@@ -22,6 +22,9 @@ include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE
 add_library(wheel_plugin SHARED wheel_plugin.cpp)
 target_link_libraries(wheel_plugin ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES} ${roscpp_LIBRARIES})
 
+add_library(ir_plugin SHARED ir_plugin.cpp)
+target_link_libraries(ir_plugin ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES} ${roscpp_LIBRARIES})
+
 catkin_package(
   DEPENDS
     roscpp

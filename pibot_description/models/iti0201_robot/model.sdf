@@ -191,7 +191,7 @@
           </visual>
       </link>
 
-      <!-- LINKS 3-11: Infrared sensors. -->
+      <!-- LINKS 3-11: Infrareds. -->
       <link name="front_right_45deg_ir">
         <pose>0.0326151 -0.0470558 0.0167955 0 0 0.78535</pose>
         <collision name="collision">
@@ -208,6 +208,28 @@
             </box>
           </geometry>
         </visual>
+				<sensor name="ir" type="ray">
+					<pose>0 0 0 0 -0 -1.571</pose>
+					<ray>
+						<scan>
+							<horizontal>
+								<samples>100</samples>
+								<resolution>1</resolution>
+							</horizontal>
+						</scan>
+						<range>
+						  <min>0.01</min>
+						  <max>2.00</max>
+						  <resolution>0.1</resolution>
+						</range>
+					</ray>
+					<always_on>1</always_on>
+					<update_rate>30</update_rate>
+					<visualize>true</visualize>
+					<plugin name="ir_plugin" filename="libir_plugin.so">
+						<topic>ir/front_right</topic>
+					</plugin>
+				</sensor>
       </link>
 
       <joint type="fixed" name="front_right_45deg_ir_to_base">
@@ -232,6 +254,28 @@
             </box>
           </geometry>
         </visual>
+				<sensor name="ir" type="ray">
+					<pose>0 0 0 0 -0 0</pose>
+					<ray>
+						<scan>
+							<horizontal>
+								<samples>100</samples>
+								<resolution>1</resolution>
+							</horizontal>
+						</scan>
+						<range>
+						  <min>0.01</min>
+						  <max>2.00</max>
+						  <resolution>0.1</resolution>
+						</range>
+					</ray>
+					<always_on>1</always_on>
+					<update_rate>30</update_rate>
+					<visualize>true</visualize>
+					<plugin name="ir_plugin" filename="libir_plugin.so">
+						<topic>ir/front_middle</topic>
+					</plugin>
+				</sensor>
       </link>
 
       <joint type="fixed" name="front_middle_ir_to_base">
@@ -256,6 +300,28 @@
             </box>
           </geometry>
         </visual>
+				<sensor name="ir" type="ray">
+					<pose>0 0 0 0 -0 0</pose>
+					<ray>
+						<scan>
+							<horizontal>
+								<samples>100</samples>
+								<resolution>1</resolution>
+							</horizontal>
+						</scan>
+						<range>
+						  <min>0.01</min>
+						  <max>2.00</max>
+						  <resolution>0.1</resolution>
+						</range>
+					</ray>
+					<always_on>1</always_on>
+					<update_rate>30</update_rate>
+					<visualize>true</visualize>
+					<plugin name="ir_plugin" filename="libir_plugin.so">
+						<topic>ir/front_left</topic>
+					</plugin>
+				</sensor>
       </link>
 
       <joint type="fixed" name="front_left_45deg_ir_to_base">
@@ -280,6 +346,28 @@
             </box>
           </geometry>
         </visual>
+				<sensor name="ir" type="ray">
+					<pose>0 0 0 0 -0 -1.571</pose>
+					<ray>
+						<scan>
+							<horizontal>
+								<samples>100</samples>
+								<resolution>1</resolution>
+							</horizontal>
+						</scan>
+						<range>
+						  <min>0.01</min>
+						  <max>2.00</max>
+						  <resolution>0.1</resolution>
+						</range>
+					</ray>
+					<always_on>1</always_on>
+					<update_rate>30</update_rate>
+					<visualize>true</visualize>
+					<plugin name="ir_plugin" filename="libir_plugin.so">
+						<topic>ir/rear_right_90</topic>
+					</plugin>
+				</sensor>
       </link>
 
       <joint type="fixed" name="rear_right_90deg_ir_to_base">
@@ -304,6 +392,28 @@
             </box>
           </geometry>
         </visual>
+				<sensor name="ir" type="ray">
+					<pose>0 0 0 0 -0 -1.571</pose>
+					<ray>
+						<scan>
+							<horizontal>
+								<samples>100</samples>
+								<resolution>1</resolution>
+							</horizontal>
+						</scan>
+						<range>
+						  <min>0.01</min>
+						  <max>2.00</max>
+						  <resolution>0.1</resolution>
+						</range>
+					</ray>
+					<always_on>1</always_on>
+					<update_rate>30</update_rate>
+					<visualize>true</visualize>
+					<plugin name="ir_plugin" filename="libir_plugin.so">
+						<topic>ir/rear_right_45</topic>
+					</plugin>
+				</sensor>
       </link>
 
       <joint type="fixed" name="rear_right_45deg_ir_to_base">
@@ -328,6 +438,28 @@
             </box>
           </geometry>
         </visual>
+				<sensor name="ir" type="ray">
+					<pose>0 0 0 0 -0 1.571</pose>
+					<ray>
+						<scan>
+							<horizontal>
+								<samples>100</samples>
+								<resolution>1</resolution>
+							</horizontal>
+						</scan>
+						<range>
+						  <min>0.01</min>
+						  <max>2.00</max>
+						  <resolution>0.1</resolution>
+						</range>
+					</ray>
+					<always_on>1</always_on>
+					<update_rate>30</update_rate>
+					<visualize>true</visualize>
+					<plugin name="ir_plugin" filename="libir_plugin.so">
+						<topic>ir/rear_right_0</topic>
+					</plugin>
+				</sensor>
       </link>
 
       <joint type="fixed" name="rear_right_straight_ir_to_base">
@@ -352,6 +484,28 @@
             </box>
           </geometry>
         </visual>
+				<sensor name="ir" type="ray">
+					<pose>0 0 0 0 -0 1.571</pose>
+					<ray>
+						<scan>
+							<horizontal>
+								<samples>100</samples>
+								<resolution>1</resolution>
+							</horizontal>
+						</scan>
+						<range>
+						  <min>0.01</min>
+						  <max>2.00</max>
+						  <resolution>0.1</resolution>
+						</range>
+					</ray>
+					<always_on>1</always_on>
+					<update_rate>30</update_rate>
+					<visualize>true</visualize>
+					<plugin name="ir_plugin" filename="libir_plugin.so">
+						<topic>ir/rear_left_90</topic>
+					</plugin>
+				</sensor>
       </link>
 
       <joint type="fixed" name="rear_left_90deg_ir_to_base">
@@ -376,6 +530,28 @@
             </box>
           </geometry>
         </visual>
+				<sensor name="ir" type="ray">
+					<pose>0 0 0 0 -0 1.571</pose>
+					<ray>
+						<scan>
+							<horizontal>
+								<samples>100</samples>
+								<resolution>1</resolution>
+							</horizontal>
+						</scan>
+						<range>
+						  <min>0.01</min>
+						  <max>2.00</max>
+						  <resolution>0.1</resolution>
+						</range>
+					</ray>
+					<always_on>1</always_on>
+					<update_rate>30</update_rate>
+					<visualize>true</visualize>
+					<plugin name="ir_plugin" filename="libir_plugin.so">
+						<topic>ir/rear_left_45</topic>
+					</plugin>
+				</sensor>
       </link>
 
       <joint type="fixed" name="rear_left_45deg_ir_to_base">
@@ -400,6 +576,28 @@
             </box>
           </geometry>
         </visual>
+				<sensor name="ir" type="ray">
+					<pose>0 0 0 0 -0 1.571</pose>
+					<ray>
+						<scan>
+							<horizontal>
+								<samples>100</samples>
+								<resolution>1</resolution>
+							</horizontal>
+						</scan>
+						<range>
+						  <min>0.01</min>
+						  <max>2.00</max>
+						  <resolution>0.1</resolution>
+						</range>
+					</ray>
+					<always_on>1</always_on>
+					<update_rate>30</update_rate>
+					<visualize>true</visualize>
+					<plugin name="ir_plugin" filename="libir_plugin.so">
+						<topic>ir/rear_left_0</topic>
+					</plugin>
+				</sensor>
       </link>
 
       <joint type="fixed" name="rear_left_straight_ir_to_base">

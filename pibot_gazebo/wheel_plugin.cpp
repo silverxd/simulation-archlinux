@@ -2,7 +2,6 @@
 #include <gazebo/gazebo.hh>
 #include <gazebo/physics/physics.hh>
 #include <gazebo/common/common.hh>
-#include <ignition/math/Vector3.hh>
 #include <gazebo/physics/Joint.hh>
 #include <gazebo/physics/Model.hh>
 #include <gazebo/physics/PhysicsTypes.hh>
@@ -11,10 +10,10 @@
 
 #include <thread>
 #include <ros/console.h>
-#include "ros/ros.h"
-#include "ros/callback_queue.h"
-#include "ros/subscribe_options.h"
-#include "std_msgs/Float32.h"
+#include <ros/ros.h>
+#include <ros/callback_queue.h>
+#include <ros/subscribe_options.h>
+#include <std_msgs/Float32.h>
 
 // Boost
 #include <boost/thread.hpp>
@@ -56,12 +55,9 @@ namespace gazebo
         this->model = _parent;
 
         // Initialize ros, if it has not already been initialized.
-        if (!ros::isInitialized())
-        {
-          int argc = 0;
-          char **argv = NULL;
-          ros::init(argc, argv, "gazebo_client",
-              ros::init_options::NoSigintHandler);
+        if (!ros::isInitialized()) {
+          ROS_FATAL_STREAM("A ROS node for Gazebo has not been initialized");
+          return;
         }
 
         this->leftWheelJoint = this->model->GetJoint("left_wheel_hinge");
