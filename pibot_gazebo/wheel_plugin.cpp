@@ -1,12 +1,7 @@
 #include <functional>
 #include <gazebo/gazebo.hh>
-#include <gazebo/physics/physics.hh>
-#include <gazebo/common/common.hh>
 #include <gazebo/physics/Joint.hh>
 #include <gazebo/physics/Model.hh>
-#include <gazebo/physics/PhysicsTypes.hh>
-#include <gazebo/transport/transport.hh>
-#include <gazebo/msgs/msgs.hh>
 
 #include <thread>
 #include <ros/console.h>
@@ -94,7 +89,6 @@ namespace gazebo
         // Listen to the update event. This event is broadcast every simulation iteration.
         this->updateConnection = event::Events::ConnectWorldUpdateBegin(
             std::bind(&WheelPlugin::OnUpdate, this));
-        ROS_INFO("Load function finished");
       }
 
       void OnLeftVelCmd(const std_msgs::Float32ConstPtr &msg) {

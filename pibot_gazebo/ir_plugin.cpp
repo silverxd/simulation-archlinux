@@ -1,30 +1,13 @@
-#include <functional>
 #include <gazebo/gazebo.hh>
-#include <gazebo/physics/physics.hh>
-#include <gazebo/common/common.hh>
 #include <gazebo/common/Plugin.hh>
-#include <ignition/math/Vector3.hh>
-#include <gazebo/physics/Joint.hh>
-#include <gazebo/physics/Model.hh>
-#include <gazebo/physics/PhysicsTypes.hh>
-#include <gazebo/transport/transport.hh>
-#include <gazebo/msgs/msgs.hh>
 #include <gazebo/sensors/RaySensor.hh>
-#include <gazebo/common/Events.hh>
 
 #include <thread>
 #include <ros/console.h>
 #include <ros/ros.h>
-#include <ros/callback_queue.h>
-#include <ros/subscribe_options.h>
 #include <std_msgs/Float64.h>
 #include <std_msgs/Float64MultiArray.h>
 #include <string>
-
-// Boost
-#include <boost/thread.hpp>
-#include <boost/bind.hpp>
-
 
 namespace gazebo {
   class IRPlugin : public SensorPlugin {
