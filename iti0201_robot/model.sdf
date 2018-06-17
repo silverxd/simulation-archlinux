@@ -722,4 +722,3 @@
       <plugin name="wheel_plugin" filename="libwheel_plugin.so"/>
   </model>
 </sdf>
-
