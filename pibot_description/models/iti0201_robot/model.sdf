@@ -917,6 +917,305 @@
           <xyz>0 1 0</xyz>
         </axis>
       </joint>
+
       <plugin name="wheel_plugin" filename="libwheel_plugin.so"/>
+
+      <!-- LINKS 22-26: Grabber. 
+      TODO: inertia
+      -->
+      <link name="grabber_pole">
+
+        <collision name="to_base">
+        <pose>0.055 0 0.0235 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.006 .034 .03455</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="to_base">
+        <pose>0.055 0 0.0235 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.006 .034 .03455</size>
+            </box>
+          </geometry>
+        </visual>
+      
+        <collision name="collision">
+          <pose>0.058912 0 0.0455477 0 1.5707 1.5707</pose>
+          <geometry>
+            <cylinder>
+              <radius>.006</radius>
+              <length>.034</length>
+            </cylinder>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <pose>0.058912 0 0.0455477 0 1.5707 1.5707</pose>
+          <geometry>
+            <cylinder>
+              <radius>.006</radius>
+              <length>.034</length>
+            </cylinder>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="fixed" name="grabber_pole">
+        <pose>0 0 0 0 0 0</pose>
+        <child>grabber_pole</child>
+        <parent>base</parent>
+      </joint>
+
+      <link name="grabber_mount">
+        <collision name="collision_left">
+        <pose>0.073412 0.020 0.0455477 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.035 .006 .011</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual_left">
+        <pose>0.073412 0.020 0.0455477 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.035 .006 .011</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <collision name="collision_right">
+        <pose>0.073412 -0.020 0.0455477 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.035 .006 .011</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual_right">
+        <pose>0.073412 -0.020 0.0455477 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.035 .006 .011</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <collision name="collision_under">
+        <pose>0.083912 0 0.0369977 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.015 .042 .0057</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual_under">
+        <pose>0.083912 0 0.0369977 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.015 .042 .0057</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <inertial>
+          <!-- don't know the real mass -->
+          <mass>2</mass>
+            <inertia>
+              <!-- https://en.wikipedia.org/wiki/List_of_moments_of_inertia -->
+              <ixx>0.000337</ixx>
+              <iyy>0.000493</iyy>
+              <izz>0.000248</izz>
+            </inertia>
+        </inertial>
+      </link>
+
+      <!--
+      TODO: revolute?
+      -->
+      <joint type="fixed" name="grabber_mount_to_pole">
+        <pose>0 0 0 0 0 0</pose>
+        <child>grabber_mount</child>
+        <parent>grabber_pole</parent>
+      </joint>
+
+      <link name="grabber_arms_joint">
+        <pose>0.083912 0 0.0319977 0 3.1414 0</pose>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>.004</radius>
+              <length>.005</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>.004</radius>
+              <length>.005</length>
+            </cylinder>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="fixed" name="grabber_arms_joint_to_grabber_mount">
+        <pose>0 0 0 0 0 0</pose>
+        <child>grabber_arms_joint</child>
+        <parent>grabber_mount</parent>
+      </joint>
+
+      <link name="grabber_arm_left">
+        <collision name="main_arm_collision_l">
+        <pose>0.106912 0.022 0.0319977 0 0 0.78535</pose>
+          <geometry>
+            <box>
+              <size>.06213 .009 .005</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="main_arm_visual_l">
+        <pose>0.106912 0.022 0.0319977 0 0 0.78535</pose>
+          <geometry>
+            <box>
+              <size>.06213 .009 .005</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <collision name="small_arm_collision_l_f">
+        <pose>0.145 0.040 0.0294977 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.029 .003 .002</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="small_arm_visual_l_f">
+        <pose>0.145 0.040 0.0294977 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.029 .003 .002</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <collision name="small_arm_collision_l_b">
+        <pose>0.1305 0.0255 0.0294977 0 0 -1.5707</pose>
+          <geometry>
+            <box>
+              <size>.029 .003 .002</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="small_arm_visual_l_b">
+        <pose>0.1305 0.0255 0.0294977 0 0 -1.5707</pose>
+          <geometry>
+            <box>
+              <size>.029 .003 .002</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <inertial>
+          <!-- don't know the real mass -->
+          <mass>1</mass>
+            <inertia>
+              <!-- https://en.wikipedia.org/wiki/List_of_moments_of_inertia -->
+              <ixx>0.000322</ixx>
+              <iyy>0.000327</iyy>
+              <izz>0.000088</izz>
+            </inertia>
+        </inertial>
+      </link>
+
+      <!--
+      TODO: revolute?
+      -->
+      <joint type="fixed" name="grabber_arm_left_to_grabber_joint">
+        <pose>0 0 0 0 0 0</pose>
+        <child>grabber_arm_left</child>
+        <parent>grabber_arms_joint</parent>
+      </joint>
+
+      <link name="grabber_arm_right">
+        <collision name="main_arm_collision_r">
+        <pose>0.106912 -0.022 0.0319977 0 0 -0.78535</pose>
+          <geometry>
+            <box>
+              <size>.06213 .009 .005</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="main_arm_visual_r">
+        <pose>0.106912 -0.022 0.0319977 0 0 -0.78535</pose>
+          <geometry>
+            <box>
+              <size>.06213 .009 .005</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <collision name="small_arm_collision_r_f">
+        <pose>0.145 -0.040 0.0294977 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.029 .003 .002</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="small_arm_visual_r_f">
+        <pose>0.145 -0.040 0.0294977 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.029 .003 .002</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <collision name="small_arm_collision_r_b">
+        <pose>0.1305 -0.0255 0.0294977 0 0 -1.5707</pose>
+          <geometry>
+            <box>
+              <size>.029 .003 .002</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="small_arm_visual_r_b">
+        <pose>0.1305 -0.0255 0.0294977 0 0 -1.5707</pose>
+          <geometry>
+            <box>
+              <size>.029 .003 .002</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <inertial>
+          <!-- don't know the real mass -->
+          <mass>1</mass>
+            <inertia>
+              <!-- https://en.wikipedia.org/wiki/List_of_moments_of_inertia -->
+              <ixx>0.000322</ixx>
+              <iyy>0.000327</iyy>
+              <izz>0.000088</izz>
+            </inertia>
+        </inertial>
+      </link>
+
+      <!--
+      TODO: revolute?
+      -->
+      <joint type="fixed" name="grabber_arm_right_to_grabber_joint">
+        <pose>0 0 0 0 0 0</pose>
+        <child>grabber_arm_right</child>
+        <parent>grabber_arms_joint</parent>
+      </joint>
   </model>
 </sdf>
