@@ -623,6 +623,39 @@
             </box>
           </geometry>
         </visual>
+        <sensor type="camera" name="line_sensor_camera1">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/right_first</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
       </link>
 
       <joint type="fixed" name="right_side_first_line_sensor_from_middle_to_base">
@@ -647,6 +680,39 @@
             </box>
           </geometry>
         </visual>
+        <sensor type="camera" name="line_sensor_camera2">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/left_first</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
       </link>
 
       <joint type="fixed" name="left_side_first_line_sensor_from_middle_to_base">
@@ -671,6 +737,39 @@
             </box>
           </geometry>
         </visual>
+        <sensor type="camera" name="line_sensor_camera3">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/right_second</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
       </link>
 
       <joint type="fixed" name="right_side_second_line_sensor_from_middle_to_base">
@@ -695,6 +794,39 @@
             </box>
           </geometry>
         </visual>
+        <sensor type="camera" name="line_sensor_camera4">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/left_second</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
       </link>
 
       <joint type="fixed" name="left_side_second_line_sensor_from_middle_to_base">
@@ -719,6 +851,39 @@
             </box>
           </geometry>
         </visual>
+        <sensor type="camera" name="line_sensor_camera5">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/right_third</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
       </link>
 
       <joint type="fixed" name="right_side_third_line_sensor_from_middle_to_base">
@@ -743,6 +908,39 @@
             </box>
           </geometry>
         </visual>
+        <sensor type="camera" name="line_sensor_camera6">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/left_third</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
       </link>
 
       <joint type="fixed" name="left_side_third_line_sensor_from_middle_to_base">
@@ -805,6 +1003,39 @@
             </box>
           </geometry>
         </visual>
+        <sensor type="camera" name="camera">
+          <pose>0 0 0 0 -1.571 0</pose>
+          <update_rate>30.0</update_rate>
+          <always_on>1</always_on>
+          <visualize>true</visualize>
+          <camera name="head">
+            <horizontal_fov>1.3962634</horizontal_fov>
+            <image>
+              <width>800</width>
+              <height>800</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.02</near>
+              <far>300</far>
+            </clip>
+          </camera>
+          
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>0.0</updateRate>
+            <cameraName>robot/camera</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
       </link>
 
       <joint type="fixed" name="camera">
