@@ -6,7 +6,7 @@ from sensor_msgs.msg import Image
 
 def publish_intensity(image, publisher):
     if image.data is not None:
-        publisher.publish(get_intensity(image))
+        publisher.publish(normalize(get_intensity(image)))
 
 def main():
     rospy.init_node("line_sensor_script")
@@ -21,6 +21,9 @@ def main():
             rospy.Subscriber(topic, Image, (lambda publisher: lambda image: publish_intensity(image, publisher))(publisher))
 
     rospy.spin()
+
+def normalize(intensity, max_in=255, max_out=950):
+    return (intensity / max_in) * max_out
 
 
 def get_intensity(image):
