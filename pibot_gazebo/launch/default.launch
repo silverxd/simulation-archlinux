@@ -1,8 +1,10 @@
 <launch>
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
-  <node name="line_sensor_script" pkg="pibot_gazebo" type="line_sensor_script.py"/>
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(find pibot_gazebo)/worlds/default.world"/>
     <!-- more default parameters can be changed here -->
   </include>
+  <node name="line_sensor_script" pkg="pibot_gazebo" type="line_sensor_script.py"/>
+  <remap from="imu/data_raw" to="robot/imu"/>
+  <node name="complementary_filter_node" pkg="imu_complementary_filter" type="complementary_filter_node"/>
 </launch>

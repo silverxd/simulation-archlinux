@@ -9,6 +9,7 @@
 #include <ros/callback_queue.h>
 #include <ros/subscribe_options.h>
 #include <std_msgs/Float32.h>
+#include <std_msgs/Int32.h>
 
 // Boost
 #include <boost/thread.hpp>
@@ -31,6 +32,10 @@ namespace gazebo
       // ROS subscribers
       ros::Subscriber rosSubRightVel;
       ros::Subscriber rosSubLeftVel;
+
+      //Joint state publisher
+      ros::Publisher rightWheelJointStatePublisher;
+      ros::Publisher leftWheelJointStatePublisher;
 
       // A ROS callbackqueue that helps process messages
       ros::CallbackQueue rosQueue;
@@ -67,20 +72,24 @@ namespace gazebo
         // Create named topics, and subscribe to them.
         ros::SubscribeOptions soRightVel =
           ros::SubscribeOptions::create<std_msgs::Float32>(
-              "/" + this->model->GetName() + "/right_vel_cmd",
+              "/robot/wheel/right/vel_cmd",
               1,
               boost::bind(&WheelPlugin::OnRightVelCmd, this, _1),
               ros::VoidPtr(), &this->rosQueue);
 
         ros::SubscribeOptions soLeftVel =
           ros::SubscribeOptions::create<std_msgs::Float32>(
-              "/" + this->model->GetName() + "/left_vel_cmd",
+              "/robot/wheel/left/vel_cmd",
               1,
               boost::bind(&WheelPlugin::OnLeftVelCmd, this, _1),
               ros::VoidPtr(), &this->rosQueue);
 
         this->rosSubRightVel = this->rosNode->subscribe(soRightVel);
         this->rosSubLeftVel = this->rosNode->subscribe(soLeftVel);
+
+        //Create joint state publishers
+        this->rightWheelJointStatePublisher = this->rosNode->advertise<std_msgs::Int32>("/robot/wheel/right/position", 1000);
+        this->leftWheelJointStatePublisher = this->rosNode->advertise<std_msgs::Int32>("/robot/wheel/left/position", 1000);
 
         // Spin up the queue helper thread.
         this->rosQueueThread =
@@ -93,12 +102,23 @@ namespace gazebo
 
       void OnLeftVelCmd(const std_msgs::Float32ConstPtr &msg) {
         this->leftVel = msg->data;
-        ROS_INFO("left_vel_cmd received");
       }
 
       void OnRightVelCmd(const std_msgs::Float32ConstPtr &msg) {
         this->rightVel = msg->data;
-        ROS_INFO("right_vel_cmd received");
+      }
+
+      void publishJointStates() {
+        std_msgs::Int32 rightWheelPosition;
+        std_msgs::Int32 leftWheelPosition;
+
+        float radInDeg = 180 / 3.14;
+
+        rightWheelPosition.data = (int) (this->rightWheelJoint->Position() * radInDeg);
+        leftWheelPosition.data = (int) (this->leftWheelJoint->Position() * radInDeg);
+
+        this->rightWheelJointStatePublisher.publish(rightWheelPosition);
+        this->leftWheelJointStatePublisher.publish(leftWheelPosition);
       }
 
       // Called by the world update start event
@@ -106,6 +126,7 @@ namespace gazebo
         // Apply velocity to wheel joints
         this->leftWheelJoint->SetVelocity(0, this->leftVel);
         this->rightWheelJoint->SetVelocity(0, this->rightVel);
+        publishJointStates();
       }
 
     private:
