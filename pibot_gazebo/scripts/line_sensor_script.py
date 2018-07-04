@@ -10,8 +10,10 @@ def publish_intensity(image, publisher):
 
 def main():
     rospy.init_node("line_sensor_script")
-    topics = rospy.get_published_topics("/robot/line_sensor")
-
+    topics = []
+    while not topics:
+        topics = rospy.get_published_topics("/robot/line_sensor")
+        rospy.sleep(0.1)
     for topic in topics:
         if topic[1] == "sensor_msgs/Image":
             topic = topic[0]
@@ -22,8 +24,8 @@ def main():
 
     rospy.spin()
 
-def normalize(intensity, max_in=255, max_out=950):
-    return (intensity / max_in) * max_out
+def normalize(intensity, max_in=255, max_out=900, min_out=100):
+    return (intensity / max_in) * (max_out - min_out) + min_out
 
 
 def get_intensity(image):

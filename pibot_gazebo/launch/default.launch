@@ -4,7 +4,6 @@
     <arg name="world_name" value="$(find pibot_gazebo)/worlds/default.world"/>
     <!-- more default parameters can be changed here -->
   </include>
-  <node name="line_sensor_script" pkg="pibot_gazebo" type="line_sensor_script.py"/>
-  <remap from="imu/data_raw" to="robot/imu"/>
-  <node name="complementary_filter_node" pkg="imu_complementary_filter" type="complementary_filter_node"/>
+  <node name="line_sensor_script" pkg="pibot_gazebo" type="line_sensor_script.py" output="screen"/>
+  <node name="imu_script" pkg="pibot_gazebo" type="imu_script.py" output="screen"/>
 </launch>
