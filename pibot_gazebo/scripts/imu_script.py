@@ -10,7 +10,6 @@ def callback(data, publisher):
     publisher.publish(get_angle(data))
 
 def main():
-    global publisher
     rospy.init_node("imu_script")
     publisher = rospy.Publisher("/robot/imu/angle", Float32, queue_size=1)
     rospy.Subscriber("/robot/imu/raw", Imu, (lambda publisher: lambda data: callback(data, publisher))(publisher))
