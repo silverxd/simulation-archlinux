@@ -1,0 +1,1349 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="pibot">
+
+  <xacro:macro name="base_with_casters">
+    <xacro:property name="base_radius" value="0.07" />
+    <xacro:property name="base_height" value="0.0015" />
+    <xacro:property name="base_mass" value="0.48" />
+    <xacro:property name="caster_wheel_radius" value="0.005" />
+
+    <link name="base_with_casters">
+
+      <inertial>
+        <mass value="${base_mass}"/>
+        <inertia ixx="${1/12 * base_mass * ((3 * base_radius * base_radius) + (base_height * base_height))}" ixy="0.0" ixz="0.0" 
+          iyy="${1/12 * base_mass * ((3 * base_radius * base_radius) + (base_height * base_height))}" iyz="0.0" 
+          izz="${1/2 * base_mass * (base_radius * base_radius)}"/>
+      </inertial>
+
+      <visual name='base_visual'>
+      <origin xyz="0 0 0.003" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="${base_radius}" length="${base_height}"/>
+        </geometry>
+      </visual>
+
+      <collision name='base_collision'>
+      <origin xyz="0 0 0.003" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="${base_radius}" length="${base_height}"/>
+        </geometry>
+      </collision>
+
+      <!--visual name='front_caster_visual'>
+        <origin xyz="0.035 0 0.0025" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="${caster_wheel_radius}"/>
+        </geometry>
+      </visual>
+
+      <collision name='front_caster_collision'>
+        <origin xyz="0.035 0 0.0025" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="${caster_wheel_radius}"/>
+        </geometry>
+      </collision>
+
+      <visual name='rear_caster_visual'>
+        <origin xyz="-0.035 0 0.0025" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="${caster_wheel_radius}"/>
+        </geometry>
+      </visual>
+
+      <collision name='rear_caster_collision'>
+        <origin xyz="-0.035 0 0.0025" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="${caster_wheel_radius}"/>
+        </geometry>
+      </collision-->
+    </link>
+
+    <!--gazebo reference="base_with_casters">
+      <surface>
+        <friction>
+          <ode>
+            <mu1 value="1.0"/>
+            <mu2 value="1.0"/>
+          </ode>
+        </friction>
+      </surface>
+    </gazebo-->
+
+    <link name="wheel_joint">
+      <visual name='joint_visual'>
+        <geometry>
+          <box size="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint type="fixed" name="Wheel_joint_to_base">
+      <origin xyz="0 0 0.0125" rpy="0 0 0" />
+      <child link="wheel_joint"/>
+      <parent link="base_with_casters" />
+    </joint>
+  </xacro:macro>
+
+<!-- ONLY VISUAL -->
+  <xacro:macro name="brainbox_with_battery">
+    <link name="brainbox_with_battery">
+      <visual name="brainbox_visual">
+        <origin xyz="-0.022 0 0.0294" rpy="0 0 0" />
+        <geometry>
+          <box size="0.077 0.0468 0.0512"/>
+        </geometry>
+      </visual>
+
+      <visual name="camera_stand_visual">
+        <origin xyz="0.0294 0 0.043" rpy="0 0 0" />
+        <geometry>
+          <box size="0.0255 0.0553 0.07896"/>
+        </geometry>
+      </visual>
+
+      <visual name="camera_stand_right_wall_visual">
+        <origin xyz="0.0294 -0.02467 0.1" rpy="0 0 0" />
+        <geometry>
+          <box size="0.0255 0.006 0.0346"/>
+        </geometry>        
+      </visual>
+
+      <visual name="camera_stand_left_wall_visual">
+        <origin xyz="0.0294 0.02467 0.1" rpy="0 0 0" />
+        <geometry>
+          <box size="0.0255 0.006 0.0346"/>
+        </geometry> 
+      </visual>
+    </link>
+
+    <joint type="fixed" name="brainbox_to_base">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <child link="brainbox_with_battery"/>
+      <parent link="base_with_casters"/>
+    </joint>
+  </xacro:macro>
+
+<!-- SHARP SENSORS -->
+  <xacro:macro name="front_ir_sensors">
+    <link name="front_right_45deg_ir">
+      <collision name="collision">
+        <geometry>
+          <box size="0.01 0.01 0.02"/>
+        </geometry>
+      </collision>
+
+      <visual name="visual">
+        <geometry>
+          <box size="0.01 0.01 0.02"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint type="fixed" name="front_right_45deg_ir_to_base">
+      <origin xyz="0.0326 -0.0471 0.0138" rpy="0 0 -0.78535"/>
+      <child link="front_right_45deg_ir"/>
+      <parent link="base_with_casters"/>
+    </joint>
+        
+    <gazebo reference="front_right_45deg_ir">
+      <sensor name="ir" type="ray">
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>100</samples>
+              <resolution>1</resolution>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.01</min>
+            <max>2.00</max>
+            <resolution>0.1</resolution>
+          </range>
+        </ray>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>true</visualize>
+        <plugin name="ir_plugin" filename="libir_plugin.so">
+          <topic>ir/front_right</topic>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <link name="front_middle_ir">
+      <collision name="collision">
+        <geometry>
+          <box size="0.01 0.02 0.01"/>
+        </geometry>
+      </collision>
+
+      <visual name="visual">
+        <geometry>
+          <box size="0.01 0.02 0.01"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint type="fixed" name="front_middle_ir_to_base">
+      <origin xyz="0.059312 0 0.0088" rpy="0 0 0"/>
+      <child link="front_middle_ir"/>
+      <parent link="base_with_casters"/>
+    </joint>
+
+    <gazebo reference="front_middle_ir">
+      <sensor name="ir" type="ray">
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>100</samples>
+                <resolution>1</resolution>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.01</min>
+              <max>2.00</max>
+              <resolution>0.1</resolution>
+            </range>
+          </ray>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="ir_plugin" filename="libir_plugin.so">
+            <topic>ir/front_middle</topic>
+          </plugin>
+        </sensor>
+    </gazebo>
+
+    <link name="front_left_45deg_ir">
+      <collision name="collision">
+        <geometry>
+          <box size="0.01 0.01 0.02"/>
+        </geometry>
+      </collision>
+
+      <visual name="visual">
+        <geometry>
+          <box size="0.01 0.01 0.02"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint type="fixed" name="front_left_45deg_ir_to_base">
+      <origin xyz="0.0326151 0.0470558 0.0138" rpy="0 0 0.78535"/>
+      <child link="front_left_45deg_ir"/>
+      <parent link="base_with_casters"/>
+    </joint>
+
+    <gazebo reference="front_left_45deg_ir">
+      <sensor name="ir" type="ray">
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>100</samples>
+                <resolution>1</resolution>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.01</min>
+              <max>2.00</max>
+              <resolution>0.1</resolution>
+            </range>
+          </ray>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="ir_plugin" filename="libir_plugin.so">
+            <topic>ir/front_left</topic>
+          </plugin>
+        </sensor>
+    </gazebo>
+  </xacro:macro>
+
+<!-- REAR IR SENSORS -->
+  <xacro:macro name="rear_ir_sensors">
+    <link name="rear_right_90deg_ir">
+      <collision name="collision">
+        <geometry>
+          <box size="0.012 0.008 0.0135"/>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box size="0.012 0.008 0.0135"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint type="fixed" name="rear_right_90deg_ir_to_base">
+    <origin xyz="-0.02256 -0.0547 0.01134" rpy="0 0 -1.5707" />
+      <child link="rear_right_90deg_ir"/>
+      <parent link="base_with_casters"/>
+    </joint>
+
+    <gazebo reference="rear_right_90deg_ir">
+      <sensor name="ir" type="ray">
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>100</samples>
+              <resolution>1</resolution>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.01</min>
+            <max>2.00</max>
+            <resolution>0.1</resolution>
+          </range>
+        </ray>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>true</visualize>
+        <plugin name="ir_plugin" filename="libir_plugin.so">
+          <topic>ir/rear_right_90</topic>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <link name="rear_right_45deg_ir">
+      <collision name="collision">
+        <geometry>
+          <box size="0.012 0.008 0.0135"/>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box size="0.012 0.008 0.0135"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint type="fixed" name="rear_right_45deg_ir_to_base">
+    <origin xyz="-0.037845 -0.046812 0.011341" rpy="0 0 -2.35605" />
+      <child link="rear_right_45deg_ir"/>
+      <parent link="base_with_casters"/>
+    </joint>
+
+    <gazebo reference="rear_right_45deg_ir">
+      <sensor name="ir" type="ray">
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>100</samples>
+              <resolution>1</resolution>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.01</min>
+            <max>2.00</max>
+            <resolution>0.1</resolution>
+          </range>
+        </ray>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>true</visualize>
+        <plugin name="ir_plugin" filename="libir_plugin.so">
+          <topic>ir/rear_right_45</topic>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <link name="rear_right_straight_ir">
+      <collision name="collision">
+        <geometry>
+          <box size="0.012 0.008 0.0135"/>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box size="0.012 0.008 0.0135"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint type="fixed" name="rear_right_straight_ir_to_base">
+    <origin xyz="-0.0501109 -0.035473 0.011341" rpy="0 0 -3.14" />
+      <child link="rear_right_straight_ir"/>
+      <parent link="base_with_casters"/>
+    </joint>
+
+    <gazebo reference="rear_right_straight_ir">
+      <sensor name="ir" type="ray">
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>100</samples>
+              <resolution>1</resolution>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.01</min>
+            <max>2.00</max>
+            <resolution>0.1</resolution>
+          </range>
+        </ray>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>true</visualize>
+        <plugin name="ir_plugin" filename="libir_plugin.so">
+          <topic>ir/rear_right_0</topic>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+      <link name="rear_left_90deg_ir">
+        <collision name="collision">
+          <geometry>
+            <box size="0.012 0.008 0.0135"/>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box size="0.012 0.008 0.0135"/>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="fixed" name="rear_left_90deg_ir_to_base">
+      <origin xyz="-0.0225688 0.054749 0.011341" rpy="0 0 1.5707" />
+        <child link="rear_left_90deg_ir"/>
+        <parent link="base_with_casters"/>
+      </joint>
+
+      <gazebo reference="rear_left_90deg_ir">
+        <sensor name="ir" type="ray">
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>100</samples>
+                <resolution>1</resolution>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.01</min>
+              <max>2.00</max>
+              <resolution>0.1</resolution>
+            </range>
+          </ray>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="ir_plugin" filename="libir_plugin.so">
+            <topic>ir/rear_left_90</topic>
+          </plugin>
+        </sensor>
+      </gazebo>
+
+      <link name="rear_left_45deg_ir">
+        <collision name="collision">
+          <geometry>
+            <box size="0.012 0.008 0.0135"/>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box size="0.012 0.008 0.0135"/>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="fixed" name="rear_left_45deg_ir_to_base">
+      <origin xyz="-0.037845 0.046812 0.011341" rpy="0 0 2.35605" />
+        <child link="rear_left_45deg_ir"/>
+        <parent link="base_with_casters"/>
+      </joint>
+
+      <gazebo reference="rear_left_45deg_ir">
+        <sensor name="ir" type="ray">
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>100</samples>
+                <resolution>1</resolution>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.01</min>
+              <max>2.00</max>
+              <resolution>0.1</resolution>
+            </range>
+          </ray>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="ir_plugin" filename="libir_plugin.so">
+            <topic>ir/rear_left_45</topic>
+          </plugin>
+        </sensor>
+      </gazebo>
+
+      <link name="rear_left_straight_ir">
+        <collision name="collision">
+          <geometry>
+            <box size="0.012 0.008 0.0135"/>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box size="0.012 0.008 0.0135"/>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="fixed" name="rear_left_straight_ir_to_base">
+      <origin xyz="-0.0501109 0.035473 0.011341" rpy="0 0 3.14" />
+        <child link="rear_left_straight_ir"/>
+        <parent link="base_with_casters"/>
+      </joint>
+
+      <gazebo reference="rear_left_straight_ir">
+        <sensor name="ir" type="ray">
+          <pose>0 0 0 0 -0 1.571</pose>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>100</samples>
+                <resolution>1</resolution>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.01</min>
+              <max>2.00</max>
+              <resolution>0.1</resolution>
+            </range>
+          </ray>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="ir_plugin" filename="libir_plugin.so">
+            <topic>ir/rear_left_0</topic>
+          </plugin>
+        </sensor>
+      </gazebo>
+  </xacro:macro>
+
+<!-- LINE SENSORS -->
+  <xacro:macro name="first_two_line_sensors">
+    <link name="right_side_first_line_sensor_from_middle">
+        <collision name="collision">
+          <geometry>
+            <box size="0.0015 0.0035 0.0025"/>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box size="0.0015 0.0035 0.0025"/>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="fixed" name="right_side_first_line_sensor_from_middle_to_base">
+      <origin xyz="-0.0629 -0.005 0.0014545" rpy="0 1.5707 0" />
+        <child link="right_side_first_line_sensor_from_middle"/>
+        <parent link="base_with_casters"/>
+      </joint>
+
+      <gazebo reference="right_side_first_line_sensor_from_middle">
+        <sensor type="camera" name="line_sensor_camera1">
+          <update_rate>30.0</update_rate>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/right_first</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
+      </gazebo>
+
+      <link name="left_side_first_line_sensor_from_middle">
+        <collision name="collision">
+          <geometry>
+            <box size="0.0015 0.0035 0.0025"/>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box size="0.0015 0.0035 0.0025"/>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="fixed" name="left_side_first_line_sensor_from_middle_to_base">
+      <origin xyz="-0.0629 0.005 0.0014545" rpy="0 1.5707 0" />
+        <child link="left_side_first_line_sensor_from_middle"/>
+        <parent link="base_with_casters"/>
+      </joint>
+
+      <gazebo reference="left_side_first_line_sensor_from_middle">
+        <sensor type="camera" name="line_sensor_camera2">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/left_first</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
+      </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="second_two_line_sensors">
+    <link name="right_side_second_line_sensor_from_middle">
+        <collision name="collision">
+          <geometry>
+            <box size="0.0015 0.0035 0.0025"/>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box size="0.0015 0.0035 0.0025"/>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="fixed" name="right_side_second_line_sensor_from_middle_to_base">
+      <origin xyz="-0.06289935 -0.015 0.0014545" rpy="0 1.5707 0" />
+        <child link="right_side_second_line_sensor_from_middle"/>
+        <parent link="base_with_casters"/>
+      </joint>
+
+      <gazebo reference="right_side_second_line_sensor_from_middle">
+        <sensor type="camera" name="line_sensor_camera3">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/right_second</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
+      </gazebo>
+
+      <link name="left_side_second_line_sensor_from_middle">
+        <collision name="collision">
+          <geometry>
+            <box size="0.0015 0.0035 0.0025"/>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box size="0.0015 0.0035 0.0025"/>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="fixed" name="left_side_second_line_sensor_from_middle_to_base">
+      <origin xyz="-0.06289935 0.015 0.0014545" rpy="0 1.5707 0" />
+        <child link="left_side_second_line_sensor_from_middle"/>
+        <parent link="base_with_casters"/>
+      </joint>
+
+      <gazebo reference="left_side_second_line_sensor_from_middle">
+        <sensor type="camera" name="line_sensor_camera4">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/left_second</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
+      </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="third_two_line_sensors">
+    <link name="right_side_third_line_sensor_from_middle">
+        <collision name="collision">
+          <geometry>
+            <box size="0.0015 0.0035 0.0025"/>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box size="0.0015 0.0035 0.0025"/>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="fixed" name="right_side_third_line_sensor_from_middle_to_base">
+      <origin xyz="-0.0541 -0.035 0.0014545" rpy="0 1.5707 0" />
+        <child link="right_side_third_line_sensor_from_middle"/>
+        <parent link="base_with_casters"/>
+      </joint>
+
+      <gazebo reference="right_side_third_line_sensor_from_middle">
+        <sensor type="camera" name="line_sensor_camera5">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/right_third</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
+      </gazebo>
+
+      <link name="left_side_third_line_sensor_from_middle">
+        <collision name="collision">
+          <geometry>
+            <box size="0.0015 0.0035 0.0025"/>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box size="0.0015 0.0035 0.0025"/>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="fixed" name="left_side_third_line_sensor_from_middle_to_base">
+      <origin xyz="-0.0541 0.035 0.0014545" rpy="0 1.5707 0" />
+        <child link="left_side_third_line_sensor_from_middle"/>
+        <parent link="base_with_casters"/>
+      </joint>
+
+      <gazebo reference="left_side_third_line_sensor_from_middle">
+        <sensor type="camera" name="line_sensor_camera6">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/left_third</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
+      </gazebo>
+  </xacro:macro>
+
+<!-- CAMERA -->
+  <xacro:macro name="raspberry_camera">
+    <link name="camera_stand_pole">
+        <collision name="collision">
+          <geometry>
+            <cylinder radius="0.003822" length="0.0433499"/>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder radius="0.003822" length="0.0433499"/>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="fixed" name="camera_stand_pole_to_base">
+      <origin xyz="0.02940475 0 0.1135341" rpy="0 1.5707 1.5707" />
+        <child link="camera_stand_pole"/>
+        <parent link="base_with_casters"/>
+      </joint>
+
+      <!--REVOLUTE CAMERA???, uncomment this and delete the above
+      <joint type="revolute" name="camera_stand_pole_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>camera_stand_pole</child>
+        <parent>base</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+        </axis>
+      </joint>
+      -->
+
+      <link name="pi_camera">
+        <collision name="collision">
+          <geometry>
+            <box size="0.017 0.024 0.024"/>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box size="0.017 0.024 0.024"/>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="fixed" name="pi_camera_to_pole">
+      <origin xyz="0 -0.0104 0" rpy="0 0 -1.5707"/>
+        <child link="pi_camera"/>
+        <parent link="camera_stand_pole"/>
+      </joint>
+
+      <gazebo reference="pi_camera">
+        <sensor type="camera" name="camera">
+          <update_rate>30.0</update_rate>
+          <always_on>1</always_on>
+          <visualize>true</visualize>
+          <camera name="head">
+            <horizontal_fov>1.3962634</horizontal_fov>
+            <image>
+              <width>800</width>
+              <height>800</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.02</near>
+              <far>300</far>
+            </clip>
+          </camera>
+          
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>0.0</updateRate>
+            <cameraName>robot/camera</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
+      </gazebo>
+  </xacro:macro>
+
+<!-- WHEELS -->
+  <xacro:macro name="wheels">
+    <xacro:property name="wheel_mass" value="0.005" />
+    <xacro:property name="wheel_radius" value="0.0125"/>
+    <xacro:property name="wheel_length" value="0.009"/>
+
+    <link name="right_wheel">
+        <inertial>
+          <mass value="${wheel_mass}"/>
+          <origin xyz="0 0 0" />
+          <inertia ixx="${1/12 * wheel_mass * ((3 * wheel_radius * wheel_radius) + (wheel_length * wheel_length))}" ixy="0.0" ixz="0.0" 
+            iyy="${1/12 * wheel_mass * ((3 * wheel_radius * wheel_radius) + (wheel_length * wheel_length))}" iyz="0.0" 
+            izz="${1/2 * wheel_mass * (wheel_radius * wheel_radius)}"/>
+        </inertial>
+
+        <visual name="visual">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>
+            <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+          </geometry>
+        </visual>
+
+        <collision name="collision">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>
+            <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+          </geometry>
+        </collision>
+    </link>
+
+      <gazebo reference="right_wheel">
+        <mu1 value="0.6"/>
+        <mu2 value="0.6"/>
+        <kp value="10000000.0" />
+        <kd value="1.0" />
+        <fdir1 value="1 0 0"/>
+      </gazebo>
+
+      <joint type="revolute" name="right_wheel_hinge">
+      <origin xyz="0 -0.0655 0" rpy="0 1.5707 1.5707"/>
+        <child link="right_wheel"/>
+        <parent link="wheel_joint"/>
+        <!--proovisin erinevaid väärtusi siia "limit" alla, midagi ei muutunud -->
+        <limit lower="0" upper="0" effort="10.0" velocity="1.0" />
+        <axis xyz="0 1 0" rpy="0 0 0"/>
+      </joint>
+
+      <!--link name="left_wheel">
+        <visual name="visual">
+          <geometry>
+            <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+          </geometry>
+        </visual>
+
+        <collision name="collision">
+          <geometry>
+            <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+          </geometry>
+          <surface>
+            <friction>
+              <ode mu="0.6" mu2="0.6"/>
+            </friction>
+          </surface>
+        </collision>
+
+        <inertial>
+          <mass value="${wheel_mass}"/>
+          <inertia ixx="${1/12 * wheel_mass * ((3 * wheel_radius * wheel_radius) + (wheel_length * wheel_length))}" ixy="0.0" ixz="0.0" 
+            iyy="${1/12 * wheel_mass * ((3 * wheel_radius * wheel_radius) + (wheel_length * wheel_length))}" iyz="0.0" 
+            izz="${1/2 * wheel_mass * (wheel_radius * wheel_radius)}"/>
+        </inertial>
+      </link>
+
+      <joint type="revolute" name="left_wheel_hinge">
+      <origin xyz="0 0.0655 0.0152" rpy="0 1.5707 1.5707"/>
+        <child link="left_wheel"/>
+        <parent link="wheel_joint"/>
+        <??????????????????????????????????????????????????? >
+        <limit lower="-1.8326" upper="1.8326" effort="100.0" velocity="1.0" />
+        <axis xyz="0 1 0"/>
+      </joint>
+
+      <gazebo>
+        <plugin name="wheel_plugin" filename="libwheel_plugin.so"/>
+      </gazebo-->
+  </xacro:macro>
+
+
+  <xacro:macro name="cyton_gamma_1500" params="prefix virtual_ee">
+    <link name="${prefix}base_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://cyton_gamma_1500_description/meshes/base.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0.0115 0.047"/>
+        <geometry>
+          <box size="0.154 0.177 0.094"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="100.0"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx="1.1027" iyy="1.1027" izz="1.1027"
+                  ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+    </link>
+
+    <joint name="${prefix}shoulder_roll_joint" type="revolute">
+      <parent link="${prefix}base_link" />
+      <child link="${prefix}shoulder_roll" />
+      <origin xyz="0 0 0.05315" rpy="0 0 0" />
+      <limit lower="-2.618" upper="2.618" effort="100.0" velocity="1.0" />
+      <axis xyz="0 0 1" />
+    </joint>
+
+    <link name="${prefix}shoulder_roll">
+      <visual>
+        <origin xyz="0 0 0" rpy="1.5708 0 0.384"/>
+        <geometry>
+          <mesh filename="package://cyton_gamma_1500_description/meshes/shoulder_roll.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.069 0.0587"/>
+        <geometry>
+          <box size="0.09829 0.18143 0.08392"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="50.0"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx=".1027" iyy=".1027" izz=".1027"
+                  ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+    </link>
+
+    <joint name="${prefix}shoulder_pitch_joint" type="revolute">
+      <parent link="${prefix}shoulder_roll" />
+      <child link="${prefix}shoulder_pitch" />
+      <origin xyz="0.0205 0 0.12435" rpy="0 0 0" />
+      <limit lower="-1.8326" upper="1.8326" effort="100.0" velocity="1.0" />
+      <axis xyz="1 0 0" />
+    </joint>
+
+    <link name="${prefix}shoulder_pitch">
+      <visual>
+        <origin xyz="0 0 0" rpy="1.5708 0 0" />
+        <geometry>
+          <mesh filename="package://cyton_gamma_1500_description/meshes/shoulder_pitch.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="-0.001 0.064 0.1745"/>
+        <geometry>
+          <box size="0.0709 0.19363 0.083"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="20.0"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx=".0827" iyy=".0827" izz=".0827"
+                  ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+    </link>
+
+    <joint name="${prefix}shoulder_yaw_joint" type="revolute">
+      <parent link="${prefix}shoulder_pitch" />
+      <child link="${prefix}shoulder_yaw" />
+      <origin xyz="-0.0215 -0.0205 0.1255" rpy="0 0 0" />
+      <limit lower="-1.8326" upper="1.8326" effort="100.0" velocity="1.0" />
+      <axis xyz="0 -1 0" />
+    </joint>
+
+    <link name="${prefix}shoulder_yaw">
+      <visual>
+        <origin xyz="0 0 0.0" rpy="1.5708 0 -1.5708" />
+        <geometry>
+          <mesh filename="package://cyton_gamma_1500_description/meshes/shoulder_yaw.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="-0.0225 0.039 0.3068"/>
+        <geometry>
+          <box size="0.0717 0.1846 0.0756"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="10.0"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx=".0627" iyy=".0627" izz=".0627"
+                  ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+    </link>
+
+    <joint name="${prefix}elbow_pitch_joint" type="revolute">
+      <parent link="${prefix}shoulder_yaw" />
+      <child link="${prefix}elbow_pitch" />
+      <origin xyz="0.018 0.0206 0.1158" rpy="0 0 0" />
+      <limit lower="-1.8326" upper="1.8326" effort="100.0" velocity="1.0" />
+      <axis xyz="1 0 0" />
+    </joint>
+
+    <link name="${prefix}elbow_pitch">
+      <visual>
+        <origin xyz="0 0 0" rpy="1.5708 0 3.1416" />
+        <geometry>
+          <mesh filename="package://cyton_gamma_1500_description/meshes/elbow_pitch.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0.0346 0.0461 0.4228"/>
+        <geometry>
+          <box size="0.0549 0.1557 0.076"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="10.0"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx=".0327" iyy=".0327" izz=".0327"
+                  ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+    </link>
+
+    <joint name="${prefix}elbow_yaw_joint" type="revolute">
+      <parent link="${prefix}elbow_pitch" />
+      <child link="${prefix}elbow_yaw" />
+      <origin xyz="-0.0171 -0.018 0.09746" rpy="0 0 0" />
+      <limit lower="-1.8326" upper="1.8326" effort="100.0" velocity="1.0" />
+      <axis xyz="0 -1 0" />
+    </joint>
+
+    <link name="${prefix}elbow_yaw">
+      <visual>
+        <origin xyz="0 0 0" rpy="1.5708 0 1.5708" />
+        <geometry>
+          <mesh filename="package://cyton_gamma_1500_description/meshes/elbow_yaw.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0.0172 0.0209 0.516"/>
+        <geometry>
+          <box size="0.0535 0.1160 0.0402"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="10.0"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx=".0227" iyy=".0227" izz=".0227"
+                  ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+    </link>
+
+    <joint name="${prefix}wrist_pitch_joint" type="revolute">
+      <parent link="${prefix}elbow_yaw" />
+      <child link="${prefix}wrist_pitch" />
+      <origin xyz="0.02626 0.018 0.0718" rpy="0 0 0" />
+      <limit lower="-1.8326" upper="1.8326" effort="100.0" velocity="1.0" />
+      <axis xyz="-1 0 0" />
+    </joint>
+
+    <link name="${prefix}wrist_pitch">
+      <visual>
+        <origin xyz="0 0 0" rpy="1.5708 0 1.5708" />
+        <geometry>
+          <mesh filename="package://cyton_gamma_1500_description/meshes/wrist_pitch.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0.0257 0.0118 0.5617"/>
+        <geometry>
+          <box size="0.026 0.0435 0.05185"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="10.0"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx=".0127" iyy=".0127" izz=".0127"
+                  ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+    </link>
+
+    <joint name="${prefix}wrist_roll_joint" type="revolute">
+      <parent link="${prefix}wrist_pitch" />
+      <child link="${prefix}wrist_roll" />
+      <origin xyz="-0.026255 0 0.051425" rpy="0 0 0" />
+      <limit lower="-2.61799" upper="2.61799" effort="100.0" velocity="1.0" />
+      <axis xyz="0 0 1" />
+    </joint>
+
+    <link name="${prefix}wrist_roll">
+      <visual>
+        <origin xyz="0 0 0" rpy="3.1416 0 -1.5708" />
+        <geometry>
+          <mesh filename="package://cyton_gamma_1500_description/meshes/wrist_roll.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="-0.0063 -0.0014 0.6102"/>
+        <geometry>
+          <box size="0.0518 0.0723 0.1004"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="10.0"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx=".0027" iyy=".0027" izz=".0027"
+                  ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+    </link>
+
+    <joint name="${prefix}gripper_joint" type="prismatic">
+      <parent link="${prefix}wrist_roll" />
+      <child link="${prefix}gripper_finger1" />
+      <origin xyz="-0.01331 0.00485 0.077225" rpy="0 0 0" />
+      <limit lower="-0.008" upper="0.008" effort="100.0" velocity="1.0" />
+      <axis xyz="1 0 0" />
+    </joint>
+
+    <link name="${prefix}gripper_finger1">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://cyton_gamma_1500_description/meshes/gripper_finger1.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="-0.0167 0.0172 0.7254"/>
+        <geometry>
+          <box size="0.015 0.0229 0.0475"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="1.0"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx=".0027" iyy=".0027" izz=".0027"
+                  ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+    </link>
+
+    <joint name="${prefix}gripper_joint2" type="prismatic">
+      <parent link="${prefix}wrist_roll" />
+      <child link="${prefix}gripper_finger2" />
+      <origin xyz="0.0098 0.00485 0.077225" rpy="0 0 0" />
+      <limit lower="-0.008" upper="0.008" effort="100.0" velocity="1.0" />
+      <mimic joint="${prefix}gripper_joint" multiplier="-1"/>
+      <axis xyz="1 0 0" />
+    </joint>
+
+    <link name="${prefix}gripper_finger2">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://cyton_gamma_1500_description/meshes/gripper_finger2.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0.0132 0.0172 0.7254"/>
+        <geometry>
+          <box size="0.015 0.0229 0.0475"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="1.0"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx=".0027" iyy=".0027" izz=".0027"
+                  ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+    </link>
+
+    <xacro:if value="${virtual_ee}"> <!-- virtual end-effector -->
+      <joint name="${prefix}virtual_endeffector_joint" type="fixed">
+        <parent link="${prefix}wrist_roll" />
+        <child link="${prefix}virtual_endeffector" />
+        <origin xyz="-0.002316 0.0079 0.079425" rpy="0 0 0" />
+      </joint>
+
+      <link name="${prefix}virtual_endeffector">
+        <visual>
+          <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>
+            <sphere radius="0.002" />
+          </geometry>
+          <material name="grey">
+            <color rgba="0.7 0.7 0.7 0.8" />
+          </material>
+        </visual>
+      </link>
+    </xacro:if>
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
+  </gazebo>
+  <gazebo>
+    <plugin name="joint_state_publisher"
+            filename="libgazebo_ros_joint_state_publisher.so">
+      <jointName>shoulder_roll_joint, shoulder_pitch_joint, shoulder_yaw_joint, elbow_pitch_joint, elbow_yaw_joint, wrist_pitch_joint, wrist_roll_joint, gripper_joint, gripper_joint2</jointName>
+    </plugin>
+  </gazebo>
+  </xacro:macro>
+
+</robot>
