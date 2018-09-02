@@ -1,0 +1,7 @@
+Creating pibot.urdf:
+ - cd catkin_ws/
+ - roslaunch pibot_description generate_urdf.launch 
+
+Launching pibot.urdf (while in catkin_ws):
+ - roslaunch gazebo_ros empty_world.launch
+ - rosrun gazebo_ros spawn_model -file `rospack find pibot_description`/models/iti0201_robot/urdf/pibot.urdf -urdf -x 0 -y 0 -z 0 -model pibot
