@@ -49,6 +49,8 @@ namespace gazebo
       // Pointer to the update event connection
       event::ConnectionPtr updateConnection;
 
+      double maxAngularVelocity = 1.36;
+
     public:
       void Load(physics::ModelPtr _parent, sdf::ElementPtr /*_sdf*/) {
         // Store the pointer to the model
@@ -101,11 +103,11 @@ namespace gazebo
       }
 
       void OnLeftVelCmd(const std_msgs::Float32ConstPtr &msg) {
-        this->leftVel = msg->data;
+        this->leftVel = ((msg->data)/100.0)*this->maxAngularVelocity;
       }
 
       void OnRightVelCmd(const std_msgs::Float32ConstPtr &msg) {
-        this->rightVel = msg->data;
+        this->rightVel = ((msg->data)/100.0)*this->maxAngularVelocity;
       }
 
       void publishJointStates() {
@@ -127,6 +129,8 @@ namespace gazebo
         this->leftWheelJoint->SetVelocity(0, this->leftVel);
         this->rightWheelJoint->SetVelocity(0, this->rightVel);
         publishJointStates();
+	ROS_INFO_STREAM("left joint" << this->leftWheelJoint->GetVelocity(0));
+        ROS_INFO_STREAM("right joint" << this->rightWheelJoint->GetVelocity(0));
       }
 
     private:

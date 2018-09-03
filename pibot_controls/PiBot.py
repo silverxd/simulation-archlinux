@@ -1,7 +1,7 @@
 import rospy
 from std_msgs.msg import Int32
 from std_msgs.msg import Float32
-
+from std_msgs.msg import Float64
 
 def validate_speed_percentage_arg(i):
     def validate_speed_percentage(speed_function):
@@ -43,28 +43,28 @@ class PiBot:
                          self.make_callback_for_sensor("rightmost_line_sensor"))
 
     def subscribe_to_ir_sensors(self):
-        prefix = "/robot/ir"
+        prefix = "/robot/ir/"
         suffix = "/value"
 
-        rospy.Subscriber(prefix + "front_left" + suffix, Float32, self.make_callback_for_sensor("front_left_ir"))
-        rospy.Subscriber(prefix + "front_middle" + suffix, Float32, self.make_callback_for_sensor("front_middle_ir"))
-        rospy.Subscriber(prefix + "front_right" + suffix, Float32, self.make_callback_for_sensor("front_right_ir"))
+        rospy.Subscriber(prefix + "front_left" + suffix, Float64, self.make_callback_for_sensor("front_left_ir"))
+        rospy.Subscriber(prefix + "front_middle" + suffix, Float64, self.make_callback_for_sensor("front_middle_ir"))
+        rospy.Subscriber(prefix + "front_right" + suffix, Float64, self.make_callback_for_sensor("front_right_ir"))
 
-        rospy.Subscriber(prefix + "rear_left_0" + suffix, Float32,
+        rospy.Subscriber(prefix + "rear_left_0" + suffix, Float64,
                          self.make_callback_for_sensor("rear_left_straight_ir"))
-        rospy.Subscriber(prefix + "rear_left_45" + suffix, Float32,
+        rospy.Subscriber(prefix + "rear_left_45" + suffix, Float64,
                          self.make_callback_for_sensor("rear_left_diagonal_ir"))
-        rospy.Subscriber(prefix + "rear_left_90" + suffix, Float32, self.make_callback_for_sensor("rear_left_side_ir"))
+        rospy.Subscriber(prefix + "rear_left_90" + suffix, Float64, self.make_callback_for_sensor("rear_left_side_ir"))
 
-        rospy.Subscriber(prefix + "rear_right_0" + suffix, Float32,
+        rospy.Subscriber(prefix + "rear_right_0" + suffix, Float64,
                          self.make_callback_for_sensor("rear_right_straight_ir"))
-        rospy.Subscriber(prefix + "rear_right_45" + suffix, Float32,
+        rospy.Subscriber(prefix + "rear_right_45" + suffix, Float64,
                          self.make_callback_for_sensor("rear_right_diagonal_ir"))
-        rospy.Subscriber(prefix + "rear_right_90" + suffix, Float32,
+        rospy.Subscriber(prefix + "rear_right_90" + suffix, Float64,
                          self.make_callback_for_sensor("rear_right_side_ir"))
 
     def subscribe_to_encoders(self):
-        prefix = "robot/wheel"
+        prefix = "/robot/wheel/"
         suffix = "/position"
 
         rospy.Subscriber(prefix + "left" + suffix, Int32, self.make_callback_for_sensor("left_wheel_encoder"))
@@ -72,27 +72,27 @@ class PiBot:
 
     def __init__(self, robot_nr=1):
         # IRs
-        self.front_left_ir = None
-        self.front_middle_ir = None
-        self.front_right_ir = None
-        self.rear_left_straight_ir = None
-        self.rear_left_diagonal_ir = None
-        self.rear_left_side_ir = None
-        self.rear_right_straight_ir = None
-        self.rear_right_diagonal_ir = None
-        self.rear_right_side_ir = None
+        self.front_left_ir = 0
+        self.front_middle_ir = 0
+        self.front_right_ir = 0
+        self.rear_left_straight_ir = 0
+        self.rear_left_diagonal_ir = 0
+        self.rear_left_side_ir = 0
+        self.rear_right_straight_ir = 0
+        self.rear_right_diagonal_ir = 0
+        self.rear_right_side_ir = 0
 
         # Line sensors
-        self.leftmost_line_sensor = None
-        self.second_line_sensor_from_left = None
-        self.third_line_sensor_from_left = None
-        self.rightmost_line_sensor = None
-        self.second_line_sensor_from_right = None
-        self.third_line_sensor_from_right = None
+        self.leftmost_line_sensor = 0
+        self.second_line_sensor_from_left = 0
+        self.third_line_sensor_from_left = 0
+        self.rightmost_line_sensor = 0
+        self.second_line_sensor_from_right = 0
+        self.third_line_sensor_from_right = 0
 
         # Encoders
-        self.right_wheel_encoder = None
-        self.left_wheel_encoder = None
+        self.right_wheel_encoder = 0
+        self.left_wheel_encoder = 0
 
         rospy.init_node("pibot", anonymous=True)
 
@@ -105,7 +105,12 @@ class PiBot:
         self.subscribe_to_line_sensors()
         self.subscribe_to_encoders()
 
-        rospy.spin()
+        #TODO: copy constants from PiBot
+        # Constants
+        self.UPDATE_TIME = 0.005
+        self.SENSOR_LIMITS = [(100, 1000)] * 6 + [(50, 800)] * 2 + [(0, 1023)] * 6 + [(50, 800)]
+        self.WHEEL_DIAMETER = 0.025
+        self.TICK_PER_DEGREE = 1
 
     def get_front_left_ir(self):
         return self.front_left_ir
