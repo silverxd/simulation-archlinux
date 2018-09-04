@@ -49,7 +49,7 @@ namespace gazebo
       // Pointer to the update event connection
       event::ConnectionPtr updateConnection;
 
-      double maxAngularVelocity = 1.36;
+      double maxAngularVelocity = 136;
 
     public:
       void Load(physics::ModelPtr _parent, sdf::ElementPtr /*_sdf*/) {
