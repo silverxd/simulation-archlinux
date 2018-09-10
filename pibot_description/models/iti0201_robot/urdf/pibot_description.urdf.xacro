@@ -1159,7 +1159,7 @@
 
 <!-- ARM -->
   <xacro:macro name="grabber_arm">
-    <link name="grabber_pole">
+    <link name="grabber_to_base_1">
       <inertial>
         <mass value="0.001"/>
         <inertia ixx="0.0000337" ixy="0.0" ixz="0.0" 
@@ -1168,73 +1168,113 @@
       </inertial>
 
       <collision name="arm_to_base_col">
-      <origin xyz="0.055 0 0.0235" rpy="0 0 0" />
         <geometry>
           <box size=".006 .034 .03455"/>
         </geometry>
       </collision>
       <visual name="arm_to_base_vis">
-      <origin xyz="0.055 0 0.0235" rpy="0 0 0" />
         <geometry>
           <box size=".006 .034 .03455"/>
         </geometry>
       </visual>
+    </link>
+
+    <joint type="fixed" name="grabber_to_base_joint_1">
+      <origin xyz="0.055 0 0.0235" rpy="0 0 0" />
+      <child link="grabber_to_base_1"/>
+      <parent link="base_with_casters"/>
+    </joint>
+
+    <link name="pole_rotation_reference">
+      <inertial>
+        <mass value="0.001"/>
+        <inertia ixx="0.0000337" ixy="0.0" ixz="0.0" 
+          iyy="0.0000493" iyz="0.0" 
+          izz="0.0000248"/>
+      </inertial>
       
-      <collision name="collision_1">
-        <origin xyz="0.058912 0 0.0455477" rpy="0 1.5707 1.5707" />
+      <collision name="pole_rotation_reference_col">
+        <geometry>
+          <box size=".001 .001 .001"/>
+        </geometry>
+      </collision>
+      <visual name="pole_rotation_reference_vis">
+        <geometry>
+          <box size=".001 .001 .001"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint type="fixed" name="pole_rotation_reference_to_base">
+      <origin xyz="0.059 0 0.04555" rpy="0 1.5707 1.5707" />
+      <child link="pole_rotation_reference"/>
+      <parent link="base_with_casters"/>
+    </joint>
+
+    <link name="grabber_pole">
+      <inertial>
+        <mass value="0.001"/>
+        <inertia ixx="0.0000337" ixy="0.0" ixz="0.0" 
+          iyy="0.0000493" iyz="0.0" 
+          izz="0.0000248"/>
+      </inertial>
+      
+      <collision name="the_pole_col">
         <geometry>
           <cylinder radius=".006" length=".034"/>
         </geometry>
       </collision>
-      <visual name="visual_1">
-        <origin xyz="0.058912 0 0.0455477" rpy="0 1.5707 1.5707" />
+      <visual name="the_pole_vis">
         <geometry>
           <cylinder radius=".006" length=".034"/>
         </geometry>
       </visual>
     </link>
 
-    <joint type="fixed" name="grabber_pole">
+    <!-- TODO -->
+    <joint type="revolute" name="grabber_pole">
       <origin xyz="0 0 0" rpy="0 0 0" />
       <child link="grabber_pole"/>
-      <parent link="base_with_casters"/>
+      <parent link="pole_rotation_reference"/>
+      <limit effort="10.0" velocity="1.0" lower="0.0" upper="1.5"/>
+      <axis xyz="0 0 1"/>
     </joint>
 
     <link name="grabber_mount">
       <collision name="arm_collision_left">
-        <origin xyz="0.073412 0.020 0.0455477" rpy="0 0 0" />
+        <origin xyz="0.0144 0.02 0" rpy="0 0 0" />
         <geometry>
           <box size=".035 .006 .011"/>
         </geometry>
       </collision>
       <visual name="arm_visual_left">
-        <origin xyz="0.073412 0.020 0.0455477" rpy="0 0 0" />
+        <origin xyz="0.0144 0.02 0" rpy="0 0 0" />
         <geometry>
           <box size=".035 .006 .011"/>
         </geometry>
       </visual>
 
       <collision name="arm_collision_right">
-        <origin xyz="0.073412 -0.020 0.0455477" rpy="0 0 0" />
+        <origin xyz="0.0144 -0.02 0" rpy="0 0 0" />
         <geometry>
           <box size=".035 .006 .011"/>
         </geometry>
       </collision>
       <visual name="arm_visual_right">
-        <origin xyz="0.073412 -0.020 0.0455477" rpy="0 0 0" />
+        <origin xyz="0.0144 -0.02 0" rpy="0 0 0" />
         <geometry>
           <box size=".035 .006 .011"/>
         </geometry>
       </visual>
 
       <collision name="collision_under">
-        <origin xyz="0.083912 0 0.0369977" rpy="0 0 0" />
+        <origin xyz="0.025 0 -0.00855" rpy="0 0 0"/>
         <geometry>
           <box size=".015 .042 .0057"/>
         </geometry>
       </collision>
       <visual name="visual_under">
-        <origin xyz="0.083912 0 0.0369977" rpy="0 0 0" />
+        <origin xyz="0.025 0 -0.00855" rpy="0 0 0"/>
         <geometry>
           <box size=".015 .042 .0057"/>
         </geometry>
@@ -1248,28 +1288,21 @@
       </inertial>
     </link>
 
-      <!--
-      TODO: revolute?
-      -->
-    <joint type="revolute" name="grabber_mount_to_pole">
-      <origin xyz="0 0 0" rpy="0 0 0" />
+    <joint type="fixed" name="grabber_mount_to_pole">
+      <origin xyz="0 0 0" rpy="1.5707 0 3.1414"/>
       <child link="grabber_mount"/>
       <parent link="grabber_pole"/>
-      <limit effort="10.0" velocity="1.0" lower="0.0" upper="-1.5"/>
-      <axis xyz="0 1 0" />
     </joint>
 
-    <link name="grabber_arms_joint">
-      <collision name="collision_for_arms_joint">
-      <origin xyz="0.083912 0 0.0319977" rpy="0 3.1414 0" />
+    <link name="grabber_left_arm_joint">
+      <collision name="collision_for_left_arm_joint">
         <geometry>
-          <cylinder radius=".004" length=".005"/>
+          <cylinder radius=".002" length=".004"/>
         </geometry>
       </collision>
-      <visual name="visual_for_arms_joint">
-      <origin xyz="0.083912 0 0.0319977" rpy="0 3.1414 0" />
+      <visual name="visual_for_left_arm_joint">
         <geometry>
-          <cylinder radius=".004" length=".005"/>
+          <cylinder radius=".002" length=".004"/>
         </geometry>
       </visual>
 
@@ -1281,47 +1314,79 @@
       </inertial>
     </link>
 
-    <joint type="fixed" name="grabber_arms_joint_to_grabber_mount">
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <child link="grabber_arms_joint"/>
+    <!-- TODO -->
+    <joint type="revolute" name="grabber_left_arm_joint_to_grabber_mount">
+      <origin xyz="0.025 0.01 -0.01355" rpy="0 3.1414 0" />
+      <child link="grabber_left_arm_joint"/>
       <parent link="grabber_mount"/>
+      <limit effort="10.0" velocity="1.0" lower="0.0" upper="0.7"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <link name="grabber_right_arm_joint">
+      <collision name="collision_for_right_arm_joint">
+        <geometry>
+          <cylinder radius=".002" length=".004"/>
+        </geometry>
+      </collision>
+      <visual name="visual_for_right_arm_joint">
+        <geometry>
+          <cylinder radius=".002" length=".004"/>
+        </geometry>
+      </visual>
+
+      <inertial>
+        <mass value="0.001"/>
+        <inertia ixx="0.0000337" ixy="0.0" ixz="0.0" 
+          iyy="0.0000493" iyz="0.0" 
+          izz="0.0000248"/>
+      </inertial>
+    </link>
+
+    <!-- TODO -->
+    <joint type="revolute" name="grabber_right_arm_joint_to_grabber_mount">
+      <origin xyz="0.025 -0.01 -0.01355" rpy="0 3.1414 0" />
+      <child link="grabber_right_arm_joint"/>
+      <parent link="grabber_mount"/>
+      <limit effort="10.0" velocity="1.0" lower="0.0" upper="-0.7"/>
+      <axis xyz="0 0 1"/>
     </joint>
 
     <link name="grabber_arm_left">
       <collision name="main_arm_collision_l">          
-        <origin xyz="0.106912 0.022 0.0319977" rpy="0 0 0.78535"/>
+        <origin xyz="0.023 0.019 0" rpy="0 0 0.78535"/>
         <geometry>
           <box size=".06213 .009 .005"/>
         </geometry>
       </collision>
       <visual name="main_arm_visual_l">          
-        <origin xyz="0.106912 0.022 0.0319977" rpy="0 0 0.78535"/>
+        <origin xyz="0.023 0.019 0" rpy="0 0 0.78535"/>
         <geometry>
           <box size=".06213 .009 .005"/>
         </geometry>
       </visual>
 
       <collision name="small_arm_collision_l_f">          
-        <origin xyz="0.145 0.040 0.0294977" rpy="0 0 0"/>
+        <origin xyz="0.061 0.037 -0.0025" rpy="0 0 0"/>
         <geometry>
           <box size=".029 .003 .002"/>
         </geometry>
       </collision>
       <visual name="small_arm_visual_l_f">          
-        <origin xyz="0.145 0.040 0.0294977" rpy="0 0 0"/>
+        <origin xyz="0.061 0.037 -0.0025" rpy="0 0 0"/>
         <geometry>
           <box size=".029 .003 .002"/>
         </geometry>
       </visual>
 
       <collision name="small_arm_collision_l_b">          
-        <origin xyz="0.1305 0.0255 0.0294977" rpy="0 0 -1.5707"/>
+        <origin xyz="0.0465 0.0225 -0.0025" rpy="0 0 -1.5707"/>
         <geometry>
           <box size=".029 .003 .002"/>
         </geometry>
       </collision>
       <visual name="small_arm_visual_l_b">          
-        <origin xyz="0.1305 0.0255 0.0294977" rpy="0 0 -1.5707"/>
+        <origin xyz="0.0465 0.0225 -0.0025" rpy="0 0 -1.5707"/>
         <geometry>
           <box size=".029 .003 .002"/>
         </geometry>
@@ -1335,52 +1400,47 @@
       </inertial>
     </link>
 
-      <!--
-      TODO: revolute?
-      -->
-    <joint type="revolute" name="grabber_arm_left_to_grabber_joint">
-      <origin xyz="0 0 0" rpy="0 0 0" />
+    <joint type="fixed" name="grabber_arm_left_to_grabber_joint">
+      <origin xyz="0 0 0" rpy="0 3.1414 0" />
       <child link="grabber_arm_left"/>
-      <parent link="grabber_arms_joint"/>
-      <limit effort="10.0" velocity="1.0" lower="0.0" upper="0.8"/>
-      <axis xyz="0 0 1" />
+      <parent link="grabber_left_arm_joint"/>
     </joint>
 
     <link name="grabber_arm_right">
       <collision name="main_arm_collision_r">          
-        <origin xyz="0.106912 -0.022 0.0319977" rpy="0 0 -0.78535"/>
+        <origin xyz="0.023 -0.019 0" rpy="0 0 -0.78535"/>
         <geometry>
           <box size=".06213 .009 .005"/>
         </geometry>
       </collision>
       <visual name="main_arm_visual_r">          
-        <origin xyz="0.106912 -0.022 0.0319977" rpy="0 0 -0.78535"/>
+        <origin xyz="0.023 -0.019 0" rpy="0 0 -0.78535"/>
         <geometry>
           <box size=".06213 .009 .005"/>
         </geometry>
       </visual>
 
       <collision name="small_arm_collision_r_f">          
-        <origin xyz="0.145 -0.040 0.0294977" rpy="0 0 0"/>
+        <origin xyz="0.061 -0.037 -0.0025" rpy="0 0 0"/>
         <geometry>
           <box size=".029 .003 .002"/>
         </geometry>
       </collision>
       <visual name="small_arm_visual_r_f">          
-        <origin xyz="0.145 -0.040 0.0294977" rpy="0 0 0"/>
+        <origin xyz="0.061 -0.037 -0.0025" rpy="0 0 0"/>
         <geometry>
           <box size=".029 .003 .002"/>
         </geometry>
       </visual>
 
       <collision name="small_arm_collision_r_b">
-        <origin xyz="0.1305 -0.0255 0.0294977" rpy="0 0 -1.5707"/>
+        <origin xyz="0.0465 -0.0225 -0.0025" rpy="0 0 -1.5707"/>
         <geometry>
           <box size=".029 .003 .002"/>
         </geometry>
       </collision>
       <visual name="small_arm_visual_r_b">
-        <origin xyz="0.1305 -0.0255 0.0294977" rpy="0 0 -1.5707"/>
+        <origin xyz="0.0465 -0.0225 -0.0025" rpy="0 0 -1.5707"/>
         <geometry>
           <box size=".029 .003 .002"/>
         </geometry>
@@ -1394,16 +1454,12 @@
       </inertial>
     </link>
 
-      <!--
-      TODO: revolute?
-      -->
-    <joint type="revolute" name="grabber_arm_right_to_grabber_joint">
-      <limit effort="10.0" velocity="1.0" lower="0.0" upper="0.8" />
-      <origin xyz="0 0 0" rpy="0 0 0" />
+    <joint type="fixed" name="grabber_arm_right_to_grabber_joint">
+      <origin xyz="0 0 0" rpy="0 3.1414 0" />
       <child link="grabber_arm_right"/>
-      <parent link="grabber_arms_joint"/>
-      <axis xyz="0 0 1" />
+      <parent link="grabber_right_arm_joint"/>
     </joint>
+  
     <gazebo>
       <plugin name="grabber_plugin" filename="libgrabber_plugin.so"/>
     </gazebo>
