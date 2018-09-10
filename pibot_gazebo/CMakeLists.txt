@@ -25,6 +25,9 @@ target_link_libraries(wheel_plugin ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES} ${ros
 add_library(ir_plugin SHARED ir_plugin.cpp)
 target_link_libraries(ir_plugin ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES} ${roscpp_LIBRARIES})
 
+add_library(grabber_plugin SHARED grabber_plugin.cpp)
+target_link_libraries(ir_plugin ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES} ${roscpp_LIBRARIES})
+
 catkin_package(
   DEPENDS
     roscpp

@@ -1251,10 +1251,12 @@
       <!--
       TODO: revolute?
       -->
-    <joint type="fixed" name="grabber_mount_to_pole">
+    <joint type="revolute" name="grabber_mount_to_pole">
       <origin xyz="0 0 0" rpy="0 0 0" />
       <child link="grabber_mount"/>
       <parent link="grabber_pole"/>
+      <limit effort="10.0" velocity="1.0" lower="0.0" upper="-1.5"/>
+      <axis xyz="0 1 0" />
     </joint>
 
     <link name="grabber_arms_joint">
@@ -1336,10 +1338,12 @@
       <!--
       TODO: revolute?
       -->
-    <joint type="fixed" name="grabber_arm_left_to_grabber_joint">
+    <joint type="revolute" name="grabber_arm_left_to_grabber_joint">
       <origin xyz="0 0 0" rpy="0 0 0" />
       <child link="grabber_arm_left"/>
       <parent link="grabber_arms_joint"/>
+      <limit effort="10.0" velocity="1.0" lower="0.0" upper="0.8"/>
+      <axis xyz="0 0 1" />
     </joint>
 
     <link name="grabber_arm_right">
@@ -1393,11 +1397,16 @@
       <!--
       TODO: revolute?
       -->
-    <joint type="fixed" name="grabber_arm_right_to_grabber_joint">
+    <joint type="revolute" name="grabber_arm_right_to_grabber_joint">
+      <limit effort="10.0" velocity="1.0" lower="0.0" upper="0.8" />
       <origin xyz="0 0 0" rpy="0 0 0" />
       <child link="grabber_arm_right"/>
       <parent link="grabber_arms_joint"/>
+      <axis xyz="0 0 1" />
     </joint>
+    <gazebo>
+      <plugin name="grabber_plugin" filename="libgrabber_plugin.so"/>
+    </gazebo>
   </xacro:macro>
 
 </robot>

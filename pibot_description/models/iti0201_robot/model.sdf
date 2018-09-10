@@ -24,13 +24,13 @@
           <update_rate>100</update_rate>
           <visualize>true</visualize>
           <topic>__default_topic__</topic>
-          <imu>
+          <!--<imu>
             <orientation_reference_frame>
               <localization>GRAV_UP</localization>
             </orientation_reference_frame>
-          </imu>
+          </imu>-->
           <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-            <topicName>imu</topicName>
+            <topicName>imu/raw</topicName>
             <bodyName>imu_link</bodyName>
             <updateRateHZ>10.0</updateRateHZ>
             <gaussianNoise>0.0</gaussianNoise>
