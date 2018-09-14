@@ -100,6 +100,10 @@ class PiBot:
         self.right_wheel_speed_publisher = rospy.Publisher("/robot/wheel/right/vel_cmd", Float32, queue_size=1)
         self.left_wheel_speed_publisher = rospy.Publisher("/robot/wheel/left/vel_cmd", Float32, queue_size=1)
 
+        self.grabber_height_publisher = rospy.Publisher("/robot/grabber/height_cmd", Float32, queue_size=1)
+        self.grabber_close_publisher = rospy.Publisher("/robot/grabber/close_cmd", Float32, queue_size=1)
+
+
         # Subscribe
         self.subscribe_to_ir_sensors()
         self.subscribe_to_line_sensors()
@@ -200,3 +204,13 @@ class PiBot:
 
     def get_left_wheel_encoder(self):
         return self.left_wheel_encoder
+
+    def set_grabber_height(self, height_percentage):
+        value = Float32()
+        value.data = height_percentage
+        self.grabber_height_publisher.publish(value)
+
+    def close_grabber(self, percentage):
+        value = Float32()
+        value.data = percentage
+        self.grabber_close_publisher.publish(value)
