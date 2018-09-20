@@ -1,0 +1,103 @@
+#!/bin/bash
+
+killall gzserver -9 >/dev/null 2>&1
+
+cd ~
+DIRECTORY="iti0201-2018"
+
+if [ "$#" -lt 3 ]; then
+    echo "USAGE: robot_test [uni-id] [exercise_number] [map_number]"
+    echo "You can also add optional arguments of [ir_noise], [wait_time], [x] and [y] and [yaw]"
+    exit 0
+fi
+
+git_user_name=$1
+exercise_number=$2
+map_number=$3
+
+ir_noise=0
+waiting_time=10
+
+yaw_start=0
+
+for i in "$@"
+do
+case $i in
+    -i=*|--ir=*)
+    ir_noise="${i#*=}"
+    shift # past argument=value
+    ;;
+    -w=*|--wait=*)
+    waiting_time="${i#*=}"
+    shift # past argument=value
+    ;;
+    -x=*|--xstart=*)
+    x_start="${i#*=}"
+    shift # past argument=value
+    ;;
+    -y=*|--ystart=*)
+    y_start="${i#*=}"
+    shift # past argument=value
+    ;;
+    -Y=*|--yawstart=*)
+    yaw_start="${i#*=}"
+    shift # past argument=value
+    ;;
+    --default)
+    DEFAULT=YES
+    shift # past argument with no value
+    ;;
+    *)
+          # unknown option
+    ;;
+esac
+done
+
+git_address="https://$git_user_name@gitlab.cs.ttu.ee/$git_user_name/$DIRECTORY.git"
+
+echo $git_address
+
+# rm -rf $DIRECTORY # Temporary hack for when the iti0201 repo already exists, will be fixed soon
+
+if [ -d "$DIRECTORY" ]; then
+    echo "Repository already exists. Updating.."
+    cd $DIRECTORY
+    git pull
+else
+    echo "Repository doesn't exist yet. Creating one now..."
+    git clone $git_address
+    cd $DIRECTORY
+fi
+
+exercise_name=""
+directory_name=""
+
+if [ -d "$exercise_number" ]; then
+    cd $exercise_number
+else
+    echo "Your files do not contain the $exercise_number folder."
+    exit 1
+fi
+
+if ! [ -f "robot.py" ]; then
+    echo "Your directory $exercise_number folder does not contain the necessary robot.py file."
+    exit 1
+fi
+
+if [[ -z "$x_start" || -z "$y_start" ]]; then
+    x_start=0
+    y_start=0
+fi
+
+x-terminal-emulator -e roslaunch pibot_gazebo default.launch dir:=$exercise_number map:=$map_number ir_noise:=$ir_noise
+
+if [[ -z "$x_start" || -z "$y_start" ]]; then
+    echo "spawning model at default location"
+else
+    echo "spawning model at specified location"
+fi
+x-terminal-emulator -e rosrun gazebo_ros spawn_model -file `rospack find pibot_description`/models/iti0201_robot/urdf/pibot.urdf -urdf -x "$x_start" -y "$y_start" -z 0 -Y "$yaw_start" -model pibot
+
+x-terminal-emulator -e script_launch ~/$DIRECTORY/$exercise_number $waiting_time
+
+#roslaunch lego_gazebo lego_$exercise_name.launch

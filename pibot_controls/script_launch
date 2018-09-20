@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo ".."
+echo ".."
+echo ".."
+echo $1
+sleep $2s # waiting time to get ready; 
+
+cd $1 
+
+python2 "robot.py"
+
+$SHELL
