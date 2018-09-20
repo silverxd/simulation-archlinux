@@ -66,6 +66,8 @@ public:
       min_range = std::min(range, min_range);
     }
 
+    min_range = std::max(min_range, raySensor->RangeMin());
+
     //Publish raw data
     std_msgs::Float64MultiArray rawMsg;
     fillRawData(rawMsg);
