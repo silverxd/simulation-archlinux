@@ -1,11 +1,12 @@
-#!/bin/bash
+#!/bin/bash -e
 . ~/catkin_ws/devel/setup.bash
 echo "Updating files..."
 cd ~/catkin_ws
+echo "Cloning repos..."
+git clone https://github.com/iti0201/simulation new
 echo "Removing old repos..."
 rm -rf src
-echo "Cloning repos..."
-git clone https://github.com/iti0201/simulation src
+mv new src
 cd src
 echo "Initializing workspace..."
 catkin_init_workspace
