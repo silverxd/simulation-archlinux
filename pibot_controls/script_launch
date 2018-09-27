@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$#" -lt 2 ]; then
+    echo "Illegal number of parameters"
+    exit
+fi
+
 echo ".."
 echo ".."
 echo ".."
