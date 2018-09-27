@@ -16,7 +16,7 @@ exercise_number=$2
 map_number=$3
 
 ir_noise=0
-waiting_time=12
+waiting_time=10
 
 yaw_start=0
 

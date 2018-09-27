@@ -8,6 +8,6 @@ sleep $2s # waiting time to get ready;
 
 cd $1 
 
-python3 "robot.py"
+python2 "robot.py"
 
 $SHELL
