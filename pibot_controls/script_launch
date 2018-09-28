@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$#" -lt 2 ]; then
+    echo "Illegal number of parameters"
+    exit
+fi
+
 echo ".."
 echo ".."
 echo ".."
@@ -8,6 +13,6 @@ sleep $2s # waiting time to get ready;
 
 cd $1 
 
-python2 "robot.py"
+python3 "robot.py"
 
 $SHELL

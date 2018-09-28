@@ -181,8 +181,8 @@
           </range>
         </ray>
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <visualize>true</visualize>
+        <update_rate>15</update_rate>
+        <visualize>false</visualize>
         <plugin name="ir_plugin" filename="libir_plugin.so">
           <topic>ir/front_right</topic>
         </plugin>
@@ -230,8 +230,8 @@
             </range>
           </ray>
           <always_on>1</always_on>
-          <update_rate>30</update_rate>
-          <visualize>true</visualize>
+          <update_rate>15</update_rate>
+          <visualize>false</visualize>
           <plugin name="ir_plugin" filename="libir_plugin.so">
             <topic>ir/front_middle</topic>
           </plugin>
@@ -279,8 +279,8 @@
             </range>
           </ray>
           <always_on>1</always_on>
-          <update_rate>30</update_rate>
-          <visualize>true</visualize>
+          <update_rate>15</update_rate>
+          <visualize>false</visualize>
           <plugin name="ir_plugin" filename="libir_plugin.so">
             <topic>ir/front_left</topic>
           </plugin>
@@ -331,8 +331,8 @@
           </range>
         </ray>
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <visualize>true</visualize>
+        <update_rate>15</update_rate>
+        <visualize>false</visualize>
         <plugin name="ir_plugin" filename="libir_plugin.so">
           <topic>ir/rear_right_90</topic>
         </plugin>
@@ -380,8 +380,8 @@
           </range>
         </ray>
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <visualize>true</visualize>
+        <update_rate>15</update_rate>
+        <visualize>false</visualize>
         <plugin name="ir_plugin" filename="libir_plugin.so">
           <topic>ir/rear_right_45</topic>
         </plugin>
@@ -429,8 +429,8 @@
           </range>
         </ray>
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <visualize>true</visualize>
+        <update_rate>15</update_rate>
+        <visualize>false</visualize>
         <plugin name="ir_plugin" filename="libir_plugin.so">
           <topic>ir/rear_right_0</topic>
         </plugin>
@@ -478,8 +478,8 @@
           </range>
         </ray>
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <visualize>true</visualize>
+        <update_rate>15</update_rate>
+        <visualize>false</visualize>
         <plugin name="ir_plugin" filename="libir_plugin.so">
           <topic>ir/rear_left_90</topic>
         </plugin>
@@ -527,8 +527,8 @@
           </range>
         </ray>
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <visualize>true</visualize>
+        <update_rate>15</update_rate>
+        <visualize>false</visualize>
         <plugin name="ir_plugin" filename="libir_plugin.so">
           <topic>ir/rear_left_45</topic>
         </plugin>
@@ -577,8 +577,8 @@
           </range>
         </ray>
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <visualize>true</visualize>
+        <update_rate>15</update_rate>
+        <visualize>false</visualize>
         <plugin name="ir_plugin" filename="libir_plugin.so">
           <topic>ir/rear_left_0</topic>
         </plugin>
@@ -615,7 +615,7 @@
 
     <gazebo reference="right_side_first_line_sensor_from_middle">
       <sensor type="camera" name="line_sensor_camera1">
-        <update_rate>30.0</update_rate>
+        <update_rate>15.0</update_rate>
         <camera name="head">
           <horizontal_fov>0.4</horizontal_fov>
           <image>
@@ -629,11 +629,11 @@
           </clip>
         </camera>
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <visualize>true</visualize>
+        <update_rate>15</update_rate>
+        <visualize>false</visualize>
         <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
           <alwaysOn>true</alwaysOn>
-          <updateRate>30.0</updateRate>
+          <updateRate>15.0</updateRate>
           <cameraName>/robot/line_sensor/right_first</cameraName>
           <imageTopicName>image_raw</imageTopicName>
           <cameraInfoTopicName>camera_info</cameraInfoTopicName>
@@ -675,7 +675,7 @@
 
     <gazebo reference="left_side_first_line_sensor_from_middle">
       <sensor type="camera" name="line_sensor_camera2">
-        <update_rate>30.0</update_rate>
+        <update_rate>15.0</update_rate>
         <pose>0 0 0 0 1.571 0</pose>
         <camera name="head">
           <horizontal_fov>0.4</horizontal_fov>
@@ -690,11 +690,11 @@
           </clip>
         </camera>
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <visualize>true</visualize>
+        <update_rate>15</update_rate>
+        <visualize>false</visualize>
         <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
           <alwaysOn>true</alwaysOn>
-          <updateRate>30.0</updateRate>
+          <updateRate>15.0</updateRate>
           <cameraName>/robot/line_sensor/left_first</cameraName>
           <imageTopicName>image_raw</imageTopicName>
           <cameraInfoTopicName>camera_info</cameraInfoTopicName>
@@ -738,7 +738,7 @@
 
     <gazebo reference="right_side_second_line_sensor_from_middle">
       <sensor type="camera" name="line_sensor_camera3">
-        <update_rate>30.0</update_rate>
+        <update_rate>15.0</update_rate>
         <pose>0 0 0 0 1.571 0</pose>
         <camera name="head">
           <horizontal_fov>0.4</horizontal_fov>
@@ -753,11 +753,11 @@
           </clip>
         </camera>
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <visualize>true</visualize>
+        <update_rate>15</update_rate>
+        <visualize>false</visualize>
         <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
           <alwaysOn>true</alwaysOn>
-          <updateRate>30.0</updateRate>
+          <updateRate>15.0</updateRate>
           <cameraName>/robot/line_sensor/right_second</cameraName>
           <imageTopicName>image_raw</imageTopicName>
           <cameraInfoTopicName>camera_info</cameraInfoTopicName>
@@ -799,7 +799,7 @@
 
     <gazebo reference="left_side_second_line_sensor_from_middle">
       <sensor type="camera" name="line_sensor_camera4">
-        <update_rate>30.0</update_rate>
+        <update_rate>15.0</update_rate>
         <pose>0 0 0 0 1.571 0</pose>
         <camera name="head">
           <horizontal_fov>0.4</horizontal_fov>
@@ -814,11 +814,11 @@
           </clip>
         </camera>
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <visualize>true</visualize>
+        <update_rate>15</update_rate>
+        <visualize>false</visualize>
         <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
           <alwaysOn>true</alwaysOn>
-          <updateRate>30.0</updateRate>
+          <updateRate>15.0</updateRate>
           <cameraName>/robot/line_sensor/left_second</cameraName>
           <imageTopicName>image_raw</imageTopicName>
           <cameraInfoTopicName>camera_info</cameraInfoTopicName>
@@ -862,7 +862,7 @@
 
     <gazebo reference="right_side_third_line_sensor_from_middle">
       <sensor type="camera" name="line_sensor_camera5">
-        <update_rate>30.0</update_rate>
+        <update_rate>15.0</update_rate>
         <pose>0 0 0 0 1.571 0</pose>
         <camera name="head">
           <horizontal_fov>0.4</horizontal_fov>
@@ -877,11 +877,11 @@
           </clip>
         </camera>
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <visualize>true</visualize>
+        <update_rate>15</update_rate>
+        <visualize>false</visualize>
         <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
           <alwaysOn>true</alwaysOn>
-          <updateRate>30.0</updateRate>
+          <updateRate>15.0</updateRate>
           <cameraName>/robot/line_sensor/right_third</cameraName>
           <imageTopicName>image_raw</imageTopicName>
           <cameraInfoTopicName>camera_info</cameraInfoTopicName>
@@ -923,7 +923,7 @@
 
     <gazebo reference="left_side_third_line_sensor_from_middle">
       <sensor type="camera" name="line_sensor_camera6">
-        <update_rate>30.0</update_rate>
+        <update_rate>15.0</update_rate>
         <pose>0 0 0 0 1.571 0</pose>
         <camera name="head">
           <horizontal_fov>0.4</horizontal_fov>
@@ -938,11 +938,11 @@
           </clip>
         </camera>
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <visualize>true</visualize>
+        <update_rate>15</update_rate>
+        <visualize>false</visualize>
         <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
           <alwaysOn>true</alwaysOn>
-          <updateRate>30.0</updateRate>
+          <updateRate>15.0</updateRate>
           <cameraName>/robot/line_sensor/left_third</cameraName>
           <imageTopicName>image_raw</imageTopicName>
           <cameraInfoTopicName>camera_info</cameraInfoTopicName>
@@ -1025,7 +1025,7 @@
       <sensor type="camera" name="camera">
         <update_rate>30.0</update_rate>
         <always_on>1</always_on>
-        <visualize>true</visualize>
+        <visualize>false</visualize>
         <camera name="head">
           <horizontal_fov>1.3962634</horizontal_fov>
           <image>

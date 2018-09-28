@@ -116,6 +116,9 @@ class PiBot:
         self.AXIS_LENGTH = 0.14
         self.TICK_PER_DEGREE = 1
 
+        # Wait for initialisation to finish
+        rospy.sleep(2)
+
     def get_front_left_ir(self):
         return self.front_left_ir
 
