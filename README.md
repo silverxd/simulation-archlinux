@@ -4,6 +4,18 @@
 
 Virtuaalmasin asub aadressil: [http://dijkstra.cs.ttu.ee/~Gert.Kanter/iti0201/](http://dijkstra.cs.ttu.ee/~Gert.Kanter/iti0201/)
 
+Kui kasutate arvutiklassi arvutit, siis salvestage see `.ova` fail kettale `D:` (datadrive).
+
+### Installeerimine ja seadistamine
+
+Virtuaalmasin tuleb importida VirtualBox rakendusse.
+
+Selleks pange VirtualBox käima ja valige `File` menüüst `Import Appliance` ja valige eelnevas punktis salvestatud `.ova` fail.
+
+Kui kasutate arvutiklassi arvutit, siis peale importimist tuleb seadistuste all valida `4` protsessorit (CPU) ja mälu 8192 MB.
+
+Kui seadistused on tehtud, siis võib virtuaalmasina käivitada.
+
 ### Kasutamine
 
 Virtuaalmasina kasutajanimi ja parool on mõlemad `iti0201`.
