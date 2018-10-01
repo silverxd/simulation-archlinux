@@ -11,6 +11,10 @@
     <include>
       <uri>model://sun</uri>
     </include>
+    <include>
+      <uri>model://iti0201_robot</uri>
+      <pose>0 0 0 0 0 1.57</pose>
+    </include>
     <model name='big_wall'>
       <pose frame=''>0 1.1 0.2 0 0 0</pose>
       <link name='Wall_0'>
