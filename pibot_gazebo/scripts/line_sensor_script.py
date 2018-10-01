@@ -24,9 +24,8 @@ def main():
 
     rospy.spin()
 
-def normalize(intensity, max_in=255, max_out=900, min_out=100):
-    return (intensity / max_in) * (max_out - min_out) + min_out
-
+def normalize(intensity):
+    return 3.137255 * intensity + 100
 
 def get_intensity(image):
     intensity_sum = 0
