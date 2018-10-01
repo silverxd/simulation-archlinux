@@ -7,7 +7,7 @@ DIRECTORY="iti0201-2018"
 
 if [ "$#" -lt 3 ]; then
     echo "USAGE: robot_test [uni-id] [exercise_number] [map_number]"
-    echo "You can also add optional arguments of [ir_noise], [wait_time], [x] and [y] and [yaw]"
+    echo "You can also add optional arguments of -i=[ir_noise], -w=[wait_time], -x=[x] and -y=[y] and -Y=[yaw]"
     exit 0
 fi
 
@@ -52,6 +52,12 @@ case $i in
     ;;
 esac
 done
+
+echo $ir_noise
+echo $x_start
+echo $y_start
+echo $waiting_time
+echo $yaw_start
 
 git_address="https://$git_user_name@gitlab.cs.ttu.ee/$git_user_name/$DIRECTORY.git"
 
