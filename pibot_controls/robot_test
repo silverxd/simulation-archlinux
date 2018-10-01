@@ -53,12 +53,6 @@ case $i in
 esac
 done
 
-echo $ir_noise
-echo $x_start
-echo $y_start
-echo $waiting_time
-echo $yaw_start
-
 git_address="https://$git_user_name@gitlab.cs.ttu.ee/$git_user_name/$DIRECTORY.git"
 
 echo $git_address
