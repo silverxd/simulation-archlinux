@@ -16,6 +16,29 @@ Kui kasutate arvutiklassi arvutit, siis peale importimist tuleb seadistuste all 
 
 Kui seadistused on tehtud, siis võib virtuaalmasina käivitada.
 
+### Troubleshooting
+
+#### NO_VMX (arvutiklassis)
+
+Kui näete sellist pilti, siis tuleb arvuti restartida ja valida käivitamisel "No Hyper-V" režiim.
+
+![Virtualiseerimise viga](https://raw.githubusercontent.com/iti0201/simulation/doc/img/verrvmxnovmx.png)
+
+#### Must ekraan
+
+Kui virtuaalmasin läheb küll näiliselt käima, aga ees on lihtsalt must ekraan, siis vaadake ega ei ole operatsioonisüsteemiks valitud "Ubuntu (32-bit)". Operatsioonisüsteem peab olema "Ubuntu **(64-bit)**".
+Lülitage virtuaalmasin välja ja vahetage operatsioonisüsteem 64-bitiseks.
+
+#### Virtualiseerimine ei tööta (enda arvutil)
+
+Kui virtualiseerimine ei toimi enda arvutil, siis tõenäoliselt on see arvuti BIOS-is välja lülitatud. Selleks tuleb minna BIOS-i seadistustesse ja sealt virtualiseerimine sisse lülitada.
+Kahjuks on igal arvutitootjal erinev viis kuidas BIOS-i seadistusmenüüsse ligi pääseda.
+Kui te kasutate Windows 10 või Windows 8, siis võite nt vaadata [seda linki](https://www.drivereasy.com/knowledge/how-to-enter-bios-on-windows-10-windows-7/) kuidas sinna ligi pääseda.
+
+Mõistlikud otsingusõnad on "how to boot into bios" ja lisage oma arvutitootja ja/või mudel või seeria (nt "how to boot into bios ibm thinkpad").
+
+Kui teil on UEFI boot, siis vaadake nt [seda linki](https://www.howtogeek.com/213795/how-to-enable-intel-vt-x-in-your-computers-bios-or-uefi-firmware/).
+
 ### Kasutamine
 
 Virtuaalmasina kasutajanimi ja parool on mõlemad `iti0201`.
