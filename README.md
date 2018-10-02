@@ -16,6 +16,12 @@ Kui kasutate arvutiklassi arvutit, siis peale importimist tuleb seadistuste all 
 
 Kui seadistused on tehtud, siis võib virtuaalmasina käivitada.
 
+Kui näete sellist pilti, siis tuleb arvuti restartida ja valida käivitamisel "No Hyper-V" režiim.
+
+![Virtualiseerimise viga](https://raw.githubusercontent.com/iti0201/simulation/doc/img/verrvmxnovmx.png)
+
+
+
 ### Kasutamine
 
 Virtuaalmasina kasutajanimi ja parool on mõlemad `iti0201`.
