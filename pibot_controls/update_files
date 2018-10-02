@@ -1,5 +1,7 @@
 #!/bin/bash -e
 . ~/catkin_ws/devel/setup.bash
+echo "Removing old student repository just in case..."
+rm -rf ~/iti0201*
 echo "Updating files..."
 cd ~/catkin_ws
 echo "Cloning repos..."
