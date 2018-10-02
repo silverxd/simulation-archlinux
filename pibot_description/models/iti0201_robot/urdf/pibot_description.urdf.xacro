@@ -1087,16 +1087,11 @@
     </link>
 
     <gazebo reference="right_wheel">
-      <surface>
-          <friction>
-             <ode>
-                <!-- wheel friction coefficient -->
-                <mu>0.6</mu>
-                <!-- floor friction coefficient -->
-                <mu2>0.6</mu2>
-             </ode>
-          </friction>
-        </surface>
+      <mu1 value="1.0"/>
+      <mu2 value="1.0"/>
+      <kp value="10000000.0" />
+      <kd value="1.0" />
+      <fdir1 value="1 0 0"/>
     </gazebo>
 
     <joint type="continuous" name="right_wheel_hinge">
@@ -1132,16 +1127,11 @@
     </link>
 
     <gazebo reference="left_wheel">
-      <surface>
-          <friction>
-             <ode>
-                <!-- wheel friction coefficient -->
-                <mu>0.6</mu>
-                <!-- floor friction coefficient -->
-                <mu2>0.6</mu2>
-             </ode>
-          </friction>
-        </surface>
+      <mu1 value="1.0"/>
+      <mu2 value="1.0"/>
+      <kp value="10000000.0" />
+      <kd value="1.0" />
+      <fdir1 value="1 0 0"/>
     </gazebo>
 
     <joint type="continuous" name="left_wheel_hinge">
