@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="object">
+      <static>false</static>
+      <link name="body">
+        <pose>0 0 0 0 0 0</pose>
+        
+        <inertial>
+          <mass>0.5</mass>
+          <pose>0.01 0.021 0.04 0 0 0</pose>
+          <inertia>
+            <ixx>0.0003</ixx>
+            <iyy>0.0002</iyy>
+            <izz>0.0002</izz>
+          </inertia>
+      </inertial>
+        
+        <visual name="vis">
+          <geometry>
+            <mesh>
+         	<uri>model://object/robot_object.dae</uri>
+          </mesh>
+          </geometry>
+        </visual>
+
+        <collision name="col">
+          <geometry>
+            <mesh>
+             <uri>model://object/robot_object.dae</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+  </model>
+</sdf>

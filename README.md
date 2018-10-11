@@ -12,7 +12,7 @@ Virtuaalmasin tuleb importida VirtualBox rakendusse.
 
 Selleks pange VirtualBox käima ja valige `File` menüüst `Import Appliance` ja valige eelnevas punktis salvestatud `.ova` fail.
 
-Kui kasutate arvutiklassi arvutit, siis peale importimist tuleb seadistuste all valida `4` protsessorit (CPU) ja mälu 8192 MB.
+Kui kasutate arvutiklassi arvutit, siis peale importimist tuleb seadistuste all valida `4` protsessorit (CPU) ja mälu `8192` MB.
 
 Kui seadistused on tehtud, siis võib virtuaalmasina käivitada.
 
@@ -31,7 +31,7 @@ Lülitage virtuaalmasin välja ja vahetage operatsioonisüsteem 64-bitiseks.
 
 #### Virtualiseerimine ei tööta (enda arvutil)
 
-Kui virtualiseerimine ei toimi enda arvutil, siis tõenäoliselt on see arvuti BIOS-is välja lülitatud. Selleks tuleb minna BIOS-i seadistustesse ja sealt virtualiseerimine sisse lülitada.
+Kui virtualiseerimine ei toimi enda arvutil, siis tõenäoliselt on see arvuti BIOS-is välja lülitatud. Virtualiseerimise lubamiseks tuleb minna BIOS-i seadistustesse ja sealt virtualiseerimine sisse lülitada.
 Kahjuks on igal arvutitootjal erinev viis kuidas BIOS-i seadistusmenüüsse ligi pääseda.
 Kui te kasutate Windows 10 või Windows 8, siis võite nt vaadata [seda linki](https://www.drivereasy.com/knowledge/how-to-enter-bios-on-windows-10-windows-7/) kuidas sinna ligi pääseda.
 
