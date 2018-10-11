@@ -22,7 +22,7 @@ def validate_speed_percentage(speed_function):
 
 class PiBot:
     def is_simulation():
-        return true
+        return True
     
     def make_callback_for_sensor(self, attribute_name):
         def callback(value):
