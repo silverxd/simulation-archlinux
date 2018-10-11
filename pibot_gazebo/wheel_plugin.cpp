@@ -127,8 +127,8 @@ public:
 
     float radInDeg = 180 / 3.14;
 
-    rightWheelPosition.data = (int)(this->rightWheelJoint->Position() * radInDeg);
-    leftWheelPosition.data = (int)(this->leftWheelJoint->Position() * radInDeg);
+    rightWheelPosition.data = (((int)(this->rightWheelJoint->Position() * radInDeg))/4)*4;
+    leftWheelPosition.data = (((int)(this->leftWheelJoint->Position() * radInDeg))/4)*4;
 
     this->rightWheelJointStatePublisher.publish(rightWheelPosition);
     this->leftWheelJointStatePublisher.publish(leftWheelPosition);
