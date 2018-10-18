@@ -70,9 +70,9 @@ public:
     this->leftGrabberJoint = this->model->GetJoint("grabber_left_arm_joint_to_grabber_mount");
     this->rightGrabberJoint = this->model->GetJoint("grabber_right_arm_joint_to_grabber_mount");
 
-    this->polePos = 0;
-    this->leftPos = 0.25 * M_PI;
-    this->rightPos = -0.25 * M_PI;
+    this->polePos = 0.314;
+    this->leftPos = 0.25 * M_PI * 0.8;
+    this->rightPos = -0.25 * M_PI * 0.8;
 
     // Create named topics, and subscribe to them.
     ros::SubscribeOptions soHeight = ros::SubscribeOptions::create<std_msgs::Float32>(
