@@ -103,13 +103,13 @@ public:
   void OnHeightCmd(const std_msgs::Float32ConstPtr &msg)
   {
     float percentage = msg->data;
-    this->polePos = (-0.005 * percentage + 0.5) * M_PI;
+    this->polePos = (-0.005 * 0.8* percentage + 0.5) * M_PI;
   }
 
   void OnCloseCmd(const std_msgs::Float32ConstPtr &msg)
   {
     float percentage = msg->data;
-    this->leftPos = 0.0025 * M_PI * percentage;
+    this->leftPos = 0.0025 * M_PI * 0.8 * percentage;
     this->rightPos = -this->leftPos;
   }
 
