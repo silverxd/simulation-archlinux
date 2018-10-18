@@ -71,8 +71,8 @@ public:
     this->rightGrabberJoint = this->model->GetJoint("grabber_right_arm_joint_to_grabber_mount");
 
     this->polePos = 0.314;
-    this->leftPos = 0.25 * M_PI * 0.8;
-    this->rightPos = -0.25 * M_PI * 0.8;
+    this->leftPos = 0.25 * M_PI * 0.7;
+    this->rightPos = -0.25 * M_PI * 0.7;
 
     // Create named topics, and subscribe to them.
     ros::SubscribeOptions soHeight = ros::SubscribeOptions::create<std_msgs::Float32>(
@@ -103,22 +103,42 @@ public:
   void OnHeightCmd(const std_msgs::Float32ConstPtr &msg)
   {
     float percentage = msg->data;
-    this->polePos = (-0.005 * 0.8* percentage + 0.5) * M_PI;
+    this->polePos = (-0.005 * 0.8 * percentage + 0.5) * M_PI;
   }
 
   void OnCloseCmd(const std_msgs::Float32ConstPtr &msg)
   {
     float percentage = msg->data;
-    this->leftPos = 0.0025 * M_PI * 0.8 * percentage;
+    this->leftPos = 0.0025 * M_PI * 0.7 * percentage;
     this->rightPos = -this->leftPos;
+  }
+
+  void setJointPos(physics::JointPtr joint, double destination, double force) {
+    //double d = 0.002;
+    double limit = 0.000001;
+    double currentPos = joint->Position();
+    //double goal = currentPos;
+    if (destination - currentPos > 0) {
+      //goal += d;
+      joint->SetForce(0, force);
+    } else if (currentPos - destination > 0) {
+      //goal -= d;
+      joint->SetForce(0, -force);
+    } else {
+      joint->SetForce(0, 0);
+    }
   }
 
   // Called by the world update start event
   void OnUpdate()
   {
-    this->poleJoint->SetPosition(0, this->polePos);
-    this->leftGrabberJoint->SetPosition(0, this->leftPos);
-    this->rightGrabberJoint->SetPosition(0, this->rightPos);
+    double force = 0.1;
+    setJointPos(this->poleJoint, this->polePos, force);
+    //this->poleJoint->SetPosition(0, this->polePos);
+    setJointPos(this->leftGrabberJoint, this->leftPos, force);
+    //this->leftGrabberJoint->SetPosition(0, this->leftPos);
+    setJointPos(this->rightGrabberJoint, this->rightPos, force);
+    //this->rightGrabberJoint->SetPosition(0, this->rightPos);
   }
 
 private:
