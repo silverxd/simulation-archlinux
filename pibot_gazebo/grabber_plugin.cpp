@@ -31,6 +31,8 @@ private:
   double leftPos;
   double rightPos;
 
+  int updateCount = 0;
+
   // A node use for ROS transport
   std::unique_ptr<ros::NodeHandle> rosNode;
 
@@ -114,15 +116,11 @@ public:
   }
 
   void setJointPos(physics::JointPtr joint, double destination, double force) {
-    //double d = 0.002;
-    double limit = 0.000001;
     double currentPos = joint->Position();
-    //double goal = currentPos;
+    
     if (destination - currentPos > 0) {
-      //goal += d;
       joint->SetForce(0, force);
     } else if (currentPos - destination > 0) {
-      //goal -= d;
       joint->SetForce(0, -force);
     } else {
       joint->SetForce(0, 0);
