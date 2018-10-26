@@ -1,0 +1,4 @@
+<launch>
+    <!-- Generates the URDF, useful for incorporating the manipulator in your own robot description -->
+    <node name="xacro" pkg="xacro" type="xacro" args="-o $(find pibot_description)/models/iti0201_robot_cone/urdf/pibot.urdf $(find pibot_description)/models/iti0201_robot_cone/urdf/generate_pibot.urdf.xacro" />
+</launch>
