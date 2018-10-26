@@ -50,7 +50,7 @@ Terminali (käsurea) saab käivitada nupukombinatsiooniga *Ctrl+Alt+T*.
 Kirjuta terminali käsk
 
 ```
-robot_test [uni-id] [task-id] [world-id]
+robot_test [uni-id] [task-id] [world-id] [--cone]
 ```
 
 `[uni-id]` asemele tuleb panna oma Uni-ID (nt `karamb`).
@@ -58,6 +58,8 @@ robot_test [uni-id] [task-id] [world-id]
 `[task-id]` asemele tuleb panna ülesande kood (nt simulaatori ülesanne on `S`).
 
 `[world-id]` asemele tuleb panna maailma number (osadel ülesannetel on mitu testimismaailma), alates numbrist `1` (ja `2`, `3` jne).
+
+`[--cone]` asemele tuleb kirjutada `--cone` kui tahta, et kaugussensorite vaateväli oleks koonuseline, mitte üks sirge kiir.
 
 Näiteks
 
