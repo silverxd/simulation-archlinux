@@ -93,13 +93,13 @@ if [[ -z "$x_start" || -z "$y_start" ]]; then
     echo "x and y not set"
     if $cone; then
         map_number_cone=""$map_number"_cone"
-	map_name_cone="$map_number_cone.world"
+	    map_name_cone="$map_number_cone.world"
         map_name="$map_number.world"
         map_number+="_cone"
-	copy_path=~/catkin_ws/src/pibot_gazebo/worlds/$exercise_number/$map_name_cone
+	    copy_path=~/catkin_ws/src/pibot_gazebo/worlds/$exercise_number/$map_name_cone
         touch "$copy_path"
-	cp ~/catkin_ws/src/pibot_gazebo/worlds/$exercise_number/$map_name "$copy_path"
-	uri="_cone"
+	    cp ~/catkin_ws/src/pibot_gazebo/worlds/$exercise_number/$map_name "$copy_path"
+	    uri="_cone"
         sed -i "s|\(<uri>model://iti0201_robot\)[^<>]*\(</uri>\)|\1${uri}\2|" $copy_path
         sed -i "s|\(<name>iti0201_robot\)[^<>]*\(</name>\)|\1${uri}\2|" $copy_path
         echo "IR Sensors with cone"
