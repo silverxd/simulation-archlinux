@@ -8,6 +8,8 @@
 #include <std_msgs/Float64.h>
 #include <std_msgs/Float64MultiArray.h>
 #include <string>
+#include <stdlib.h>
+#include <time.h>
 
 namespace gazebo
 {
@@ -20,6 +22,7 @@ private:
   ros::Publisher publisher;
   std::string topic;
   event::ConnectionPtr updateConnection;
+  int noise = -1;
 
 public:
   void Load(sensors::SensorPtr sensor, sdf::ElementPtr sdf)
@@ -30,9 +33,13 @@ public:
       return;
     }
 
+    srand(time(NULL));
+
     rosNode.reset(new ros::NodeHandle("gazebo_client"));
     raySensor = std::dynamic_pointer_cast<sensors::RaySensor>(sensor);
     topic = sdf->GetElement("topic")->GetValue()->GetAsString();
+
+    noise = getNoise();
 
     rawPublisher = rosNode->advertise<std_msgs::Float64MultiArray>("/robot/" + topic + "/raw", 1);
     publisher = rosNode->advertise<std_msgs::Float64>("/robot/" + topic + "/value", 1);
@@ -54,6 +61,25 @@ public:
     msg.data.insert(msg.data.end(), data.begin(), data.end());
   }
 
+  void addNoise(double &min_range) {
+    int probability = rand() % 100;
+    double random = rand() % 100 + 1;
+    if (0 <= probability < 10) {
+      min_range += (random / 1000.0);
+    } else if (10 <= probability < 20) {
+      min_range = (random / 100.0);
+    }
+  }
+
+  int getNoise() {
+    if (noise == -1) {
+      rosNode->getParam("/noise", noise);
+      ROS_INFO_STREAM("Noise enabled: " << noise);
+    }
+    if (noise == -1) return 0;
+    return noise;
+  }
+
   void OnUpdate()
   {
     raySensor->SetActive(false);
@@ -65,6 +91,12 @@ public:
       double range = raySensor->Range(i);
       min_range = std::min(range, min_range);
     }
+
+    noise = getNoise();
+    if (noise == 1) {
+      addNoise(min_range);
+    }
+
 
     min_range = std::max(min_range, raySensor->RangeMin());
 

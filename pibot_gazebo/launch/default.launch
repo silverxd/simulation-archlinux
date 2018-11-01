@@ -2,8 +2,10 @@
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
   <arg name="dir"/>
   <arg name="map"/>
-  <arg name="ir_noise" default="0"/>
-  <param name="ir_noise" value="$(arg ir_noise)" />
+  <arg name="noise" default="-1"/>
+  <arg name="realmotors" default="-1"/>
+  <param name="/realmotors" value="$(arg realmotors)" />
+  <param name="/noise" value="$(arg noise)" />
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(find pibot_gazebo)/worlds/$(arg dir)/$(arg map).world"/>
     <!-- more default parameters can be changed here -->

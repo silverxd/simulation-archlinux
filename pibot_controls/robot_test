@@ -7,7 +7,7 @@ DIRECTORY="iti0201-2018"
 
 if [ "$#" -lt 3 ]; then
     echo "USAGE: robot_test [uni-id] [exercise_number] [map_number]"
-    echo "You can also add optional arguments of -i=[ir_noise], -w=[wait_time], -x=[x] and -y=[y] and -Y=[yaw] and --cone"
+    echo "You can also add optional arguments of -i=[ir_noise], -w=[wait_time], -x=[x] and -y=[y], -Y=[yaw], --cone, --noise, --realmotors, --realism"
     exit 0
 fi
 
@@ -20,6 +20,8 @@ waiting_time=12
 
 yaw_start=0
 cone=false
+noise=0
+realmotors=0
 
 for i in "$@"
 do
@@ -46,6 +48,21 @@ case $i in
     ;;
     --cone)
     cone=true
+    shift
+    ;;
+    --noise)
+    noise=1
+    shift
+    ;;
+    --realmotors)
+    realmotors=1
+    shift
+    ;;
+    --realism)
+    cone=true
+    realmotors=1
+    noise=1
+    echo "REALISM"
     shift
     ;;
     --default)
@@ -108,7 +125,9 @@ else
     map_number+="_custom"
 fi
 
-x-terminal-emulator -e roslaunch pibot_gazebo default.launch dir:=$exercise_number map:=$map_number ir_noise:=$ir_noise
+echo "IR noise: $noise"
+echo "Real motors: $realmotors"
+x-terminal-emulator -e roslaunch pibot_gazebo default.launch dir:=$exercise_number map:=$map_number noise:=$noise realmotors:=$realmotors
 
 if [[ -z "$x_start" || -z "$y_start" ]]; then
     echo "spawning model at default location"
