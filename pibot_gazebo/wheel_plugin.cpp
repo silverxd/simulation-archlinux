@@ -175,7 +175,7 @@ public:
   double getVelocity(float percentage)
   {
     float x = abs(percentage);
-    if (x < 15)
+    if (x < 11)
       return 0.0;
 
     if (realmotors) {
