@@ -23,6 +23,8 @@ private:
   std::string topic;
   event::ConnectionPtr updateConnection;
   int noise = -1;
+  int blind = -1;
+  double rearBlindMinimum = 0.05;
 
 public:
   void Load(sensors::SensorPtr sensor, sdf::ElementPtr sdf)
@@ -61,44 +63,70 @@ public:
     msg.data.insert(msg.data.end(), data.begin(), data.end());
   }
 
-  void addNoise(double &min_range) {
+  void addNoise(double &minRange) {
     int probability = rand() % 100;
     double random = rand() % 100 + 1;
     if (0 <= probability && probability < 10) {
-      min_range += (random / 1000.0);
+      minRange += (random / 1000.0);
     } else if (10 <= probability && probability < 20) {
-      min_range = (random / 100.0);
+      minRange = (random / 100.0);
     }
   }
 
   int getNoise() {
     if (noise == -1) {
       rosNode->getParam("/noise", noise);
-      ROS_INFO_STREAM("Noise enabled: " << noise);
+      ROS_INFO_STREAM("Noise: " << noise);
     }
     if (noise == -1) return 0;
     return noise;
+  }
+
+  int getBlind() {
+    if (!isRearSensor()) {
+      blind = 0;
+    }
+    if (blind == -1) {
+      rosNode->getParam("/blind", blind);
+      ROS_INFO_STREAM("Rear blindness: " << noise);
+    }
+    if (blind == -1) return 0;
+    return blind;
+  }
+
+  bool isRearSensor() {
+    return raySensor->RangeMax() < 0.2;
+  }
+
+  void addModifiers(double &minRange) {
+    int ns = getNoise();
+    if (ns == 1) {
+      addNoise(minRange);
+    }
+
+    int bl = getBlind();
+    if (bl == 1 && isRearSensor()) {
+      minRange = std::min(minRange, rearBlindMinimum);
+    }
+  }
+
+  double findMinimumRange() {
+    double minRange = raySensor->RangeMax();
+    for (int i = 0; i < raySensor->RangeCount(); i++)
+    {
+      double range = raySensor->Range(i);
+      minRange = std::min(range, minRange);
+    }
+    return minRange;
   }
 
   void OnUpdate()
   {
     raySensor->SetActive(false);
 
-    //Find min
-    double min_range = raySensor->RangeMax();
-    for (int i = 0; i < raySensor->RangeCount(); i++)
-    {
-      double range = raySensor->Range(i);
-      min_range = std::min(range, min_range);
-    }
-
-    noise = getNoise();
-    if (noise == 1) {
-      addNoise(min_range);
-    }
-
-
-    min_range = std::max(min_range, raySensor->RangeMin());
+    double minRange = findMinimumRange();
+    addModifiers(minRange);
+    minRange = std::max(minRange, raySensor->RangeMin());
 
     //Publish raw data
     std_msgs::Float64MultiArray rawMsg;
@@ -107,7 +135,7 @@ public:
 
     //Publish min value
     std_msgs::Float64 msg;
-    msg.data = min_range;
+    msg.data = minRange;
     publisher.publish(msg);
 
     raySensor->SetActive(true);

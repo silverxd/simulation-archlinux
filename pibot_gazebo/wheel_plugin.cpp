@@ -56,8 +56,9 @@ private:
   // Pointer to the update event connection
   event::ConnectionPtr updateConnection;
 
-  double maxAngularVelocity = 10;
   int realmotors = -1;
+  double leftWheelCoefficient = 1.0;
+  double rightWheelCoefficient = 1.0;
 
 public:
   void Load(physics::ModelPtr _parent, sdf::ElementPtr /*_sdf*/)
@@ -83,7 +84,7 @@ public:
     // Create our ROS node.
     this->rosNode.reset(new ros::NodeHandle("gazebo_client"));
 
-    realmotors = getRealMotors();
+    addCoefficent();
 
     // Create named topics, and subscribe to them.
     ros::SubscribeOptions soRightVel =
@@ -119,7 +120,7 @@ public:
   void OnLeftVelCmd(const std_msgs::Float32ConstPtr &msg)
   {
     //ROS_INFO_STREAM("msg->data is" << msg->data);
-    this->leftVel = this->getVelocity(msg->data);
+    this->leftVel = this->getVelocity(leftWheelCoefficient * msg->data);
     this->leftVelPercentage = msg->data;
     //ROS_INFO_STREAM("leftvel is " << this->leftVel);
   }
@@ -127,15 +128,30 @@ public:
   void OnRightVelCmd(const std_msgs::Float32ConstPtr &msg)
   {
     //ROS_INFO_STREAM("msg->data is" << msg->data);
-    this->rightVel = this->getVelocity(msg->data);
+    this->rightVel = this->getVelocity(rightWheelCoefficient * msg->data);
     this->rightVelPercentage = msg->data;
     //ROS_INFO_STREAM("rightvel is " << this->rightVel);
+  }
+
+  void addCoefficent() {
+    int rm = getRealMotors();
+    if (rm == 1 && leftWheelCoefficient == 1 && rightWheelCoefficient == 1) {
+      int probability = rand() % 100;
+      double coefficient = (rand() % 20 + 80) / 100.0;
+      if (0 <= probability && probability < 50) {
+        leftWheelCoefficient = coefficient;
+        ROS_INFO_STREAM("Left wheel coefficient: " << leftWheelCoefficient);
+      } else if (50 <= probability && probability < 100) {
+        rightWheelCoefficient = coefficient;
+        ROS_INFO_STREAM("Right wheel coefficient: " << rightWheelCoefficient);
+      }
+    }
   }
 
   int getRealMotors() {
     if (realmotors == -1) {
       rosNode->getParam("/realmotors", realmotors);
-      ROS_INFO_STREAM("Realmotors enabled: " << realmotors);
+      ROS_INFO_STREAM("Realmotors: " << realmotors);
     }
     if (realmotors == -1) return 0;
     return realmotors;
@@ -161,26 +177,11 @@ public:
     return (x > 0) - (x < 0);
   }
 
-  void addNoise(float &velocity) {
-    int probability = rand() % 100;
-    int random = rand() % std::max(3,((int)(velocity/10))) + 1;
-
-    if (0 <= probability && probability < 10) {
-      velocity += random;
-    } else if (10 <= probability && probability < 20) {
-      velocity -= random;
-    }
-  }
-
   double getVelocity(float percentage)
   {
     float x = abs(percentage);
     if (x < 11)
       return 0.0;
-
-    if (realmotors) {
-      addNoise(x);
-    };
 
     double y = 143.7422 + (-97.04175 - 143.7422) / (1 + pow((x / 20.43845), 0.9319634));
 
@@ -191,12 +192,7 @@ public:
   void OnUpdate()
   {
     
-    realmotors = getRealMotors();
-    if (realmotors) {
-      // If realmotors is enabled, add noise on every update
-      this->leftVel = this->getVelocity(this->leftVelPercentage);
-      this->rightVel = this->getVelocity(this->rightVelPercentage);
-    }
+    addCoefficent();
     // Apply velocity to wheel joints
     this->leftWheelJoint->SetVelocity(0, this->leftVel);
     this->rightWheelJoint->SetVelocity(0, this->rightVel);
