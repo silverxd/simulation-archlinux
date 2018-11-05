@@ -133,11 +133,22 @@ public:
     //ROS_INFO_STREAM("rightvel is " << this->rightVel);
   }
 
+  void addNoise(float &velocity) {
+    int probability = rand() % 100;
+    int random = rand() % std::max(3,((int)(velocity/10))) + 1;
+
+    if (0 <= probability && probability < 10) {
+      velocity += random;
+    } else if (10 <= probability && probability < 20) {
+      velocity -= random;
+    }
+  }
+
   void addCoefficent() {
     int rm = getRealMotors();
     if (rm == 1 && leftWheelCoefficient == 1 && rightWheelCoefficient == 1) {
       int probability = rand() % 100;
-      double coefficient = (rand() % 20 + 80) / 100.0;
+      double coefficient = (rand() % 30 + 70.0) / 100.0;
       if (0 <= probability && probability < 50) {
         leftWheelCoefficient = coefficient;
         ROS_INFO_STREAM("Left wheel coefficient: " << leftWheelCoefficient);
@@ -183,9 +194,22 @@ public:
     if (x < 11)
       return 0.0;
 
+    if (realmotors) {
+      addNoise(x);
+    };
+
     double y = 143.7422 + (-97.04175 - 143.7422) / (1 + pow((x / 20.43845), 0.9319634));
 
     return getSign(percentage) * y;
+  }
+
+  void addNoiseToVelocities() {
+    int rm = getRealMotors();
+    if (rm == 1) {
+      // If realmotors is enabled, add noise on every update
+      this->leftVel = this->getVelocity(leftWheelCoefficient * this->leftVelPercentage);
+      this->rightVel = this->getVelocity(rightWheelCoefficient * this->rightVelPercentage);
+    }
   }
 
   // Called by the world update start event
@@ -193,6 +217,8 @@ public:
   {
     
     addCoefficent();
+    addNoiseToVelocities();
+
     // Apply velocity to wheel joints
     this->leftWheelJoint->SetVelocity(0, this->leftVel);
     this->rightWheelJoint->SetVelocity(0, this->rightVel);
