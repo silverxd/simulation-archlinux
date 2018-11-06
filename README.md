@@ -70,8 +70,11 @@ Võti `--realism` paneb peale võtmed `--cone`, `--noise` ja `--realmotors`.
 Roboti algasukoha saab määrata käsureal järgmiste võtmetega:
 
 `-x` määrab x koordinaadi
+
 `-y` määrab y koordinaadi
+
 `-Y` määrab roboti nurga
+
 
 Näiteks:
 ```
