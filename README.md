@@ -50,7 +50,7 @@ Terminali (käsurea) saab käivitada nupukombinatsiooniga *Ctrl+Alt+T*.
 Kirjuta terminali käsk
 
 ```
-robot_test [uni-id] [task-id] [world-id] [--cone] [--noise] [--realmotors] [--realism]
+robot_test [uni-id] [task-id] [world-id] [--cone] [--noise] [--realmotors] [--realism] -x=[x] -y=[y] -Y=[Y]
 ```
 
 `[uni-id]` asemele tuleb panna oma Uni-ID (nt `karamb`).
@@ -67,9 +67,19 @@ Võti `--realmotors` paneb mootori kiirustele müra.
 
 Võti `--realism` paneb peale võtmed `--cone`, `--noise` ja `--realmotors`.
 
-Näiteks
+Roboti algasukoha saab määrata käsureal järgmiste võtmetega:
 
+`-x` määrab x koordinaadi
+
+`-y` määrab y koordinaadi
+
+`-Y` määrab roboti nurga
+
+
+Näiteks:
 ```
+robot_test muudamind M4 1 -x=1.5 -y=1.5 -Y=1.57
+
 robot_test muudamind S 1
 ```
 

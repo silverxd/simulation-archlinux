@@ -11,6 +11,7 @@ rm -rf src
 mv new src
 cd src
 echo "Initializing workspace..."
+rm -rf CMakeLists.txt
 catkin_init_workspace
 cd ..
 echo "Compiling workspace..."
