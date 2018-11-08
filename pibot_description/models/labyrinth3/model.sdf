@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="labyrinth3">
+      <static>true</static>
+      <link name="body">
+        <pose>0 0 0 0 0 0</pose>
+        
+        <inertial>
+          <mass>5</mass>
+          <pose>0.6025 0.935 0.15 0 0 0</pose>
+          <inertia>
+            <ixx>0.01</ixx>
+            <iyy>0.01</iyy>
+            <izz>0.01</izz>
+          </inertia>
+      	</inertial>
+        
+        <visual name="vis">
+          <geometry>
+            <mesh>
+         	<uri>model://labyrinth3/M2_2.dae</uri>
+          </mesh>
+          </geometry>
+        </visual>
+
+        <collision name="col">
+          <geometry>
+            <mesh>
+             <uri>model://labyrinth3/M2_2.dae</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+  </model>
+</sdf>
