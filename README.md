@@ -67,7 +67,7 @@ Võti `--realmotors` paneb mootori kiirustele müra.
 
 Võit `--blind` paneb tagumiste kaugussensorite maksimaalseks kauguseks 5 cm.
 
-Võti `--realism` paneb peale võtmed `--cone`, `--noise` ja `--realmotors`.
+Võti `--realism` paneb peale võtmed `--cone`, `--noise`, `--blind` ja `--realmotors`.
 
 Võti `--debug` paneb simulatsiooni konsooli printima rataste tegelikke kiirusi koos müraga.
 
