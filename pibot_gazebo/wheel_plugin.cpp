@@ -240,20 +240,24 @@ public:
     return debug;
   }
 
-  void printVelocities(std::tuple<double, double> velocities)
-  {
+  void printVelocities(std::tuple<double, double> velocities) {
     double left;
     double right;
     std::tie(left, right) = velocities;
+    ROS_INFO_STREAM("Right wheel velocity: " << right);
+    ROS_INFO_STREAM("Left wheel velocity: " << left);
+  }
+
+  void addNoisePrintVelocities()
+  {
     int db = getDebug();
     if (db == 1)
     {
       std::chrono::duration<double> diff = std::chrono::system_clock::now() - lastTime;
       if (diff.count() >= 1)
       {
+        printVelocities(addNoiseToVelocities());
         lastTime = std::chrono::system_clock::now();
-        ROS_INFO_STREAM("Right wheel velocity: " << right);
-        ROS_INFO_STREAM("Left wheel velocity: " << left);
       }
     }
   }
@@ -268,7 +272,7 @@ public:
   void OnUpdate()
   {
     setCoefficients();
-    printVelocities(addNoiseToVelocities());
+    addNoisePrintVelocities();
     setVelocities();
     publishJointStates();
   }
