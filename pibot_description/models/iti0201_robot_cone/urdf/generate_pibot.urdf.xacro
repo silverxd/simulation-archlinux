@@ -9,7 +9,7 @@
   <xacro:first_two_line_sensors/>
   <xacro:second_two_line_sensors/>
   <xacro:third_two_line_sensors/>
-  <xacro:raspberry_camera/>
+  <!--xacro:raspberry_camera/-->
   <xacro:wheels/>
   <xacro:grabber_arm/>
 </robot>

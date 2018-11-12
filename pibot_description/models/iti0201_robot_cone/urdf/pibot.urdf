@@ -10,15 +10,17 @@
       <inertia ixx="0.0061259375" ixy="0.0" ixz="0.0" iyy="0.0061259375" iyz="0.0" izz="0.01225"/>
     </inertial>
     <visual name="base_visual">
-      <origin rpy="0 0 0" xyz="0 0 0.003"/>
+      <origin rpy="0 0 1.57" xyz="0.0745 -0.0725 0.0025"/>
       <geometry>
-        <cylinder length="0.0015" radius="0.07"/>
+        <mesh filename="package://iti0201_robot/meshes/base_green.dae"/>
+        <!--cylinder length="0.0015" radius="0.07"/-->
       </geometry>
     </visual>
     <collision name="base_collision">
-      <origin rpy="0 0 0" xyz="0 0 0.003"/>
+      <origin rpy="0 0 1.57" xyz="0.0745 -0.0725 0.0025"/>
       <geometry>
-        <cylinder length="0.0015" radius="0.07"/>
+        <mesh filename="package://iti0201_robot/meshes/base_green.dae"/>
+        <!--cylinder length="0.0015" radius="0.07"/-->
       </geometry>
     </collision>
     <visual name="front_caster_visual">
@@ -859,7 +861,7 @@
       </plugin>
     </sensor>
   </gazebo>
-  <link name="camera_stand_pole">
+  <!--link name="camera_stand_pole">
     <inertial>
       <mass value="0.001"/>
       <inertia ixx="1.60253073501e-07" ixy="0.0" ixz="0.0" iyy="1.60253073501e-07" iyz="0.0" izz="7.303842e-09"/>
@@ -880,16 +882,7 @@
     <child link="camera_stand_pole"/>
     <parent link="base_with_casters"/>
   </joint>
-  <!--REVOLUTE CAMERA???, uncomment this and delete the above
-    <joint type="revolute" name="camera_stand_pole_to_base">
-      <pose>0 0 0 0 0 0</pose>
-      <child>camera_stand_pole</child>
-      <parent>base</parent>
-      <axis>
-        <xyz>0 1 0</xyz>
-      </axis>
-    </joint>
-    -->
+  
   <link name="pi_camera">
     <inertial>
       <mass value="0.001"/>
@@ -943,7 +936,7 @@
         <distortionT2>0.0</distortionT2>
       </plugin>
     </sensor>
-  </gazebo>
+  </gazebo-->
   <link name="right_wheel">
     <inertial>
       <mass value="1"/>
