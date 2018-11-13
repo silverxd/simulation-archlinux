@@ -117,7 +117,7 @@ public:
 
   void OnLeftVelCmd(const std_msgs::Float32ConstPtr &msg)
   {
-    //ROS_INFO_STREAM("msg->data is" << msg->data);
+    //ROS_INFO_STREAM("left msg->data is " << msg->data);
     this->leftVelInput = msg->data;
     this->leftVelPercentage = this->leftWheelCoefficient * msg->data;
     this->leftVel = this->getVelocity(this->leftVelPercentage);
@@ -126,7 +126,7 @@ public:
 
   void OnRightVelCmd(const std_msgs::Float32ConstPtr &msg)
   {
-    //ROS_INFO_STREAM("msg->data is" << msg->data);
+    //ROS_INFO_STREAM("right msg->data is " << msg->data);
     this->rightVelInput = msg->data;
     this->rightVelPercentage = this->rightWheelCoefficient * msg->data;
     this->rightVel = this->getVelocity(this->rightVelPercentage);
@@ -205,11 +205,19 @@ public:
   double getVelocity(float percentage)
   {
     float x = abs(percentage);
+    double y = 0.0;
     if (x < 11)
       return 0.0;
-
-    double y = 143.7422 + (-97.04175 - 143.7422) / (1 + pow((x / 20.43845), 0.9319634));
-
+    else if (x >= 11 && x < 12)
+      y = 1.1;
+    else if (x >= 12 && x < 13)
+      y = 2.2;
+    else if (x >= 13 && x < 14)
+      y = 3.3;
+    else if (x >= 14 && x < 15)
+      y = 4.5;
+    else
+      y = 143.7422 + (-97.04175 - 143.7422) / (1 + pow((x / 20.43845), 0.9319634));
     return getSign(percentage) * y;
   }
 
