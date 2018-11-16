@@ -5,6 +5,7 @@
   <arg name="noise" default="-1"/>
   <arg name="realmotors" default="-1"/>
   <arg name="debug" default="-1"/>
+  <arg name="blind" default="-1"/>
   <param name="/realmotors" value="$(arg realmotors)" />
   <param name="/noise" value="$(arg noise)" />
   <param name="/blind" value="$(arg blind)" />
