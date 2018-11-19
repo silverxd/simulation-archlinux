@@ -208,16 +208,11 @@ public:
     double y = 0.0;
     if (x < 11)
       return 0.0;
-    else if (x >= 11 && x < 12)
-      y = 1.1;
-    else if (x >= 12 && x < 13)
-      y = 2.2;
-    else if (x >= 13 && x < 14)
-      y = 3.3;
-    else if (x >= 14 && x < 15)
-      y = 4.5;
     else
-      y = 143.7422 + (-97.04175 - 143.7422) / (1 + pow((x / 20.43845), 0.9319634));
+      y = 115.48 + (-17.48109 - 115.48)/(1 + pow((x/33.14506), 1.694765));
+    
+    if (y < 0) ROS_INFO_STREAM("!!!!!!!!!!!!!!!! Something WRONG!");
+      
     return getSign(percentage) * y;
   }
 
