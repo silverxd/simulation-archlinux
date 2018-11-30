@@ -19,7 +19,7 @@
       <visual name="base_visual">
         <origin xyz="0.0745 -0.0725 0.0025" rpy="0 0 1.57"/>
         <geometry>
-          <mesh filename="package://iti0201_robot/meshes/base_green.dae"/>
+          <mesh filename="model://iti0201_robot/meshes/base_green.dae"/>
           <!--cylinder length="0.0015" radius="0.07"/-->
         </geometry>
       </visual>
@@ -27,7 +27,7 @@
       <collision name="base_collision">
         <origin xyz="0.0745 -0.0725 0.0025" rpy="0 0 1.57"/>
         <geometry>
-          <mesh filename="package://iti0201_robot/meshes/base_green.dae"/>
+          <mesh filename="model://iti0201_robot/meshes/base_green.dae"/>
           <!--cylinder length="0.0015" radius="0.07"/-->
         </geometry>
       </collision>
