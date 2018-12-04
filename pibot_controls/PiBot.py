@@ -179,6 +179,15 @@ class PiBot:
     def get_third_line_sensor_from_right(self):
         return self.third_line_sensor_from_right
 
+    def get_left_line_sensors(self):
+        return [self.get_leftmost_line_sensor(), self.get_second_line_sensor_from_left(), self.get_third_line_sensor_from_left()]
+
+    def get_right_line_sensors(self):
+        return [self.get_rightmost_line_sensor(), self.get_second_line_sensor_from_right(), self.get_third_line_sensor_from_right()]
+
+    def get_line_sensors(self):
+        return self.get_left_line_sensors() + self.get_right_line_sensors()
+
     @validate_speed_percentage
     def set_left_wheel_speed(self, percentage):
         """
