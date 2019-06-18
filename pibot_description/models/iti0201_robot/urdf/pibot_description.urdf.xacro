@@ -76,7 +76,7 @@
     </link>
 
     <joint type="fixed" name="Wheel_joint_to_base">
-      <origin xyz="-0.0295 0 0.015" rpy="0 0 0" />
+      <origin xyz="-0.0285 0 0.015" rpy="0 0 0" />
       <child link="wheel_joint"/>
       <parent link="base_with_casters" />
     </joint>
@@ -123,7 +123,7 @@
     </link>
 
     <joint type="fixed" name="brainbox_to_base">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0 0.003" rpy="0 0 0"/>
       <child link="brainbox_with_battery"/>
       <parent link="base_with_casters"/>
     </joint>
@@ -151,7 +151,7 @@
     </link>
 
     <joint type="fixed" name="front_right_45deg_ir_to_base">
-      <origin xyz="0.0326 -0.0471 0.0138" rpy="0 0 -0.78535"/>
+      <origin xyz="0.0326 -0.0471 0.016" rpy="0 0 -0.78535"/>
       <child link="front_right_45deg_ir"/>
       <parent link="base_with_casters"/>
     </joint>
@@ -200,7 +200,7 @@
     </link>
 
     <joint type="fixed" name="front_middle_ir_to_base">
-      <origin xyz="0.059312 0 0.0088" rpy="0 0 0"/>
+      <origin xyz="0.059312 0 0.011" rpy="0 0 0"/>
       <child link="front_middle_ir"/>
       <parent link="base_with_casters"/>
     </joint>
@@ -249,7 +249,7 @@
     </link>
 
     <joint type="fixed" name="front_left_45deg_ir_to_base">
-      <origin xyz="0.0326151 0.0470558 0.0138" rpy="0 0 0.78535"/>
+      <origin xyz="0.0326151 0.0470558 0.016" rpy="0 0 0.78535"/>
       <child link="front_left_45deg_ir"/>
       <parent link="base_with_casters"/>
     </joint>
@@ -301,7 +301,7 @@
     </link>
 
     <joint type="fixed" name="rear_right_90deg_ir_to_base">
-      <origin xyz="-0.02256 -0.0547 0.01134" rpy="0 0 -1.5707" />
+      <origin xyz="-0.05 -0.058 0.013" rpy="0 0 -1.5707" />
       <child link="rear_right_90deg_ir"/>
       <parent link="base_with_casters"/>
     </joint>
@@ -350,7 +350,7 @@
     </link>
 
     <joint type="fixed" name="rear_right_45deg_ir_to_base">
-      <origin xyz="-0.037845 -0.046812 0.011341" rpy="0 0 -2.35605" />
+      <origin xyz="-0.0585 -0.045 0.013" rpy="0 0 -2.35605" />
       <child link="rear_right_45deg_ir"/>
       <parent link="base_with_casters"/>
     </joint>
@@ -399,7 +399,7 @@
     </link>
 
     <joint type="fixed" name="rear_right_straight_ir_to_base">
-      <origin xyz="-0.0501109 -0.035473 0.011341" rpy="0 0 -3.14" />
+      <origin xyz="-0.06 -0.03 0.013" rpy="0 0 -3.14" />
       <child link="rear_right_straight_ir"/>
       <parent link="base_with_casters"/>
     </joint>
@@ -448,7 +448,7 @@
     </link>
 
     <joint type="fixed" name="rear_left_90deg_ir_to_base">
-      <origin xyz="-0.0225688 0.054749 0.011341" rpy="0 0 1.5707" />
+      <origin xyz="-0.05 0.058 0.013" rpy="0 0 1.5707" />
       <child link="rear_left_90deg_ir"/>
       <parent link="base_with_casters"/>
     </joint>
@@ -497,7 +497,7 @@
     </link>
 
     <joint type="fixed" name="rear_left_45deg_ir_to_base">
-      <origin xyz="-0.037845 0.046812 0.011341" rpy="0 0 2.35605" />
+      <origin xyz="-0.0585 0.045 0.013" rpy="0 0 2.35605" />
       <child link="rear_left_45deg_ir"/>
       <parent link="base_with_casters"/>
     </joint>
@@ -546,7 +546,7 @@
     </link>
 
     <joint type="fixed" name="rear_left_straight_ir_to_base">
-      <origin xyz="-0.0501109 0.035473 0.011341" rpy="0 0 3.14" />
+      <origin xyz="-0.06 0.03 0.013" rpy="0 0 3.14" />
       <child link="rear_left_straight_ir"/>
       <parent link="base_with_casters"/>
     </joint>
@@ -599,7 +599,7 @@
     </link>
 
     <joint type="fixed" name="right_side_first_line_sensor_from_middle_to_base">
-      <origin xyz="-0.0629 -0.005 0.0014545" rpy="0 1.5707 0" />
+      <origin xyz="-0.0629 -0.005 0.0044" rpy="0 1.5707 0" />
       <child link="right_side_first_line_sensor_from_middle"/>
       <parent link="base_with_casters"/>
     </joint>
@@ -659,7 +659,7 @@
     </link>
 
     <joint type="fixed" name="left_side_first_line_sensor_from_middle_to_base">
-      <origin xyz="-0.0629 0.005 0.0014545" rpy="0 1.5707 0" />
+      <origin xyz="-0.0629 0.005 0.0044" rpy="0 1.5707 0" />
       <child link="left_side_first_line_sensor_from_middle"/>
       <parent link="base_with_casters"/>
     </joint>
@@ -722,7 +722,7 @@
     </link>
 
     <joint type="fixed" name="right_side_second_line_sensor_from_middle_to_base">
-      <origin xyz="-0.06289935 -0.015 0.0014545" rpy="0 1.5707 0" />
+      <origin xyz="-0.06289935 -0.015 0.0044" rpy="0 1.5707 0" />
       <child link="right_side_second_line_sensor_from_middle"/>
       <parent link="base_with_casters"/>
     </joint>
@@ -783,7 +783,7 @@
     </link>
 
     <joint type="fixed" name="left_side_second_line_sensor_from_middle_to_base">
-      <origin xyz="-0.06289935 0.015 0.0014545" rpy="0 1.5707 0" />
+      <origin xyz="-0.06289935 0.015 0.0044" rpy="0 1.5707 0" />
       <child link="left_side_second_line_sensor_from_middle"/>
       <parent link="base_with_casters"/>
     </joint>
@@ -846,7 +846,7 @@
     </link>
 
     <joint type="fixed" name="right_side_third_line_sensor_from_middle_to_base">
-      <origin xyz="-0.0541 -0.035 0.0014545" rpy="0 1.5707 0" />
+      <origin xyz="-0.0541 -0.035 0.0044" rpy="0 1.5707 0" />
       <child link="right_side_third_line_sensor_from_middle"/>
       <parent link="base_with_casters"/>
     </joint>
@@ -907,7 +907,7 @@
     </link>
 
     <joint type="fixed" name="left_side_third_line_sensor_from_middle_to_base">
-      <origin xyz="-0.0541 0.035 0.0014545" rpy="0 1.5707 0" />
+      <origin xyz="-0.0541 0.035 0.0044" rpy="0 1.5707 0" />
       <child link="left_side_third_line_sensor_from_middle"/>
       <parent link="base_with_casters"/>
     </joint>
