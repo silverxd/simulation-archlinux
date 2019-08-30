@@ -20,15 +20,24 @@ private:
   sensors::RaySensorPtr raySensor;
   ros::Publisher rawPublisher;
   ros::Publisher publisher;
-  std::string topic;
   event::ConnectionPtr updateConnection;
+
+  std::string topic;
   int noise = -1;
   int blind = -1;
+  boolean raw = false;
+  double rawCoeficent;
   double rearBlindMinimum = 0.05;
 
 public:
   void Load(sensors::SensorPtr sensor, sdf::ElementPtr sdf)
   {
+    initializeRos();
+    initializeOutsideVariables();
+    initializeRosVariables();
+  }
+
+  void initializeRos() {
     if (!ros::isInitialized())
     {
       ROS_FATAL_STREAM("A ROS node for Gazebo has not been initialized");
@@ -36,16 +45,20 @@ public:
     }
 
     srand(time(NULL));
-
     rosNode.reset(new ros::NodeHandle("gazebo_client"));
-    raySensor = std::dynamic_pointer_cast<sensors::RaySensor>(sensor);
+  }
+
+  void initializeOutsideVariables() {
     topic = sdf->GetElement("topic")->GetValue()->GetAsString();
-
+    raw = sdf->GetElement("raw")->GetValueBool(false);
+    rawCoeficent = (rand() % 30 + 80) / 100;
     noise = getNoise();
+  }
 
+  void initializeRosVariables() {
+    raySensor = std::dynamic_pointer_cast<sensors::RaySensor>(sensor);
     rawPublisher = rosNode->advertise<std_msgs::Float64MultiArray>("/robot/" + topic + "/raw", 1);
     publisher = rosNode->advertise<std_msgs::Float64>("/robot/" + topic + "/value", 1);
-
     updateConnection = event::Events::ConnectWorldUpdateBegin(std::bind(&IRPlugin::OnUpdate, this));
   }
 
@@ -70,6 +83,20 @@ public:
       minRange += (random / 1000.0);
     } else if (10 <= probability && probability < 20) {
       minRange = (random / 100.0);
+    }
+  }
+
+  void addNoiseIfNoiseEnabled(double &minRange) {
+    int noiseEnabled = getNoise();
+    if (noiseEnabled == 1) {
+      addNoise(minRange);
+    }
+  }
+
+  void addBlindIfBlindEnabled() {
+    int blindEnabled = getBlind();
+    if (blindEnabled == 1 && isRearSensor()) {
+      minRange = std::min(minRange, rearBlindMinimum);
     }
   }
 
@@ -98,16 +125,19 @@ public:
     return raySensor->RangeMax() < 0.2;
   }
 
-  void addModifiers(double &minRange) {
-    int ns = getNoise();
-    if (ns == 1) {
-      addNoise(minRange);
-    }
+  void convertToRaw(double &minRange) {
+    minRange = 500 - 24.36869 * minRange + 0.2946128 * pow(minRange, 2) + rawCoeficent;
+  }
 
-    int bl = getBlind();
-    if (bl == 1 && isRearSensor()) {
-      minRange = std::min(minRange, rearBlindMinimum);
+  void convertToRawIfRawEnabled(double &minRange) {
+    if (raw) {
+      convertToRaw(minRange);
     }
+  }
+
+  void addModifiers(double &minRange) {
+    addNoiseIfNoiseEnabled(minRange);
+    addBlindIfBlindEnabled(minRange);
   }
 
   double findMinimumRange() {
@@ -120,26 +150,35 @@ public:
     return minRange;
   }
 
+  void publishRawData() {
+    std_msgs::Float64MultiArray rawMsg;
+    fillRawData(rawMsg);
+    rawPublisher.publish(rawMsg);
+  }
+
+  void publishMinValue() {
+    std_msgs::Float64 msg;
+    msg.data = getModifiedMinimumRange();
+    publisher.publish(msg);
+  }
+
+  double getModifiedMinimumRange() {
+    double minRange = findMinimumRange();
+    addModifiers(minRange);
+    minRange = std::max(minRange, raySensor->RangeMin());
+    convertToRawIfRawEnabled(minRange);
+    return minRange;
+  }
+
   void OnUpdate()
   {
     raySensor->SetActive(false);
 
-    double minRange = findMinimumRange();
-    addModifiers(minRange);
-    minRange = std::max(minRange, raySensor->RangeMin());
-
-    //Publish raw data
-    std_msgs::Float64MultiArray rawMsg;
-    fillRawData(rawMsg);
-    rawPublisher.publish(rawMsg);
-
-    //Publish min value
-    std_msgs::Float64 msg;
-    msg.data = minRange;
-    publisher.publish(msg);
+    publishRawData();
+    publishMinValue();
 
     raySensor->SetActive(true);
   }
 };
 GZ_REGISTER_SENSOR_PLUGIN(IRPlugin)
-} // namespace gazebo
+}
