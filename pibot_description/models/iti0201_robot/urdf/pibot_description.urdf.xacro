@@ -166,8 +166,8 @@
             </horizontal>
           </scan>
           <range>
-            <min>0.15</min>
-            <max>1.00</max>
+            <min>0.05</min>
+            <max>2.00</max>
             <resolution>0.01</resolution>
           </range>
         </ray>
@@ -215,8 +215,8 @@
               </horizontal>
             </scan>
             <range>
-              <min>0.15</min>
-              <max>1.00</max>
+              <min>0.05</min>
+              <max>2.00</max>
               <resolution>0.01</resolution>
             </range>
           </ray>
@@ -264,8 +264,8 @@
               </horizontal>
             </scan>
             <range>
-              <min>0.15</min>
-              <max>1.00</max>
+              <min>0.05</min>
+              <max>2.00</max>
               <resolution>0.01</resolution>
             </range>
           </ray>
@@ -316,8 +316,8 @@
             </horizontal>
           </scan>
           <range>
-            <min>0.02</min>
-            <max>0.16</max>
+            <min>0.01</min>
+            <max>0.40</max>
             <resolution>0.01</resolution>
           </range>
         </ray>
@@ -365,8 +365,8 @@
             </horizontal>
           </scan>
           <range>
-            <min>0.02</min>
-            <max>0.16</max>
+            <min>0.01</min>
+            <max>0.40</max>
             <resolution>0.01</resolution>
           </range>
         </ray>
@@ -414,8 +414,8 @@
             </horizontal>
           </scan>
           <range>
-            <min>0.02</min>
-            <max>0.16</max>
+            <min>0.01</min>
+            <max>0.40</max>
             <resolution>0.01</resolution>
           </range>
         </ray>
@@ -463,8 +463,8 @@
             </horizontal>
           </scan>
           <range>
-            <min>0.02</min>
-            <max>0.16</max>
+            <min>0.01</min>
+            <max>0.40</max>
             <resolution>0.01</resolution>
           </range>
         </ray>
@@ -512,8 +512,8 @@
             </horizontal>
           </scan>
           <range>
-            <min>0.02</min>
-            <max>0.16</max>
+            <min>0.01</min>
+            <max>0.40</max>
             <resolution>0.01</resolution>
           </range>
         </ray>
@@ -562,8 +562,8 @@
             </horizontal>
           </scan>
           <range>
-            <min>0.02</min>
-            <max>0.16</max>
+            <min>0.01</min>
+            <max>0.40</max>
             <resolution>0.01</resolution>
           </range>
         </ray>
