@@ -35,6 +35,7 @@ private:
   double leftVelPercentage = 0.0;
   double leftVelInput = 0.0;
   double rightVelInput = 0.0;
+  const double ROBOT_START_MOVING_SPEED = 8.0;
 
   // A node use for ROS transport
   std::unique_ptr<ros::NodeHandle> rosNode;
@@ -65,25 +66,17 @@ private:
 public:
   void Load(physics::ModelPtr _parent, sdf::ElementPtr /*_sdf*/)
   {
-    // Store the pointer to the model
     this->model = _parent;
-    srand(time(NULL));
-    // Initialize ros, if it has not already been initialized.
-    if (!ros::isInitialized())
-    {
-      ROS_FATAL_STREAM("A ROS node for Gazebo has not been initialized");
-      return;
-    }
-
-    this->leftWheelJoint = this->model->GetJoint("left_wheel_hinge");
-    this->rightWheelJoint = this->model->GetJoint("right_wheel_hinge");
-
-    // Create our ROS node.
-    this->rosNode.reset(new ros::NodeHandle("gazebo_client"));
-
+    initializeRos();
+    initializeRobotVariables();
     setCoefficients();
     getDebug();
+    subscribe();
+    createPublishers();
+    initializeUpdate();
+  }
 
+  void subscribe() {
     // Create named topics, and subscribe to them.
     ros::SubscribeOptions soRightVel =
         ros::SubscribeOptions::create<std_msgs::Float32>(
@@ -101,11 +94,15 @@ public:
 
     this->rosSubRightVel = this->rosNode->subscribe(soRightVel);
     this->rosSubLeftVel = this->rosNode->subscribe(soLeftVel);
+  }
 
+  void createPublishers() {
     //Create joint state publishers
     this->rightWheelJointStatePublisher = this->rosNode->advertise<std_msgs::Int32>("/robot/wheel/right/position", 1000);
     this->leftWheelJointStatePublisher = this->rosNode->advertise<std_msgs::Int32>("/robot/wheel/left/position", 1000);
+  }
 
+  void initializeUpdate() {
     // Spin up the queue helper thread.
     this->rosQueueThread =
         std::thread(std::bind(&WheelPlugin::QueueThread, this));
@@ -113,6 +110,23 @@ public:
     // Listen to the update event. This event is broadcast every simulation iteration.
     this->updateConnection = event::Events::ConnectWorldUpdateBegin(
         std::bind(&WheelPlugin::OnUpdate, this));
+  }
+
+  void initializeRos() {
+    srand(time(NULL));
+    // Initialize ros, if it has not already been initialized.
+    if (!ros::isInitialized())
+    {
+      ROS_FATAL_STREAM("A ROS node for Gazebo has not been initialized");
+      return;
+    }
+    // Create our ROS node.
+    this->rosNode.reset(new ros::NodeHandle("gazebo_client"));
+  }
+
+  void initializeRobotVariables() {
+    this->leftWheelJoint = this->model->GetJoint("left_wheel_hinge");
+    this->rightWheelJoint = this->model->GetJoint("right_wheel_hinge");
   }
 
   void OnLeftVelCmd(const std_msgs::Float32ConstPtr &msg)
@@ -151,8 +165,7 @@ public:
 
   void setCoefficients()
   {
-    int rm = getRealMotors();
-    if (rm == 1 && leftWheelCoefficient == 1 && rightWheelCoefficient == 1)
+    if (getRealMotors() == 1 && leftWheelCoefficient == 1 && rightWheelCoefficient == 1)
     {
       int probability = rand() % 100;
       double coefficient = (rand() % 30 + 70.0) / 100.0;
@@ -206,12 +219,12 @@ public:
   {
     float x = abs(percentage);
     double y = 0.0;
-    if (x < 11)
+    if (x < ROBOT_START_MOVING_SPEED)
       return 0.0;
     else
       y = 115.48 + (-17.48109 - 115.48)/(1 + pow((x/33.14506), 1.694765));
     
-    if (y < 0) ROS_INFO_STREAM("!!!!!!!!!!!!!!!! Something WRONG!");
+    if (y < 0) ROS_INFO_STREAM("!!! Something wrong !!!");
       
     return getSign(percentage) * y;
   }

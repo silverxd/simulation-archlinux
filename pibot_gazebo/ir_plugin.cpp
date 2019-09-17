@@ -25,7 +25,6 @@ private:
   std::string topic;
   int noise = -1;
   int blind = -1;
-  boolean raw = false;
   double rawCoeficent;
   double rearBlindMinimum = 0.05;
 
@@ -33,8 +32,8 @@ public:
   void Load(sensors::SensorPtr sensor, sdf::ElementPtr sdf)
   {
     initializeRos();
-    initializeOutsideVariables();
-    initializeRosVariables();
+    initializeOutsideVariables(sdf);
+    initializeRosVariables(sensor);
   }
 
   void initializeRos() {
@@ -43,19 +42,17 @@ public:
       ROS_FATAL_STREAM("A ROS node for Gazebo has not been initialized");
       return;
     }
-
-    srand(time(NULL));
     rosNode.reset(new ros::NodeHandle("gazebo_client"));
   }
 
-  void initializeOutsideVariables() {
+  void initializeOutsideVariables(sdf::ElementPtr& sdf) {
     topic = sdf->GetElement("topic")->GetValue()->GetAsString();
-    raw = sdf->GetElement("raw")->GetValueBool(false);
+    srand(time(NULL));
     rawCoeficent = (rand() % 30 + 80) / 100;
     noise = getNoise();
   }
 
-  void initializeRosVariables() {
+  void initializeRosVariables(sensors::SensorPtr& sensor) {
     raySensor = std::dynamic_pointer_cast<sensors::RaySensor>(sensor);
     rawPublisher = rosNode->advertise<std_msgs::Float64MultiArray>("/robot/" + topic + "/raw", 1);
     publisher = rosNode->advertise<std_msgs::Float64>("/robot/" + topic + "/value", 1);
@@ -93,7 +90,7 @@ public:
     }
   }
 
-  void addBlindIfBlindEnabled() {
+  void addBlindIfBlindEnabled(double& minRange) {
     int blindEnabled = getBlind();
     if (blindEnabled == 1 && isRearSensor()) {
       minRange = std::min(minRange, rearBlindMinimum);
@@ -122,15 +119,15 @@ public:
   }
 
   bool isRearSensor() {
-    return raySensor->RangeMax() < 0.2;
+    return raySensor->RangeMax() < 0.5;
   }
 
   void convertToRaw(double &minRange) {
     minRange = 500 - 24.36869 * minRange + 0.2946128 * pow(minRange, 2) + rawCoeficent;
   }
 
-  void convertToRawIfRawEnabled(double &minRange) {
-    if (raw) {
+  void convertToRawIfRearSensor(double &minRange) {
+    if (isRearSensor()) {
       convertToRaw(minRange);
     }
   }
@@ -166,7 +163,7 @@ public:
     double minRange = findMinimumRange();
     addModifiers(minRange);
     minRange = std::max(minRange, raySensor->RangeMin());
-    convertToRawIfRawEnabled(minRange);
+    convertToRawIfRearSensor(minRange);
     return minRange;
   }
 
