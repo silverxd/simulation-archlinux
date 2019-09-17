@@ -25,7 +25,6 @@ private:
   std::string topic;
   int noise = -1;
   int blind = -1;
-  double rawCoeficent;
   double rearBlindMinimum = 0.05;
 
 public:
@@ -42,13 +41,12 @@ public:
       ROS_FATAL_STREAM("A ROS node for Gazebo has not been initialized");
       return;
     }
+    srand(time(NULL));
     rosNode.reset(new ros::NodeHandle("gazebo_client"));
   }
 
   void initializeOutsideVariables(sdf::ElementPtr& sdf) {
     topic = sdf->GetElement("topic")->GetValue()->GetAsString();
-    srand(time(NULL));
-    rawCoeficent = (rand() % 30 + 80) / 100;
     noise = getNoise();
   }
 
@@ -123,7 +121,7 @@ public:
   }
 
   void convertToRaw(double &minRange) {
-    minRange = 500 - 24.36869 * minRange + 0.2946128 * pow(minRange, 2) + rawCoeficent;
+    minRange = 500 - 24.36869 * minRange + 0.2946128 * pow(minRange, 2) * (rand() % 30 + 80) / 100;
   }
 
   void convertToRawIfRearSensor(double &minRange) {
