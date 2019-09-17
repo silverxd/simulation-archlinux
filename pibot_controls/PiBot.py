@@ -3,27 +3,48 @@ from std_msgs.msg import Int32
 from std_msgs.msg import Float32
 from std_msgs.msg import Float64
 
-def validate_speed_percentage_arg(i):
+
+class Validator:
+    @staticmethod
+    def _get_validate_percentage_arg_function(name: str, start: int, end: int):
+        def validate_percentage_arg(i: int):
+            def validate_percentage_wrapper(function):
+                def validate_percentage(*args):
+                    percentage = args[i]
+                    if not start <= percentage <= end:
+                        raise ValueError(f"{name.capitalize()} percentage must be in range {start} .. {end}")
+                    return function(*args)
+
+                return validate_percentage
+
+            return validate_percentage_wrapper
+
+        return validate_percentage_arg
+
+    @staticmethod
+    def _validate_grabber_percentage_arg(nth_arg: int):
+        return Validator._get_validate_percentage_arg_function("grabber", 0, 100)(nth_arg)
+
+    @staticmethod
+    def _validate_speed_percentage_arg(nth_arg: int):
+        return Validator._get_validate_percentage_arg_function("speed", -99, 99)(nth_arg)
+
+    @staticmethod
     def validate_speed_percentage(speed_function):
-        def validate_percentage(*args):
-            percentage = args[i]
-            if percentage not in range(-99, 100):
-                raise ValueError("Speed percentage must be in range -99 .. 99")
-            return speed_function(*args)
+        return Validator._validate_speed_percentage_arg(1)(speed_function)
 
-        return validate_percentage
-
-    return validate_speed_percentage
-
-
-def validate_speed_percentage(speed_function):
-    return validate_speed_percentage_arg(1)(speed_function)
+    @staticmethod
+    def validate_grabber_percentage(grb_function):
+        return Validator._validate_grabber_percentage_arg(1)(grb_function)
 
 
 class PiBot:
     def is_simulation(self):
         return True
-    
+
+    def sleep(self, time_in_seconds):
+        rospy.sleep(time_in_seconds)
+
     def make_callback_for_sensor(self, attribute_name):
         def callback(value):
             setattr(self, attribute_name, value.data)
@@ -106,7 +127,6 @@ class PiBot:
         self.grabber_height_publisher = rospy.Publisher("/robot/grabber/height_cmd", Float32, queue_size=1)
         self.grabber_close_publisher = rospy.Publisher("/robot/grabber/close_cmd", Float32, queue_size=1)
 
-
         # Subscribe
         self.subscribe_to_ir_sensors()
         self.subscribe_to_line_sensors()
@@ -180,15 +200,17 @@ class PiBot:
         return self.third_line_sensor_from_right
 
     def get_left_line_sensors(self):
-        return [self.get_leftmost_line_sensor(), self.get_second_line_sensor_from_left(), self.get_third_line_sensor_from_left()]
+        return [self.get_leftmost_line_sensor(), self.get_second_line_sensor_from_left(),
+                self.get_third_line_sensor_from_left()]
 
     def get_right_line_sensors(self):
-        return [self.get_rightmost_line_sensor(), self.get_second_line_sensor_from_right(), self.get_third_line_sensor_from_right()]
+        return [self.get_rightmost_line_sensor(), self.get_second_line_sensor_from_right(),
+                self.get_third_line_sensor_from_right()]
 
     def get_line_sensors(self):
         return self.get_left_line_sensors() + self.get_right_line_sensors()
 
-    @validate_speed_percentage
+    @Validator.validate_speed_percentage
     def set_left_wheel_speed(self, percentage):
         """
         :param percentage: -99 .. 99
@@ -197,7 +219,7 @@ class PiBot:
         value.data = percentage
         self.left_wheel_speed_publisher.publish(value)
 
-    @validate_speed_percentage
+    @Validator.validate_speed_percentage
     def set_right_wheel_speed(self, percentage):
         """
         :param percentage: -99 .. 99
@@ -206,7 +228,7 @@ class PiBot:
         value.data = percentage
         self.right_wheel_speed_publisher.publish(value)
 
-    @validate_speed_percentage
+    @Validator.validate_speed_percentage
     def set_wheels_speed(self, percentage):
         """
         :param percentage: -99 .. 99
@@ -220,12 +242,20 @@ class PiBot:
     def get_left_wheel_encoder(self):
         return self.left_wheel_encoder
 
+    @Validator.validate_grabber_percentage
     def set_grabber_height(self, height_percentage):
         value = Float32()
         value.data = height_percentage
         self.grabber_height_publisher.publish(value)
 
+    @Validator.validate_grabber_percentage
     def close_grabber(self, percentage):
         value = Float32()
         value.data = percentage
         self.grabber_close_publisher.publish(value)
+
+    def get_gyro(self):
+        return None
+
+    def get_compass(self):
+        return None
