@@ -513,7 +513,7 @@
     </visual>
   </link>
   <joint name="right_side_first_line_sensor_from_middle_to_base" type="fixed">
-    <origin rpy="0 1.5707 0" xyz="-0.0629 -0.005 0.0044"/>
+    <origin rpy="0 1.5707 0" xyz="0.065 -0.005 0.0044"/>
     <child link="right_side_first_line_sensor_from_middle"/>
     <parent link="base_with_casters"/>
   </joint>
@@ -568,7 +568,7 @@
     </visual>
   </link>
   <joint name="left_side_first_line_sensor_from_middle_to_base" type="fixed">
-    <origin rpy="0 1.5707 0" xyz="-0.0629 0.005 0.0044"/>
+    <origin rpy="0 1.5707 0" xyz="0.065 0.005 0.0044"/>
     <child link="left_side_first_line_sensor_from_middle"/>
     <parent link="base_with_casters"/>
   </joint>
@@ -624,7 +624,7 @@
     </visual>
   </link>
   <joint name="right_side_second_line_sensor_from_middle_to_base" type="fixed">
-    <origin rpy="0 1.5707 0" xyz="-0.06289935 -0.015 0.0044"/>
+    <origin rpy="0 1.5707 0" xyz="0.065 -0.015 0.0044"/>
     <child link="right_side_second_line_sensor_from_middle"/>
     <parent link="base_with_casters"/>
   </joint>
@@ -680,7 +680,7 @@
     </visual>
   </link>
   <joint name="left_side_second_line_sensor_from_middle_to_base" type="fixed">
-    <origin rpy="0 1.5707 0" xyz="-0.06289935 0.015 0.0044"/>
+    <origin rpy="0 1.5707 0" xyz="0.065 0.015 0.0044"/>
     <child link="left_side_second_line_sensor_from_middle"/>
     <parent link="base_with_casters"/>
   </joint>
@@ -736,7 +736,7 @@
     </visual>
   </link>
   <joint name="right_side_third_line_sensor_from_middle_to_base" type="fixed">
-    <origin rpy="0 1.5707 0" xyz="-0.0541 -0.035 0.0044"/>
+    <origin rpy="0 1.5707 0" xyz="0.057 -0.035 0.0044"/>
     <child link="right_side_third_line_sensor_from_middle"/>
     <parent link="base_with_casters"/>
   </joint>
@@ -792,7 +792,7 @@
     </visual>
   </link>
   <joint name="left_side_third_line_sensor_from_middle_to_base" type="fixed">
-    <origin rpy="0 1.5707 0" xyz="-0.0541 0.035 0.0044"/>
+    <origin rpy="0 1.5707 0" xyz="0.057 0.035 0.0044"/>
     <child link="left_side_third_line_sensor_from_middle"/>
     <parent link="base_with_casters"/>
   </joint>
