@@ -222,7 +222,7 @@ public:
     if (x < ROBOT_START_MOVING_SPEED)
       return 0.0;
     else
-      y = 122 + (-17.48109 - 115.48)/(1 + pow((x/33.14506), 1.694765));
+      y = 123.5 + (-17.48109 - 115.48)/(1 + pow((x/33.14506), 1.694765));
     
     if (y < 0) ROS_INFO_STREAM("!!! Something wrong !!!");
       
@@ -233,8 +233,8 @@ public:
   {
     double lvp = leftVelPercentage;
     double rvp = rightVelPercentage;
-    int rm = getRealMotors();
-    if (rm == 1)
+
+    if (getRealMotors() == 1)
     {
       double lvp = addNoise(leftVelPercentage);
       double rvp = addNoise(rightVelPercentage);
