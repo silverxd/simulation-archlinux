@@ -66,7 +66,7 @@ class PiBot:
         rospy.Subscriber(prefix + "right_third" + suffix, Float32,
                          self.make_callback_for_sensor("rightmost_line_sensor"))
 
-    def subscribe_to_laser_sensors(self):
+    def subscribe_to_distance_sensors(self):
         prefix = "/robot/ir/"
         suffix = "/value"
 
@@ -95,16 +95,16 @@ class PiBot:
         rospy.Subscriber(prefix + "right" + suffix, Int32, self.make_callback_for_sensor("right_wheel_encoder"))
 
     def __init__(self, robot_nr=1):
-        # IRs
+        # Distance sensors
         self.front_left_laser = 0
         self.front_middle_laser = 0
         self.front_right_laser = 0
-        self.rear_left_straight_laser = 0
-        self.rear_left_diagonal_laser = 0
-        self.rear_left_side_laser = 0
-        self.rear_right_straight_laser = 0
-        self.rear_right_diagonal_laser = 0
-        self.rear_right_side_laser = 0
+        self.rear_left_straight_ir = 0
+        self.rear_left_diagonal_ir = 0
+        self.rear_left_side_ir = 0
+        self.rear_right_straight_ir = 0
+        self.rear_right_diagonal_ir = 0
+        self.rear_right_side_ir = 0
 
         # Line sensors
         self.leftmost_line_sensor = 0
@@ -128,16 +128,14 @@ class PiBot:
         self.grabber_close_publisher = rospy.Publisher("/robot/grabber/close_cmd", Float32, queue_size=1)
 
         # Subscribe
-        self.subscribe_to_laser_sensors()
+        self.subscribe_to_distance_sensors()
         self.subscribe_to_line_sensors()
         self.subscribe_to_encoders()
 
         # Constants
         self.UPDATE_TIME = 0.005
-        self.SENSOR_LIMITS = [(100, 1000)] * 6 + [(50, 800)] * 2 + [(0, 1023)] * 6 + [(50, 800)]
-        self.WHEEL_DIAMETER = 0.025
+        self.WHEEL_DIAMETER = 0.03
         self.AXIS_LENGTH = 0.14
-        self.TICK_PER_DEGREE = 1
 
         # Wait for initialisation to finish
         rospy.sleep(2)
@@ -154,32 +152,32 @@ class PiBot:
     def get_front_lasers(self):
         return [self.get_front_left_laser(), self.get_front_middle_laser(), self.get_front_right_laser()]
 
-    def get_rear_left_straight_laser(self):
-        return self.rear_left_straight_laser
+    def get_rear_left_straight_ir(self):
+        return self.rear_left_straight_ir
 
-    def get_rear_left_diagonal_laser(self):
-        return self.rear_left_diagonal_laser
+    def get_rear_left_diagonal_ir(self):
+        return self.rear_left_diagonal_ir
 
-    def get_rear_left_side_laser(self):
-        return self.rear_left_side_laser
+    def get_rear_left_side_ir(self):
+        return self.rear_left_side_ir
 
-    def get_rear_right_straight_laser(self):
-        return self.rear_right_straight_laser
+    def get_rear_right_straight_ir(self):
+        return self.rear_right_straight_ir
 
-    def get_rear_right_diagonal_laser(self):
-        return self.rear_right_diagonal_laser
+    def get_rear_right_diagonal_ir(self):
+        return self.rear_right_diagonal_ir
 
-    def get_rear_right_side_laser(self):
-        return self.rear_right_side_laser
+    def get_rear_right_side_ir(self):
+        return self.rear_right_side_ir
 
-    def get_rear_lasers(self):
+    def get_rear_irs(self):
         return [
-            self.get_rear_left_side_laser(), self.get_rear_left_diagonal_laser(), self.get_rear_left_straight_laser(),
-            self.get_rear_right_straight_laser(), self.get_rear_right_diagonal_laser(), self.get_rear_right_side_laser()
+            self.get_rear_left_side_ir(), self.get_rear_left_diagonal_ir(), self.get_rear_left_straight_ir(),
+            self.get_rear_right_straight_ir(), self.get_rear_right_diagonal_ir(), self.get_rear_right_side_ir()
         ]
 
-    def get_lasers(self):
-        return self.get_front_lasers() + self.get_rear_lasers()
+    def get_distance_sensors(self):
+        return self.get_front_lasers() + self.get_rear_irs()
 
     def get_leftmost_line_sensor(self):
         return self.leftmost_line_sensor
