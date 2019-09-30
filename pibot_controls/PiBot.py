@@ -66,7 +66,7 @@ class PiBot:
         rospy.Subscriber(prefix + "right_third" + suffix, Float32,
                          self.make_callback_for_sensor("rightmost_line_sensor"))
 
-    def subscribe_to_ir_sensors(self):
+    def subscribe_to_laser_sensors(self):
         prefix = "/robot/ir/"
         suffix = "/value"
 
@@ -96,15 +96,15 @@ class PiBot:
 
     def __init__(self, robot_nr=1):
         # IRs
-        self.front_left_ir = 0
-        self.front_middle_ir = 0
-        self.front_right_ir = 0
-        self.rear_left_straight_ir = 0
-        self.rear_left_diagonal_ir = 0
-        self.rear_left_side_ir = 0
-        self.rear_right_straight_ir = 0
-        self.rear_right_diagonal_ir = 0
-        self.rear_right_side_ir = 0
+        self.front_left_laser = 0
+        self.front_middle_laser = 0
+        self.front_right_laser = 0
+        self.rear_left_straight_laser = 0
+        self.rear_left_diagonal_laser = 0
+        self.rear_left_side_laser = 0
+        self.rear_right_straight_laser = 0
+        self.rear_right_diagonal_laser = 0
+        self.rear_right_side_laser = 0
 
         # Line sensors
         self.leftmost_line_sensor = 0
@@ -128,7 +128,7 @@ class PiBot:
         self.grabber_close_publisher = rospy.Publisher("/robot/grabber/close_cmd", Float32, queue_size=1)
 
         # Subscribe
-        self.subscribe_to_ir_sensors()
+        self.subscribe_to_laser_sensors()
         self.subscribe_to_line_sensors()
         self.subscribe_to_encoders()
 
@@ -142,44 +142,44 @@ class PiBot:
         # Wait for initialisation to finish
         rospy.sleep(2)
 
-    def get_front_left_ir(self):
-        return self.front_left_ir
+    def get_front_left_laser(self):
+        return self.front_left_laser
 
-    def get_front_middle_ir(self):
-        return self.front_middle_ir
+    def get_front_middle_laser(self):
+        return self.front_middle_laser
 
-    def get_front_right_ir(self):
-        return self.front_right_ir
+    def get_front_right_laser(self):
+        return self.front_right_laser
 
-    def get_front_irs(self):
-        return [self.get_front_left_ir(), self.get_front_middle_ir(), self.get_front_right_ir()]
+    def get_front_lasers(self):
+        return [self.get_front_left_laser(), self.get_front_middle_laser(), self.get_front_right_laser()]
 
-    def get_rear_left_straight_ir(self):
-        return self.rear_left_straight_ir
+    def get_rear_left_straight_laser(self):
+        return self.rear_left_straight_laser
 
-    def get_rear_left_diagonal_ir(self):
-        return self.rear_left_diagonal_ir
+    def get_rear_left_diagonal_laser(self):
+        return self.rear_left_diagonal_laser
 
-    def get_rear_left_side_ir(self):
-        return self.rear_left_side_ir
+    def get_rear_left_side_laser(self):
+        return self.rear_left_side_laser
 
-    def get_rear_right_straight_ir(self):
-        return self.rear_right_straight_ir
+    def get_rear_right_straight_laser(self):
+        return self.rear_right_straight_laser
 
-    def get_rear_right_diagonal_ir(self):
-        return self.rear_right_diagonal_ir
+    def get_rear_right_diagonal_laser(self):
+        return self.rear_right_diagonal_laser
 
-    def get_rear_right_side_ir(self):
-        return self.rear_right_side_ir
+    def get_rear_right_side_laser(self):
+        return self.rear_right_side_laser
 
-    def get_rear_irs(self):
+    def get_rear_lasers(self):
         return [
-            self.get_rear_left_side_ir(), self.get_rear_left_diagonal_ir(), self.get_rear_left_straight_ir(),
-            self.get_rear_right_straight_ir(), self.get_rear_right_diagonal_ir(), self.get_rear_right_side_ir()
+            self.get_rear_left_side_laser(), self.get_rear_left_diagonal_laser(), self.get_rear_left_straight_laser(),
+            self.get_rear_right_straight_laser(), self.get_rear_right_diagonal_laser(), self.get_rear_right_side_laser()
         ]
 
-    def get_irs(self):
-        return self.get_front_irs() + self.get_rear_irs()
+    def get_lasers(self):
+        return self.get_front_lasers() + self.get_rear_lasers()
 
     def get_leftmost_line_sensor(self):
         return self.leftmost_line_sensor
