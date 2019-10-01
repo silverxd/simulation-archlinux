@@ -70,9 +70,9 @@ class PiBot:
         prefix = "/robot/ir/"
         suffix = "/value"
 
-        rospy.Subscriber(prefix + "front_left" + suffix, Float64, self.make_callback_for_sensor("front_left_ir"))
-        rospy.Subscriber(prefix + "front_middle" + suffix, Float64, self.make_callback_for_sensor("front_middle_ir"))
-        rospy.Subscriber(prefix + "front_right" + suffix, Float64, self.make_callback_for_sensor("front_right_ir"))
+        rospy.Subscriber(prefix + "front_left" + suffix, Float64, self.make_callback_for_sensor("front_left_laser"))
+        rospy.Subscriber(prefix + "front_middle" + suffix, Float64, self.make_callback_for_sensor("front_middle_laser"))
+        rospy.Subscriber(prefix + "front_right" + suffix, Float64, self.make_callback_for_sensor("front_right_laser"))
 
         rospy.Subscriber(prefix + "rear_left_0" + suffix, Float64,
                          self.make_callback_for_sensor("rear_left_straight_ir"))
