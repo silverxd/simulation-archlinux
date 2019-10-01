@@ -7,7 +7,7 @@ DIRECTORY="iti0201-2019"
 
 if [ "$#" -lt 3 ]; then
     echo "USAGE: robot_test [uni-id] [exercise_number] [map_number]"
-    echo "You can also add optional arguments of -i=[ir_noise], -w=[wait_time], -x=[x] and -y=[y], -Y=[yaw], --cone, --noise, --realmotors, --realism, --blind, --debug"
+    echo "You can also add optional arguments of -w=[wait_time], -x=[x] and -y=[y], -Y=[yaw], --noise, --realmotors, --debug"
     exit 0
 fi
 
