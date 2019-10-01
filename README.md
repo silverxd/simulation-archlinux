@@ -50,7 +50,7 @@ Terminali (käsurea) saab käivitada nupukombinatsiooniga *Ctrl+Alt+T*.
 Kirjuta terminali käsk
 
 ```
-robot_test [uni-id] [task-id] [world-id] [--cone] [--noise] [--realmotors] [--blind] [--realism] [--debug] -x=[x] -y=[y] -Y=[Y]
+robot_test [uni-id] [task-id] [world-id] [--noise] [--realmotors] [--debug] -x=[x] -y=[y] -Y=[Y]
 ```
 
 `[uni-id]` asemele tuleb panna oma Uni-ID (nt `karamb`).
@@ -59,15 +59,9 @@ robot_test [uni-id] [task-id] [world-id] [--cone] [--noise] [--realmotors] [--bl
 
 `[world-id]` asemele tuleb panna maailma number (osadel ülesannetel on mitu testimismaailma), alates numbrist `1` (ja `2`, `3` jne).
 
-`[--cone]` asemele tuleb kirjutada `--cone` kui tahta, et kaugussensorite vaateväli oleks koonuseline, mitte üks sirge kiir.
-
 Võti `--noise` paneb kaugusanduritele müra.
 
 Võti `--realmotors` paneb mootori kiirustele müra.
-
-Võit `--blind` paneb tagumiste kaugussensorite maksimaalseks kauguseks 5 cm.
-
-Võti `--realism` paneb peale võtmed `--cone`, `--noise`, `--blind` ja `--realmotors`.
 
 Võti `--debug` paneb simulatsiooni konsooli printima rataste tegelikke kiirusi koos müraga.
 
