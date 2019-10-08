@@ -7,6 +7,7 @@ DIRECTORY="iti0201-2019"
 
 if [ "$#" -lt 3 ]; then
     echo "USAGE: robot_test [uni-id] [exercise_number] [map_number]"
+    echo "You can add git branch name with -b=[branch]"
     echo "You can also add optional arguments of -w=[wait_time], -x=[x] and -y=[y], -Y=[yaw], --noise, --realmotors, --debug"
     exit 0
 fi
@@ -24,10 +25,15 @@ noise=0
 realmotors=0
 blind=0
 debug=0
+branch=master
 
 for i in "$@"
 do
 case $i in
+    -b=*|--branch=*)
+    branch="${i#*=}"
+    shift # past argument=value
+    ;;
     -i=*|--ir=*)
     ir_noise="${i#*=}"
     shift # past argument=value
@@ -95,10 +101,11 @@ echo $git_address
 if [ -d "$DIRECTORY" ]; then
     echo "Repository already exists. Updating.."
     cd $DIRECTORY
-    git pull
+    git pull origin $branch
+    git checkout $branch
 else
     echo "Repository doesn't exist yet. Creating one now..."
-    git clone $git_address
+    git clone -b $branch $git_address
     cd $DIRECTORY
 fi
 
