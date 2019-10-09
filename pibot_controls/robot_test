@@ -8,6 +8,7 @@ DIRECTORY="iti0201-2019"
 if [ "$#" -lt 3 ]; then
     echo "USAGE: robot_test [uni-id] [exercise_number] [map_number]"
     echo "You can add git branch name with -b=[branch]"
+    echo "You can use your SSH key if you specify --key"
     echo "You can also add optional arguments of -w=[wait_time], -x=[x] and -y=[y], -Y=[yaw], --noise, --realmotors, --debug"
     exit 0
 fi
@@ -26,6 +27,7 @@ realmotors=0
 blind=0
 debug=0
 branch=master
+key=0
 
 for i in "$@"
 do
@@ -74,6 +76,10 @@ case $i in
     debug=1
     shift
     ;;
+    --key)
+    key=1
+    shift
+    ;;
     --realism)
     cone=true
     realmotors=1
@@ -93,6 +99,10 @@ esac
 done
 
 git_address="https://$git_user_name@gitlab.cs.ttu.ee/$git_user_name/$DIRECTORY.git"
+
+if [[ "$key" -eq 1 ]]; then
+    git_address="git@gitlab.cs.ttu.ee:$git_user_name/$DIRECTORY.git"
+fi
 
 echo $git_address
 
