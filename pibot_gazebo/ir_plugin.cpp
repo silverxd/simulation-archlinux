@@ -25,7 +25,7 @@ private:
   std::string topic;
   int noise = -1;
   int blind = -1;
-  double rearBlindMinimum = 0.05;
+  double rearMaxDistance = 0.3;
 
 public:
   void Load(sensors::SensorPtr sensor, sdf::ElementPtr sdf)
@@ -89,9 +89,8 @@ public:
   }
 
   void addBlindIfBlindEnabled(double& minRange) {
-    int blindEnabled = getBlind();
-    if (blindEnabled == 1 && isRearSensor()) {
-      minRange = std::min(minRange, rearBlindMinimum);
+    if (getBlind() == 1 && isRearSensor()) {
+      minRange = std::min(minRange, rearMaxDistance);
     }
   }
 
@@ -110,7 +109,7 @@ public:
     }
     if (blind == -1) {
       rosNode->getParam("/blind", blind);
-      ROS_INFO_STREAM("Rear blindness: " << noise);
+      ROS_INFO_STREAM("Rear blindness: " << blind);
     }
     if (blind == -1) return 0;
     return blind;

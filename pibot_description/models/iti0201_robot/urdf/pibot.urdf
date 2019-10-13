@@ -4,6 +4,15 @@
 <!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->
 <!-- =================================================================================== -->
 <robot name="pibot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <gazebo>
+    <plugin filename="libgazebo_ros_imu.so" name="imu_plugin">
+      <alwaysOn>true</alwaysOn>
+      <bodyName>base_with_casters</bodyName>
+      <topicName>/robot/imu/raw</topicName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <updateRate>20.0</updateRate>
+    </plugin>
+  </gazebo>
   <link name="base_with_casters">
     <inertial>
       <mass value="5"/>
