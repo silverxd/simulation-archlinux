@@ -1,0 +1,14 @@
+<launch>
+  <arg name="dir"/>
+  <arg name="map"/>
+  <arg name="noise" default="-1"/>
+  <arg name="realmotors" default="-1"/>
+  <arg name="debug" default="-1"/>
+  <arg name="blind" default="-1"/>
+  <arg name="realsensors" default="-1"/>
+  <param name="/realmotors" value="$(arg realmotors)" />
+  <param name="/noise" value="$(arg noise)" />
+  <param name="/blind" value="$(arg blind)" />
+  <param name="/debug" value="$(arg debug)" />
+  <param name="/realsensors" value="$(arg realsensors)"
+</launch>

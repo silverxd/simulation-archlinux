@@ -25,6 +25,7 @@ private:
   std::string topic;
   int noise = -1;
   int blind = -1;
+  int realSensors = -1;
   double rearMaxDistance = 0.3;
 
 public:
@@ -81,10 +82,25 @@ public:
     }
   }
 
+  void addRealSensorNoise(double &minRange) {
+    int probability = rand() % 100;
+    double random = rand() % 100 + 1;
+    if (0 <= probability && probability < 100 * minRange) {
+      minRange += minRange * (random / 1000.0);
+    } else if (10 <= probability && probability < 20) {
+      minRange = (random / 100.0);
+    }
+  }
+
   void addNoiseIfNoiseEnabled(double &minRange) {
-    int noiseEnabled = getNoise();
-    if (noiseEnabled == 1) {
+    if (getNoise() == 1) {
       addNoise(minRange);
+    }
+  }
+
+  void addRealSensorsNoiseIfEnabled(double &minRange) {
+    if (getRealSensors() == 1 && !isRearSensor()) {
+      addRealSensorNoise(minRange);
     }
   }
 
@@ -101,6 +117,15 @@ public:
     }
     if (noise == -1) return 0;
     return noise;
+  }
+
+  int getRealSensors() {
+    if (realSensors == -1) {
+      rosNode->getParam("/realsensors", realSensors);
+      ROS_INFO_STREAM("Realsensors: " << realSensors);
+    }
+    if (realSensors == -1) return 0;
+    return realSensors;
   }
 
   int getBlind() {

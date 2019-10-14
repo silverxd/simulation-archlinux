@@ -1,0 +1,14 @@
+<launch>
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find pibot_gazebo)/launch/params.launch"></include>
+  <arg name="x"/>
+  <arg name="y"/>
+  <arg name="Y"/>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find pibot_gazebo)/worlds/$(arg dir)/$(arg map).world"/>
+    <!-- more default parameters can be changed here -->
+  </include>
+  <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" args="-file $(find pibot_description)/models/iti0201_robot/urdf/pibot.urdf -urdf -x $(arg x) -y $(arg y) -z 0 -Y $(arg Y) -model pibot"/>
+  <node name="line_sensor_script" pkg="pibot_gazebo" type="line_sensor_script.py" output="screen"/>
+  <node name="imu_script" pkg="pibot_gazebo" type="imu_script.py" output="screen"/>
+</launch>

@@ -24,6 +24,7 @@ yaw_start=0
 cone=false
 noise=0
 realmotors=0
+realsensors=0
 blind=0
 debug=0
 branch=master
@@ -66,6 +67,10 @@ case $i in
     ;;
     --realmotors)
     realmotors=1
+    shift
+    ;;
+    --realsensors)
+    realsensors=1
     shift
     ;;
     --blind)
@@ -157,7 +162,8 @@ echo "IR noise: $noise"
 echo "Real motors: $realmotors"
 echo "Blind: $blind"
 echo "Debug: $debug"
-x-terminal-emulator -e roslaunch pibot_gazebo default.launch dir:=$exercise_number map:=$map_number noise:=$noise realmotors:=$realmotors blind:=$blind debug:=$debug
+echo "Real sensors: $realsensors"
+x-terminal-emulator -e roslaunch pibot_gazebo default.launch dir:=$exercise_number map:=$map_number noise:=$noise realmotors:=$realmotors realsensors:=$realsensors blind:=$blind debug:=$debug
 
 if [[ -z "$x_start" || -z "$y_start" ]]; then
     echo "spawning model at default location"
