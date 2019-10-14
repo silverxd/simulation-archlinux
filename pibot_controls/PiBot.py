@@ -2,6 +2,7 @@ import rospy
 from std_msgs.msg import Int32
 from std_msgs.msg import Float32
 from std_msgs.msg import Float64
+from math import degrees
 
 
 class Validator:
@@ -94,6 +95,9 @@ class PiBot:
         rospy.Subscriber(prefix + "left" + suffix, Int32, self.make_callback_for_sensor("left_wheel_encoder"))
         rospy.Subscriber(prefix + "right" + suffix, Int32, self.make_callback_for_sensor("right_wheel_encoder"))
 
+    def subscribe_to_imu(self):
+        rospy.Subscriber("robot/imu/angle", Float32, self.make_callback_for_sensor("rotation_angle"))
+
     def __init__(self, robot_nr=1):
         # Distance sensors
         self.front_left_laser = 0
@@ -131,6 +135,7 @@ class PiBot:
         self.subscribe_to_distance_sensors()
         self.subscribe_to_line_sensors()
         self.subscribe_to_encoders()
+        self.subscribe_to_imu()
 
         # Constants
         self.UPDATE_TIME = 0.005
@@ -139,6 +144,9 @@ class PiBot:
 
         # Wait for initialisation to finish
         rospy.sleep(2)
+
+        # Rotation
+        self.starting_rotation = self.rotation_angle
 
     def get_front_left_laser(self):
         return self.front_left_laser
@@ -252,8 +260,5 @@ class PiBot:
         value.data = percentage
         self.grabber_close_publisher.publish(value)
 
-    def get_gyro(self):
-        return None
-
-    def get_compass(self):
-        return None
+    def get_rotation(self):
+        return degrees(self.rotation_angle - self.starting_rotation)
