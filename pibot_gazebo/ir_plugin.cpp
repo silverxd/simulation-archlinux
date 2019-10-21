@@ -85,7 +85,8 @@ public:
   void addRealSensorNoise(double &minRange) {
     int probability = rand() % 100;
     double random = rand() % 100 + 1;
-    if (0 <= probability && probability < 100 * minRange) {
+    if (0 <= probability && probability < 100 * minRange * 3) {
+      ROS_INFO_STREAM("Adding noise:" << minRange * (random / 1000.0));
       minRange += minRange * (random / 1000.0);
     } else if (10 <= probability && probability < 20) {
       minRange = (random / 100.0);
