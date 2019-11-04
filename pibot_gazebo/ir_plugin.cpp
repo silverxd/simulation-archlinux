@@ -130,9 +130,6 @@ public:
   }
 
   int getBlind() {
-    if (!isRearSensor()) {
-      blind = 0;
-    }
     if (blind == -1) {
       rosNode->getParam("/blind", blind);
       ROS_INFO_STREAM("Rear blindness: " << blind);
@@ -156,8 +153,8 @@ public:
   }
 
   void addModifiers(double &minRange) {
-    addNoiseIfNoiseEnabled(minRange);
     addBlindIfBlindEnabled(minRange);
+    addNoiseIfNoiseEnabled(minRange);
   }
 
   double findMinimumRange() {
@@ -184,8 +181,8 @@ public:
 
   double getModifiedMinimumRange() {
     double minRange = findMinimumRange();
-    addModifiers(minRange);
     minRange = std::max(minRange, raySensor->RangeMin());
+    addModifiers(minRange);
     convertToRawIfRearSensor(minRange);
     return minRange;
   }
