@@ -26,7 +26,7 @@ private:
   int noise = -1;
   int blind = -1;
   int realSensors = -1;
-  double rearMaxDistance = 0.3;
+  double frontMaxDistance = 0.3;
 
 public:
   void Load(sensors::SensorPtr sensor, sdf::ElementPtr sdf)
@@ -106,8 +106,8 @@ public:
   }
 
   void addBlindIfBlindEnabled(double& minRange) {
-    if (getBlind() == 1 && isRearSensor()) {
-      minRange = std::min(minRange, rearMaxDistance);
+    if (getBlind() == 1 && !isRearSensor()) {
+      minRange = std::min(minRange, frontMaxDistance);
     }
   }
 
