@@ -86,7 +86,7 @@ case $i in
     shift
     ;;
     --realism)
-    cone=true
+    cone=false
     realmotors=1
     noise=1
     blind=1
