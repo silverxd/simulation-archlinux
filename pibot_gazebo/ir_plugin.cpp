@@ -26,7 +26,7 @@ private:
   int noise = -1;
   int blind = -1;
   int realSensors = -1;
-  double frontMaxDistance = 0.4;
+  double frontMaxDistance = 0.5;
 
 public:
   void Load(sensors::SensorPtr sensor, sdf::ElementPtr sdf)
