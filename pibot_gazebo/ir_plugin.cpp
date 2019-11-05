@@ -74,10 +74,10 @@ public:
 
   void addNoise(double &minRange) {
     int probability = rand() % 100;
-    double random = rand() % 100 + 1;
+    double random = rand() % 100 + 1; // 1 .. 100
     if (0 <= probability && probability < 10) {
       minRange += (random / 1000.0);
-    } else if (10 <= probability && probability < 20) {
+    } else if (10 <= probability && probability < 13) {
       minRange = (random / 100.0);
     }
   }
