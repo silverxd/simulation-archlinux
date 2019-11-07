@@ -14,12 +14,12 @@
     <include>
       <uri>model://iti0201_robot</uri>
       <name>iti0201_robot</name>
-      <pose>2.05 1.21 0 0 0 0</pose> <!-- this is the robot's starting position, if you know where it should be, you can change this -->
+      <pose>2.25 1.01 0 0 0 0</pose> <!-- this is the robot's starting position, if you know where it should be, you can change this -->
     </include>
 
     <model name='unit_cylinder1_1'>
       <link name='link'>
-        <pose frame=''>1.80 0.60 0.14 0 -0 0</pose>
+        <pose frame=''>2.0 0.60 0.14 0 -0 0</pose>
         <inertial>
           <mass>1</mass>
           <inertia>
