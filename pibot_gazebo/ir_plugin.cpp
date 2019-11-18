@@ -27,6 +27,7 @@ private:
   int blind = -1;
   int realSensors = -1;
   double frontMaxDistance = 0.5;
+  double rearRawConstant = 350;
 
 public:
   void Load(sensors::SensorPtr sensor, sdf::ElementPtr sdf)
@@ -49,6 +50,7 @@ public:
   void initializeOutsideVariables(sdf::ElementPtr& sdf) {
     topic = sdf->GetElement("topic")->GetValue()->GetAsString();
     noise = getNoise();
+    rearRawConstant += rand() % 150;
   }
 
   void initializeRosVariables(sensors::SensorPtr& sensor) {
@@ -143,7 +145,7 @@ public:
   }
 
   void convertToRaw(double &minRange) {
-    minRange = 500 - 24.36869 * minRange * 100 + 0.2946128 * pow(minRange * 100, 2);
+    minRange = 503.36712 - 24.36869 * minRange * 100 + 0.2946128 * pow(minRange * 100, 2) + rearRawConstant;
   }
 
   void convertToRawIfRearSensor(double &minRange) {
