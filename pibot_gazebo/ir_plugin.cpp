@@ -46,6 +46,7 @@ public:
     }
     std::hash<std::string> hasher;
     auto seed = hasher(topic);
+    ROS_INFO_STREAM("seed " << seed);
     srand(seed);
     rosNode.reset(new ros::NodeHandle("gazebo_client"));
   }
@@ -54,6 +55,7 @@ public:
     topic = sdf->GetElement("topic")->GetValue()->GetAsString();
     noise = getNoise();
     rearRawConstant += rand() % 150;
+    ROS_INFO_STREAM("rearRawConstant " << rearRawConstant);
   }
 
   void initializeRosVariables(sensors::SensorPtr& sensor) {
