@@ -10,6 +10,7 @@
 #include <string>
 #include <stdlib.h>
 #include <time.h>
+#include <functional>
 
 namespace gazebo
 {
@@ -43,7 +44,9 @@ public:
       ROS_FATAL_STREAM("A ROS node for Gazebo has not been initialized");
       return;
     }
-    srand(time(NULL));
+    std::hash<std::string> hasher;
+    auto seed = hasher(topic);
+    srand(seed);
     rosNode.reset(new ros::NodeHandle("gazebo_client"));
   }
 
