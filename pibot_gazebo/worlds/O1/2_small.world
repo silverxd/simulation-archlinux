@@ -14,7 +14,7 @@
     <include>
       <uri>model://iti0201_robot</uri>
       <name>iti0201_robot</name>
-      <pose>1.21 0.91 0 0 0 0</pose> <!-- this is the robot's starting position, if you know where it should be, you can change this -->
+      <pose>1.61 0.91 0 0 0 0</pose> <!-- this is the robot's starting position, if you know where it should be, you can change this -->
     </include>
 
     <model name='unit_cylinder1_1'>

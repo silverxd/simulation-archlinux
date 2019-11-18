@@ -26,7 +26,7 @@ private:
   int noise = -1;
   int blind = -1;
   int realSensors = -1;
-  double frontMaxDistance = 0.3;
+  double frontMaxDistance = 0.5;
 
 public:
   void Load(sensors::SensorPtr sensor, sdf::ElementPtr sdf)
@@ -74,10 +74,10 @@ public:
 
   void addNoise(double &minRange) {
     int probability = rand() % 100;
-    double random = rand() % 100 + 1;
+    double random = rand() % 100 + 1; // 1 .. 100
     if (0 <= probability && probability < 10) {
       minRange += (random / 1000.0);
-    } else if (10 <= probability && probability < 20) {
+    } else if (10 <= probability && probability < 13) {
       minRange = (random / 100.0);
     }
   }
