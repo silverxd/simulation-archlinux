@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <functional>
+#include <limits>
 
 namespace gazebo
 {
@@ -44,15 +45,15 @@ public:
       ROS_FATAL_STREAM("A ROS node for Gazebo has not been initialized");
       return;
     }
-    std::hash<std::string> hasher;
-    auto seed = hasher(topic);
-    ROS_INFO_STREAM("seed " << seed);
-    srand(seed);
     rosNode.reset(new ros::NodeHandle("gazebo_client"));
   }
 
   void initializeOutsideVariables(sdf::ElementPtr& sdf) {
     topic = sdf->GetElement("topic")->GetValue()->GetAsString();
+    std::hash<std::string> hasher;
+    auto seed = hasher(topic);
+    ROS_INFO_STREAM("seed " << seed);
+    srand((seed + time(NULL)) % std::numeric_limits<unsigned int>::max());
     noise = getNoise();
     rearRawConstant += rand() % 150;
     ROS_INFO_STREAM("rearRawConstant " << rearRawConstant);
