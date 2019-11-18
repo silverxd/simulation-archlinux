@@ -143,7 +143,7 @@ public:
   }
 
   void convertToRaw(double &minRange) {
-    minRange = 500 - 24.36869 * minRange + 0.2946128 * pow(minRange, 2) * (rand() % 30 + 80) / 100;
+    minRange = 500 - 24.36869 * minRange * 100 + 0.2946128 * pow(minRange * 100, 2);
   }
 
   void convertToRawIfRearSensor(double &minRange) {
