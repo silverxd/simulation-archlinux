@@ -120,7 +120,7 @@ else
     git clone -b $branch $git_address
     cd $DIRECTORY
 fi
-git submodule update --remote --merge
+git submodule update --init --remote --merge
 
 exercise_name=""
 directory_name=""
