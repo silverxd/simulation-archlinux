@@ -110,8 +110,6 @@ fi
 
 echo $git_address
 
-# rm -rf $DIRECTORY # Temporary hack for when the iti0201 repo already exists, will be fixed soon
-
 if [ -d "$DIRECTORY" ]; then
     echo "Repository already exists. Updating.."
     cd $DIRECTORY
@@ -122,6 +120,7 @@ else
     git clone -b $branch $git_address
     cd $DIRECTORY
 fi
+git submodule update --remote --merge
 
 exercise_name=""
 directory_name=""
