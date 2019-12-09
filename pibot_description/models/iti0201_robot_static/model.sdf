@@ -1,0 +1,1475 @@
+<?xml version='1.0'?>
+<sdf version='1.4'>
+    <model name="iti0201_robot">
+      <static>false</static>
+
+      <!-- LINK 1: Chassis, connect wheels and base to this. -->
+      <link name="chassis">
+        <pose>0 0 0.0152 0 0 0</pose>
+      </link>
+
+      <joint type="fixed" name="chassis_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>base</child>
+        <parent>chassis</parent>
+        <axis>
+          <xyz>0 0 0</xyz>
+        </axis>
+      </joint>
+
+      <!-- LINK 2: Base, contains caster wheels, base, brainbox and base for camera stand. -->
+      <link name='base'>
+        <sensor name="imu_sensor" type="imu">
+          <always_on>true</always_on>
+          <update_rate>100</update_rate>
+          <visualize>true</visualize>
+          <topic>__default_topic__</topic>
+          <!--<imu>
+            <orientation_reference_frame>
+              <localization>GRAV_UP</localization>
+            </orientation_reference_frame>
+          </imu>-->
+          <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+            <topicName>imu/raw</topicName>
+            <bodyName>imu_link</bodyName>
+            <updateRateHZ>10.0</updateRateHZ>
+            <gaussianNoise>0.0</gaussianNoise>
+            <xyzOffset>0 0 0</xyzOffset>
+            <rpyOffset>0 0 0</rpyOffset>
+            <frameName>imu_link</frameName>
+          </plugin>
+          <pose>0 0 0 0 0 0</pose>
+        </sensor>
+        <pose>0 0 .006 0 0 0</pose>
+
+          <inertial>
+            <mass>50</mass>
+            <!--inertia>
+              <ixx>0.061107</ixx>
+              <iyy>0.061107</iyy>
+              <izz>0.122192</izz>
+            </inertia-->
+          </inertial>
+
+          <collision name='base_collision'>
+            <!--FOR MESH:
+              pose>-0.069912 -0.068272 0 0 0 -0.015
+            </pose-->
+            <geometry>
+              <cylinder>
+                <radius>.069912</radius>
+                <length>0.001591</length>
+              </cylinder>
+              <!--mesh>
+                <uri>model://iti0201_robot/meshes/sketchup_dae_base.dae</uri>
+              </mesh-->
+            </geometry>
+          </collision>
+
+          <visual name='base_visual'>
+            <!--FOR MESH:
+              pose>-0.069912 -0.068272 0 0 0 -0.015
+            </pose-->
+            <geometry>
+              <cylinder>
+                <radius>.069912</radius>
+                <length>0.001591</length>
+              </cylinder>
+              <!--mesh>
+                <uri>model://iti0201_robot/meshes/sketchup_dae_base.dae</uri>
+              </mesh-->
+            </geometry>
+          </visual>
+
+          <collision name="brainbox_collision">
+            <pose>-0.022 0 0.02641535 0 0 0</pose>
+            <geometry>
+              <box>
+                <size>.077304 .0468221 .0512397</size>
+              </box>
+            </geometry>
+          </collision>
+
+          <visual name="brainbox_visual">
+            <pose>-0.022 0 0.02641535 0 0 0</pose>
+            <geometry>
+              <box>
+                <size>.077304 .0468221 .0512397</size>
+              </box>
+            </geometry>
+          </visual>
+
+          <collision name="camera_stand_collision">
+            <pose>0.02940475 0 0.0402758 0 0 0</pose>
+            <geometry>
+              <box>
+                <size>.0255021 .0553499 .0789606</size>
+              </box>
+            </geometry>
+          </collision>
+
+          <visual name="camera_stand_visual">
+            <pose>0.02940475 0 0.0402758 0 0 0</pose>
+            <geometry>
+              <box>
+                <size>.0255021 .0553499 .0789606</size>
+              </box>
+            </geometry>
+          </visual>
+
+          <collision name="camera_stand_right_wall_collision">
+          <pose>0.02940475 -0.02467495 0.0970561 0 0 0</pose>
+            <geometry>
+              <box>
+                <size>.0255021 .006 .0346</size>
+              </box>
+            </geometry>
+          </collision>
+
+          <visual name="camera_stand_right_wall_visual">
+          <pose>0.02940475 -0.02467495 0.0970561 0 0 0</pose>
+            <geometry>
+              <box>
+                <size>.0255021 .006 .0346</size>
+              </box>
+            </geometry>
+          </visual>
+
+          <collision name="camera_stand_left_wall_collision">
+          <pose>0.02940475 0.02467495 0.0970561 0 0 0</pose>
+            <geometry>
+              <box>
+                <size>.0255021 .006 .0346</size>
+              </box>
+            </geometry>
+          </collision>
+
+          <visual name="camera_stand_left_wall_visual">
+          <pose>0.02940475 0.02467495 0.0970561 0 0 0</pose>
+            <geometry>
+              <box>
+                <size>.0255021 .006 .0346</size>
+              </box>
+            </geometry>
+          </visual>
+
+          <collision name='front_caster_collision'>
+            <pose>0.035 0 -0.001 0 0 0</pose>
+            <geometry>
+                <sphere>
+                <radius>.004648</radius>
+              </sphere>
+            </geometry>
+
+            <surface>
+              <friction>
+                <ode>
+                  <mu>0</mu>
+                  <mu2>0</mu2>
+                  <slip1>1.0</slip1>
+                  <slip2>1.0</slip2>
+                </ode>
+              </friction>
+            </surface>
+          </collision>
+
+          <visual name='front_caster_visual'>
+            <pose>0.035 0 -0.001 0 0 0</pose>
+            <geometry>
+              <sphere>
+                <radius>.004648</radius>
+              </sphere>
+            </geometry>
+          </visual>
+
+          <collision name='rear_caster_collision'>
+            <pose>-0.035 0 -0.001 0 0 0</pose>
+            <geometry>
+                <sphere>
+                <radius>.004648</radius>
+              </sphere>
+            </geometry>
+
+            <surface>
+              <friction>
+                <ode>
+                  <mu>0</mu>
+                  <mu2>0</mu2>
+                  <slip1>1.0</slip1>
+                  <slip2>1.0</slip2>
+                </ode>
+              </friction>
+            </surface>
+          </collision>
+
+          <visual name='rear_caster_visual'>
+            <pose>-0.035 0 -0.001 0 0 0</pose>
+            <geometry>
+              <sphere>
+                <radius>.004648</radius>
+              </sphere>
+            </geometry>
+          </visual>
+      </link>
+
+      <!-- LINKS 3-11: Infrareds. -->
+      <link name="front_right_45deg_ir">
+        <pose>0.0326151 -0.0470558 0.0167955 0 0 0.78535</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.01 .01 .02</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.01 .01 .02</size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor name="ir" type="ray">
+          <pose>0 0 0 0 -0 -1.571</pose>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>100</samples>
+                <resolution>1</resolution>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.01</min>
+              <max>2.00</max>
+              <resolution>0.1</resolution>
+            </range>
+          </ray>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="ir_plugin" filename="libir_plugin.so">
+            <topic>ir/front_right</topic>
+          </plugin>
+        </sensor>
+      </link>
+
+      <joint type="fixed" name="front_right_45deg_ir_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>front_right_45deg_ir</child>
+        <parent>base</parent>
+      </joint>
+
+      <link name="front_middle_ir">
+        <pose>0.059312 0 0.0117955 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.01 .02 .01</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.01 .02 .01</size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor name="ir" type="ray">
+          <pose>0 0 0 0 -0 0</pose>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>100</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.17</min_angle>
+                <max_angle>0.17</max_angle>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.01</min>
+              <max>2.00</max>
+              <resolution>0.1</resolution>
+            </range>
+          </ray>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="ir_plugin" filename="libir_plugin.so">
+            <topic>ir/front_middle</topic>
+          </plugin>
+        </sensor>
+      </link>
+
+      <joint type="fixed" name="front_middle_ir_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>front_middle_ir</child>
+        <parent>base</parent>
+      </joint>
+
+      <link name="front_left_45deg_ir">
+        <pose>0.0326151 0.0470558 0.0167955 0 0 0.78535</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.01 .01 .02</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.01 .01 .02</size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor name="ir" type="ray">
+          <pose>0 0 0 0 -0 0</pose>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>100</samples>
+                <resolution>1</resolution>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.01</min>
+              <max>2.00</max>
+              <resolution>0.1</resolution>
+            </range>
+          </ray>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="ir_plugin" filename="libir_plugin.so">
+            <topic>ir/front_left</topic>
+          </plugin>
+        </sensor>
+      </link>
+
+      <joint type="fixed" name="front_left_45deg_ir_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>front_left_45deg_ir</child>
+        <parent>base</parent>
+      </joint>
+
+      <link name="rear_right_90deg_ir">
+        <pose>-0.0225688 -0.054749 0.014341 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.008 .012 .0135</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.008 .012 .0135</size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor name="ir" type="ray">
+          <pose>0 0 0 0 -0 -1.571</pose>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>100</samples>
+                <resolution>1</resolution>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.01</min>
+              <max>2.00</max>
+              <resolution>0.1</resolution>
+            </range>
+          </ray>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="ir_plugin" filename="libir_plugin.so">
+            <topic>ir/rear_right_90</topic>
+          </plugin>
+        </sensor>
+      </link>
+
+      <joint type="fixed" name="rear_right_90deg_ir_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>rear_right_90deg_ir</child>
+        <parent>base</parent>
+      </joint>
+
+      <link name="rear_right_45deg_ir">
+        <pose>-0.037845 -0.046812 0.014341 0 0 -0.78535</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.008 .012 .0135</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.008 .012 .0135</size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor name="ir" type="ray">
+          <pose>0 0 0 0 -0 -1.571</pose>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>100</samples>
+                <resolution>1</resolution>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.01</min>
+              <max>2.00</max>
+              <resolution>0.1</resolution>
+            </range>
+          </ray>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="ir_plugin" filename="libir_plugin.so">
+            <topic>ir/rear_right_45</topic>
+          </plugin>
+        </sensor>
+      </link>
+
+      <joint type="fixed" name="rear_right_45deg_ir_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>rear_right_45deg_ir</child>
+        <parent>base</parent>
+      </joint>
+
+      <link name="rear_right_straight_ir">
+        <pose>-0.0501109 -0.035473 0.014341 0 0 1.5707</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.008 .012 .0135</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.008 .012 .0135</size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor name="ir" type="ray">
+          <pose>0 0 0 0 -0 1.571</pose>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>100</samples>
+                <resolution>1</resolution>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.01</min>
+              <max>2.00</max>
+              <resolution>0.1</resolution>
+            </range>
+          </ray>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="ir_plugin" filename="libir_plugin.so">
+            <topic>ir/rear_right_0</topic>
+          </plugin>
+        </sensor>
+      </link>
+
+      <joint type="fixed" name="rear_right_straight_ir_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>rear_right_straight_ir</child>
+        <parent>base</parent>
+      </joint>
+
+      <link name="rear_left_90deg_ir">
+        <pose>-0.0225688 0.054749 0.014341 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.008 .012 .0135</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.008 .012 .0135</size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor name="ir" type="ray">
+          <pose>0 0 0 0 -0 1.571</pose>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>100</samples>
+                <resolution>1</resolution>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.01</min>
+              <max>2.00</max>
+              <resolution>0.1</resolution>
+            </range>
+          </ray>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="ir_plugin" filename="libir_plugin.so">
+            <topic>ir/rear_left_90</topic>
+          </plugin>
+        </sensor>
+      </link>
+
+      <joint type="fixed" name="rear_left_90deg_ir_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>rear_left_90deg_ir</child>
+        <parent>base</parent>
+      </joint>
+
+      <link name="rear_left_45deg_ir">
+        <pose>-0.037845 0.046812 0.014341 0 0 0.78535</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.008 .012 .0135</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.008 .012 .0135</size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor name="ir" type="ray">
+          <pose>0 0 0 0 -0 1.571</pose>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>100</samples>
+                <resolution>1</resolution>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.01</min>
+              <max>2.00</max>
+              <resolution>0.1</resolution>
+            </range>
+          </ray>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="ir_plugin" filename="libir_plugin.so">
+            <topic>ir/rear_left_45</topic>
+          </plugin>
+        </sensor>
+      </link>
+
+      <joint type="fixed" name="rear_left_45deg_ir_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>rear_left_45deg_ir</child>
+        <parent>base</parent>
+      </joint>
+
+      <link name="rear_left_straight_ir">
+        <pose>-0.0501109 0.035473 0.014341 0 0 1.5707</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.008 .012 .0135</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.008 .012 .0135</size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor name="ir" type="ray">
+          <pose>0 0 0 0 -0 1.571</pose>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>100</samples>
+                <resolution>1</resolution>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.01</min>
+              <max>2.00</max>
+              <resolution>0.1</resolution>
+            </range>
+          </ray>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="ir_plugin" filename="libir_plugin.so">
+            <topic>ir/rear_left_0</topic>
+          </plugin>
+        </sensor>
+      </link>
+
+      <joint type="fixed" name="rear_left_straight_ir_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>rear_left_straight_ir</child>
+        <parent>base</parent>
+      </joint>
+
+      <!-- LINKS 12-17: Line following sensors. -->
+      <link name="right_side_first_line_sensor_from_middle">
+        <pose>-0.06289935 -0.005 0.0044545 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.0025 .0035 .0015</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.0025 .0035 .0015</size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor type="camera" name="line_sensor_camera1">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/right_first</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
+      </link>
+
+      <joint type="fixed" name="right_side_first_line_sensor_from_middle_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>right_side_first_line_sensor_from_middle</child>
+        <parent>base</parent>
+      </joint>
+
+      <link name="left_side_first_line_sensor_from_middle">
+        <pose>-0.06289935 0.005 0.0044545 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.0025 .0035 .0015</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.0025 .0035 .0015</size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor type="camera" name="line_sensor_camera2">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/left_first</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
+      </link>
+
+      <joint type="fixed" name="left_side_first_line_sensor_from_middle_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>left_side_first_line_sensor_from_middle</child>
+        <parent>base</parent>
+      </joint>
+
+      <link name="right_side_second_line_sensor_from_middle">
+        <pose>-0.06289935 -0.015 0.0044545 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.0025 .0035 .0015</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.0025 .0035 .0015</size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor type="camera" name="line_sensor_camera3">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/right_second</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
+      </link>
+
+      <joint type="fixed" name="right_side_second_line_sensor_from_middle_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>right_side_second_line_sensor_from_middle</child>
+        <parent>base</parent>
+      </joint>
+
+      <link name="left_side_second_line_sensor_from_middle">
+        <pose>-0.06289935 0.015 0.0044545 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.0025 .0035 .0015</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.0025 .0035 .0015</size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor type="camera" name="line_sensor_camera4">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/left_second</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
+      </link>
+
+      <joint type="fixed" name="left_side_second_line_sensor_from_middle_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>left_side_second_line_sensor_from_middle</child>
+        <parent>base</parent>
+      </joint>
+
+      <link name="right_side_third_line_sensor_from_middle">
+        <pose>-0.05410292 -0.035 0.0044545 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.0025 .0035 .0015</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.0025 .0035 .0015</size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor type="camera" name="line_sensor_camera5">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/right_third</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
+      </link>
+
+      <joint type="fixed" name="right_side_third_line_sensor_from_middle_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>right_side_third_line_sensor_from_middle</child>
+        <parent>base</parent>
+      </joint>
+
+      <link name="left_side_third_line_sensor_from_middle">
+        <pose>-0.05410292 0.035 0.0044545 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.0025 .0035 .0015</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.0025 .0035 .0015</size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor type="camera" name="line_sensor_camera6">
+          <update_rate>30.0</update_rate>
+          <pose>0 0 0 0 1.571 0</pose>
+          <camera name="head">
+            <horizontal_fov>0.4</horizontal_fov>
+            <image>
+              <width>48</width>
+              <height>48</height>
+              <format>L8</format>
+            </image>
+            <clip>
+                <near>0.001</near>
+                <far>0.031</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>/robot/line_sensor/left_third</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
+      </link>
+
+      <joint type="fixed" name="left_side_third_line_sensor_from_middle_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>left_side_third_line_sensor_from_middle</child>
+        <parent>base</parent>
+      </joint>
+
+      <!-- LINKS 18-19: Camera. -->
+      <link name="camera_stand_pole">
+        <pose>0.02940475 0 0.1165341 0 1.5707 1.5707</pose>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>.003822</radius>
+              <length>.0433499</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>.003822</radius>
+              <length>.0433499</length>
+            </cylinder>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="fixed" name="camera_stand_pole_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>camera_stand_pole</child>
+        <parent>base</parent>
+      </joint>
+
+      <!--REVOLUTE CAMERA???, uncomment this and delete the above
+      <joint type="revolute" name="camera_stand_pole_to_base">
+        <pose>0 0 0 0 0 0</pose>
+        <child>camera_stand_pole</child>
+        <parent>base</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+        </axis>
+      </joint>
+      -->
+
+      <link name="camera">
+        <pose>0.04140475 0 0.1168561 0 1.5707 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.024 .024 .017</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.024 .024 .017</size>
+            </box>
+          </geometry>
+        </visual>
+        <sensor type="camera" name="camera">
+          <pose>0 0 0 0 -1.571 0</pose>
+          <update_rate>30.0</update_rate>
+          <always_on>1</always_on>
+          <visualize>true</visualize>
+          <camera name="head">
+            <horizontal_fov>1.3962634</horizontal_fov>
+            <image>
+              <width>800</width>
+              <height>800</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.02</near>
+              <far>300</far>
+            </clip>
+          </camera>
+          
+          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>0.0</updateRate>
+            <cameraName>robot/camera</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+          </plugin>
+        </sensor>
+      </link>
+
+      <joint type="fixed" name="camera">
+        <pose>0 0 0 0 0 0</pose>
+        <child>camera</child>
+        <parent>camera_stand_pole</parent>
+      </joint>
+
+      <!-- LINKS 20-21: Wheels. -->
+       <link name="right_wheel">
+        <pose>0 -0.0655005 0.0152 0 1.5707 1.5707</pose>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>.0152</radius>
+              <length>.009</length>
+            </cylinder>
+          </geometry>
+
+          <surface>
+            <friction>
+               <ode>
+                  <!-- wheel friction coefficient -->
+                  <mu>0.6</mu>
+                  <!-- floor friction coefficient -->
+                  <mu2>0.6</mu2>
+               </ode>
+            </friction>
+          </surface>
+        </collision>
+
+        <inertial>
+          <!-- don't know the real mass -->
+          <mass>2</mass>
+            <inertia>
+              <!-- https://en.wikipedia.org/wiki/List_of_moments_of_inertia -->
+              <ixx>0.00012902</ixx>
+              <iyy>0.00012902</iyy>
+              <izz>0.00023104</izz>
+            </inertia>
+        </inertial>
+
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>.0152</radius>
+              <length>.009</length>
+            </cylinder>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="revolute" name="right_wheel_hinge">
+        <pose>0 0 -0.03 0 0 0</pose>
+        <child>right_wheel</child>
+        <parent>chassis</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+        </axis>
+      </joint>
+
+      <link name="left_wheel">
+        <pose>0 0.0655005 0.0152 0 1.5707 1.5707</pose>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>.0152</radius>
+              <length>.009</length>
+            </cylinder>
+          </geometry>
+
+          <surface>
+            <friction>
+               <ode>
+                  <!-- wheel friction coefficient -->
+                  <mu>0.6</mu>
+                  <!-- floor friction coefficient -->
+                  <mu2>0.6</mu2>
+               </ode>
+            </friction>
+          </surface>
+        </collision>
+
+        <inertial>
+          <!-- don't know the real mass -->
+          <mass>2</mass>
+            <inertia>
+              <!-- https://en.wikipedia.org/wiki/List_of_moments_of_inertia -->
+              <ixx>0.00012902</ixx>
+              <iyy>0.00012902</iyy>
+              <izz>0.00023104</izz>
+            </inertia>
+        </inertial>
+
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>.0152</radius>
+              <length>.009</length>
+            </cylinder>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="revolute" name="left_wheel_hinge">
+        <pose>0 0 0.03 0 0 0</pose>
+        <child>left_wheel</child>
+        <parent>chassis</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+        </axis>
+      </joint>
+
+      <plugin name="wheel_plugin" filename="libwheel_plugin.so"/>
+
+      <!-- LINKS 22-26: Grabber. 
+      TODO: inertia
+      -->
+      <link name="grabber_pole">
+
+        <collision name="to_base">
+        <pose>0.055 0 0.0235 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.006 .034 .03455</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="to_base">
+        <pose>0.055 0 0.0235 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.006 .034 .03455</size>
+            </box>
+          </geometry>
+        </visual>
+      
+        <collision name="collision">
+          <pose>0.058912 0 0.0455477 0 1.5707 1.5707</pose>
+          <geometry>
+            <cylinder>
+              <radius>.006</radius>
+              <length>.034</length>
+            </cylinder>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <pose>0.058912 0 0.0455477 0 1.5707 1.5707</pose>
+          <geometry>
+            <cylinder>
+              <radius>.006</radius>
+              <length>.034</length>
+            </cylinder>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="fixed" name="grabber_pole">
+        <pose>0 0 0 0 0 0</pose>
+        <child>grabber_pole</child>
+        <parent>base</parent>
+      </joint>
+
+      <link name="grabber_mount">
+        <collision name="collision_left">
+        <pose>0.073412 0.020 0.0455477 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.035 .006 .011</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual_left">
+        <pose>0.073412 0.020 0.0455477 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.035 .006 .011</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <collision name="collision_right">
+        <pose>0.073412 -0.020 0.0455477 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.035 .006 .011</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual_right">
+        <pose>0.073412 -0.020 0.0455477 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.035 .006 .011</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <collision name="collision_under">
+        <pose>0.083912 0 0.0369977 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.015 .042 .0057</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual_under">
+        <pose>0.083912 0 0.0369977 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.015 .042 .0057</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <inertial>
+          <!-- don't know the real mass -->
+          <mass>2</mass>
+            <inertia>
+              <!-- https://en.wikipedia.org/wiki/List_of_moments_of_inertia -->
+              <ixx>0.000337</ixx>
+              <iyy>0.000493</iyy>
+              <izz>0.000248</izz>
+            </inertia>
+        </inertial>
+      </link>
+
+      <!--
+      TODO: revolute?
+      -->
+      <joint type="fixed" name="grabber_mount_to_pole">
+        <pose>0 0 0 0 0 0</pose>
+        <child>grabber_mount</child>
+        <parent>grabber_pole</parent>
+      </joint>
+
+      <link name="grabber_arms_joint">
+        <pose>0.083912 0 0.0319977 0 3.1414 0</pose>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>.004</radius>
+              <length>.005</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>.004</radius>
+              <length>.005</length>
+            </cylinder>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint type="fixed" name="grabber_arms_joint_to_grabber_mount">
+        <pose>0 0 0 0 0 0</pose>
+        <child>grabber_arms_joint</child>
+        <parent>grabber_mount</parent>
+      </joint>
+
+      <link name="grabber_arm_left">
+        <collision name="main_arm_collision_l">
+        <pose>0.106912 0.022 0.0319977 0 0 0.78535</pose>
+          <geometry>
+            <box>
+              <size>.06213 .009 .005</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="main_arm_visual_l">
+        <pose>0.106912 0.022 0.0319977 0 0 0.78535</pose>
+          <geometry>
+            <box>
+              <size>.06213 .009 .005</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <collision name="small_arm_collision_l_f">
+        <pose>0.145 0.040 0.0294977 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.029 .003 .002</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="small_arm_visual_l_f">
+        <pose>0.145 0.040 0.0294977 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.029 .003 .002</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <collision name="small_arm_collision_l_b">
+        <pose>0.1305 0.0255 0.0294977 0 0 -1.5707</pose>
+          <geometry>
+            <box>
+              <size>.029 .003 .002</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="small_arm_visual_l_b">
+        <pose>0.1305 0.0255 0.0294977 0 0 -1.5707</pose>
+          <geometry>
+            <box>
+              <size>.029 .003 .002</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <inertial>
+          <!-- don't know the real mass -->
+          <mass>1</mass>
+            <inertia>
+              <!-- https://en.wikipedia.org/wiki/List_of_moments_of_inertia -->
+              <ixx>0.000322</ixx>
+              <iyy>0.000327</iyy>
+              <izz>0.000088</izz>
+            </inertia>
+        </inertial>
+      </link>
+
+      <!--
+      TODO: revolute?
+      -->
+      <joint type="fixed" name="grabber_arm_left_to_grabber_joint">
+        <pose>0 0 0 0 0 0</pose>
+        <child>grabber_arm_left</child>
+        <parent>grabber_arms_joint</parent>
+      </joint>
+
+      <link name="grabber_arm_right">
+        <collision name="main_arm_collision_r">
+        <pose>0.106912 -0.022 0.0319977 0 0 -0.78535</pose>
+          <geometry>
+            <box>
+              <size>.06213 .009 .005</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="main_arm_visual_r">
+        <pose>0.106912 -0.022 0.0319977 0 0 -0.78535</pose>
+          <geometry>
+            <box>
+              <size>.06213 .009 .005</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <collision name="small_arm_collision_r_f">
+        <pose>0.145 -0.040 0.0294977 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.029 .003 .002</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="small_arm_visual_r_f">
+        <pose>0.145 -0.040 0.0294977 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>.029 .003 .002</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <collision name="small_arm_collision_r_b">
+          <pose>0.1305 -0.0255 0.0294977 0 0 -1.5707</pose>
+          <geometry>
+            <box>
+              <size>.029 .003 .002</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="small_arm_visual_r_b">
+        <pose>0.1305 -0.0255 0.0294977 0 0 -1.5707</pose>
+          <geometry>
+            <box>
+              <size>.029 .003 .002</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <inertial>
+          <!-- don't know the real mass -->
+          <mass>1</mass>
+            <inertia>
+              <!-- https://en.wikipedia.org/wiki/List_of_moments_of_inertia -->
+              <ixx>0.000322</ixx>
+              <iyy>0.000327</iyy>
+              <izz>0.000088</izz>
+            </inertia>
+        </inertial>
+      </link>
+
+      <!--
+      TODO: revolute?
+      -->
+      <joint type="fixed" name="grabber_arm_right_to_grabber_joint">
+        <pose>0 0 0 0 0 0</pose>
+        <child>grabber_arm_right</child>
+        <parent>grabber_arms_joint</parent>
+      </joint>
+  </model>
+</sdf>

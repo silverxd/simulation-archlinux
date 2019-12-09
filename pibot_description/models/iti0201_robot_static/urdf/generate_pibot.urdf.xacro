@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="pibot">
+  <xacro:include filename="$(find pibot_description)/models/iti0201_robot_static/urdf/pibot_description.urdf.xacro" />
+
+  <xacro:base_with_casters/>
+  <xacro:brainbox_with_battery/>
+  <xacro:front_ir_sensors/>
+  <xacro:rear_ir_sensors/>
+  <xacro:first_two_line_sensors/>
+  <xacro:second_two_line_sensors/>
+  <xacro:third_two_line_sensors/>
+  <xacro:raspberry_camera/>
+  <xacro:wheels/>
+  <xacro:grabber_arm/>
+</robot>

@@ -9,7 +9,7 @@ if [ "$#" -lt 3 ]; then
     echo "USAGE: robot_test [uni-id] [exercise_number] [map_number]"
     echo "You can add git branch name with -b=[branch]"
     echo "You can use your SSH key if you specify --key"
-    echo "You can also add optional arguments of -w=[wait_time], -x=[x] and -y=[y], -Y=[yaw], --noise, --realmotors, --debug"
+    echo "You can also add optional arguments of -w=[wait_time], -x=[x] and -y=[y], -Y=[yaw], --noise, --realmotors, --debug, --static"
     exit 0
 fi
 
@@ -21,12 +21,12 @@ ir_noise=0
 waiting_time=12
 
 yaw_start=0
-cone=false
 noise=0
 realmotors=0
 realsensors=0
 blind=0
 debug=0
+static=false
 branch=master
 key=0
 
@@ -57,10 +57,6 @@ case $i in
     yaw_start="${i#*=}"
     shift # past argument=value
     ;;
-    --cone)
-    cone=true
-    shift
-    ;;
     --noise)
     noise=1
     shift
@@ -79,6 +75,10 @@ case $i in
     ;;
     --debug)
     debug=1
+    shift
+    ;;
+    --static)
+    static=true
     shift
     ;;
     --key)
@@ -139,18 +139,18 @@ fi
 
 if [[ -z "$x_start" || -z "$y_start" ]]; then
     echo "x and y not set"
-    if $cone; then
-        map_number_cone=""$map_number"_cone"
-        map_name_cone="$map_number_cone.world"
+    if $static; then
+        map_number_static=""$map_number"_static"
+        map_name_static="$map_number_static.world"
         map_name="$map_number.world"
-        map_number+="_cone"
-        copy_path=~/catkin_ws/src/pibot_gazebo/worlds/$exercise_number/$map_name_cone
+        map_number+="_static"
+        copy_path=~/catkin_ws/src/pibot_gazebo/worlds/$exercise_number/$map_name_static
         touch "$copy_path"
         cp ~/catkin_ws/src/pibot_gazebo/worlds/$exercise_number/$map_name "$copy_path"
-        uri="_cone"
+        uri="_static"
         sed -i "s|\(<uri>model://iti0201_robot\)[^<>]*\(</uri>\)|\1${uri}\2|" $copy_path
         sed -i "s|\(<name>iti0201_robot\)[^<>]*\(</name>\)|\1${uri}\2|" $copy_path
-        echo "IR Sensors with cone"
+        echo "Static grabber"
     fi
 else
     map_number+="_custom"
