@@ -13,12 +13,10 @@ if ! [ ${#ROS_DISTRO} -ge 1 ]; then
   #  Install ROS
   printf "${RED}ROS IS NOT DETECTED!!! Initializing automatic install...${NC}\n\n"
   sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-  sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+  sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
   sudo apt update
-  sudo apt install ros-melodic-desktop-full
-  sudo rosdep init
-  rosdep update
-  echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+  sudo apt install ros-noetic-desktop-full
+  echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
   source ~/.bashrc
   sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
 
@@ -57,7 +55,7 @@ if command -v python3 &>/dev/null; then
 else
   printf "${RED}Python 3 is not installed!\n Installing...!${NC}\n"
   sudo apt-get update
-  sudo apt-get install python3.6
+  sudo apt-get install python3.9
 fi
 
 #  Check if pip is installed.
@@ -86,7 +84,7 @@ done
 
 # Check python directories
 printf "\nChecking python directories...\n"
-declare -a dirs=("python2.7" "python3.6")
+declare -a dirs=("python2.7" "python3.9")
 for dir in "${dirs[@]}"
 do
   if [ -d ~/.local/lib/$dir/site-packages ]; then
@@ -113,6 +111,5 @@ ${CYAN}source /opt/ros/melodic/setup.bash
 source ~/catkin_ws/devel/setup.bash${NC}
 ${YELLOW}Now start the simulation${NC}, if it says that ${RED}cannot connect to the roscore${NC} then
 open a new terminal and write ${CYAN_B}roscore${NC} and try the simulation script again.
-${CYAN_B}GOOD LUCK with the subject!${NC} You're literally gonna need it.
 ${YELLOW}Now you are done!${NC}\n\n"
 exit 1
