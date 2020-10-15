@@ -18,7 +18,7 @@ if ! [ ${#ROS_DISTRO} -ge 1 ]; then
   sudo apt-get install -y ros-noetic-desktop-full
   echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
   source ~/.bashrc
-  sudo apt-get install -y python-rosinstall python-rosinstall-generator python-wstool build-essential
+  sudo apt-get install -y python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
 
   #  Validate ROS installation.
   if ! [ ${#ROS_DISTRO} -ge 1 ]; then
