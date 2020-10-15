@@ -83,7 +83,7 @@ done
 
 # Check python directories
 printf "\nChecking python directories...\n"
-declare -a dirs=("python2.7" "python3.9")
+declare -a dirs=("python3.9")
 for dir in "${dirs[@]}"
 do
   if [ -d ~/.local/lib/$dir/site-packages ]; then
