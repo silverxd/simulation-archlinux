@@ -94,14 +94,17 @@ do
     mkdir -p ~/.local/lib/$dir/site-packages
     printf "${GREEN}lib/$dir/site-packages is created.${NC}\n"
   fi
+
+  rm -f ~/.local/lib/$dir/site-packages/PiBot.py
+  ln -s ~/catkin_ws/src/pibot_controls/PiBot.py ~/.local/lib/$dir/site-packages
 done
 
-PYTHONDIR=~/.local/lib/$(ls ~/.local/lib/ | grep python3)/site-packages
-printf "${GREEN}Python directory is ${NC}$PYTHONDIR\n"
+#PYTHONDIR=~/.local/lib/$(ls ~/.local/lib/ | grep python3)/site-packages
+#printf "${GREEN}Python directory is ${NC}$PYTHONDIR\n"
 
 # PiBot.py file transaction.
-rm -f $PYTHONDIR/PiBot.py
-ln -s ~/catkin_ws/src/pibot_controls/PiBot.py $PYTHONDIR
+#rm -f $PYTHONDIR/PiBot.py
+#ln -s ~/catkin_ws/src/pibot_controls/PiBot.py $PYTHONDIR
 
 printf "\n${YELLOW}The script has finished successfully!${NC}
 Before you start developing, you need to set the bashrc to the correct source.
