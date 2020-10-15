@@ -41,7 +41,7 @@ cd catkin_ws
 printf "${GREEN}Cloning simulation repository...${NC}\n\n"
 git clone https://github.com/iti0201/simulation src
 source ~/.bashrc
-catkin_make -DCMAKE_CXX_FLAGS="-std=c++11"
+catkin_make -DCMAKE_CXX_FLAGS="-std=c++17"
 sudo rm -rf /usr/bin/robot_test /usr/bin/script_launch
 DIR=$HOME/catkin_ws/src/pibot_controls
 printf "\nCreating symlinks...\n\n"
