@@ -15,10 +15,10 @@ if ! [ ${#ROS_DISTRO} -ge 1 ]; then
   sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
   sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
   sudo apt update
-  sudo apt install ros-noetic-desktop-full
+  sudo apt-get install -y ros-noetic-desktop-full
   echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
   source ~/.bashrc
-  sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
+  sudo apt-get install -y python-rosinstall python-rosinstall-generator python-wstool build-essential
 
   #  Validate ROS installation.
   if ! [ ${#ROS_DISTRO} -ge 1 ]; then
@@ -50,19 +50,18 @@ sudo ln -s $DIR/script_launch /usr/bin
 
 #  Check if python is installed.
 printf "Checking python...\n"
-if command -v python3 &>/dev/null; then
-  printf "${GREEN}Python 3 detected!${NC}\n"
+if command -v python3.9 &>/dev/null; then
+  printf "${GREEN}Python 3.9 detected!${NC}\n"
 else
-  printf "${RED}Python 3 is not installed!\n Installing...!${NC}\n"
+  printf "${RED}Python 3.9 is not installed!\n Installing...!${NC}\n"
   sudo apt-get update
-  sudo apt-get install python3.9
+  sudo apt-get install -y python3.9
 fi
 
 #  Check if pip is installed.
 if python -c "import python3-pip" &> /dev/null; then
   printf "${GREEN}Installing pip...${NC}\n"
-  sudo apt-get install python3-pip
-  sudo apt-get update
+  sudo apt-get install -y python3-pip
   printf "${GREEN}pip3 is installed!${NC}\n"
 else
   printf "${GREEN}pip3 detected!${NC}\n\n"
@@ -105,9 +104,9 @@ ln -s ~/catkin_ws/src/pibot_controls/PiBot.py $PYTHONDIR
 
 printf "\n${YELLOW}The script has finished successfully!${NC}
 Before you start developing, you need to set the bashrc to the correct source.
-To do that write into the terminal ${CYAN}nano ~/.bashrc${NC}
+To do that write into the terminal ${CYAN}vim ~/.bashrc${NC}
 The source variables at the bottom of the file have to be
-${CYAN}source /opt/ros/melodic/setup.bash
+${CYAN}source /opt/ros/noetic/setup.bash
 source ~/catkin_ws/devel/setup.bash${NC}
 ${YELLOW}Now start the simulation${NC}, if it says that ${RED}cannot connect to the roscore${NC} then
 open a new terminal and write ${CYAN_B}roscore${NC} and try the simulation script again.
