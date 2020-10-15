@@ -60,7 +60,7 @@ else
 fi
 
 #  Check if pip is installed.
-if pip3 -V &> /dev/null; then
+if command -v pip3 &> /dev/null; then
   printf "${GREEN}Installing pip...${NC}\n"
   sudo apt-get install -y python3-pip
   printf "${GREEN}pip3 is installed!${NC}\n"
@@ -73,7 +73,7 @@ printf "Checking packages...\n"
 declare -a packages=("rospkg" "catkin_pkg")
 for package in "${packages[@]}"
 do
-  if python -c "import $package" &> /dev/null; then
+  if python3 -c "import $package" &> /dev/null; then
     printf "${GREEN}$package detected!${NC}\n"
   else
     printf "Installing $package\n"
