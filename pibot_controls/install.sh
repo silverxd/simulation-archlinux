@@ -60,7 +60,7 @@ else
 fi
 
 #  Check if pip is installed.
-if python -c "import python3-pip" &> /dev/null; then
+if pip3 -V &> /dev/null; then
   printf "${GREEN}Installing pip...${NC}\n"
   sudo apt-get install -y python3-pip
   printf "${GREEN}pip3 is installed!${NC}\n"
@@ -84,7 +84,7 @@ done
 
 # Check python directories
 printf "\nChecking python directories...\n"
-declare -a dirs=("python3.9")
+declare -a dirs=("python3.8" "python3.9")
 for dir in "${dirs[@]}"
 do
   if [ -d ~/.local/lib/$dir/site-packages ]; then
