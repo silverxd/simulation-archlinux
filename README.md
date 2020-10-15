@@ -2,9 +2,9 @@
 
 ## Virtuaalmasin
 
-### Arvutiklassi arvuti / Windows 10
-
 Virtuaalmasina Hyper-V kujutis asub aadressil: [http://dijkstra.cs.ttu.ee/~Gert.Kanter/iti0201/](http://dijkstra.cs.ttu.ee/~Gert.Kanter/iti0201/)
+
+### Arvutiklassi arvuti / Windows 10
 
 Kui kasutate arvutiklassi arvutit, siis salvestage see `.vhdx` fail kettale `D:` (datadrive).
 
@@ -13,12 +13,12 @@ Kui kasutate arvutiklassi arvutit, siis salvestage see `.vhdx` fail kettale `D:`
 Juhul kui te kasutate oma arvutit ja mitte Windows 10 operatsioonisüsteemi, siis saab virtuaalmasinat kasutada nt [VirtualBox tarkvaraga](https://www.virtualbox.org/wiki/Downloads).
 
 Hyper-V kujutise teisendada VirtualBoxile sobivale kujule alljärgneva käsuga käsurealt:
-Windowsis
+#### Windowsis
 ```
 c:\ > "C:\Program Files\Oracle\VirtualBox\VBoxManage" clonemedium disk /full/path/to/inputdisk/vmdisk.vhdx /full/path/to/outputdisk/vmdisk.vdi --format VDI
 ```
 
-Linuxis
+#### Linuxis
 
 ```
 vboxmanage clonemedium disk /full/path/to/inputdisk/vmdisk.vhdx /full/path/to/outputdisk/vmdisk.vdi --format VDI
