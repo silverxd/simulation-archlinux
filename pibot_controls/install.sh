@@ -51,7 +51,7 @@ sudo ln -s $DIR/script_launch /usr/bin
 
 #  Check if python is installed.
 printf "Checking python...\n"
-if command -v python3.9 &>/dev/null; then
+if [ -x "$(command -v python3.9)" ]; then
   printf "${GREEN}Python 3.9 detected!${NC}\n"
 else
   printf "${RED}Python 3.9 is not installed!\n Installing...!${NC}\n"
@@ -60,7 +60,7 @@ else
 fi
 
 #  Check if pip is installed.
-if command -v pip3 &> /dev/null; then
+if ! [ -x "$(command -v pip3)" ]; then
   printf "${GREEN}Installing pip...${NC}\n"
   sudo apt-get install -y python3-pip
   printf "${GREEN}pip3 is installed!${NC}\n"
