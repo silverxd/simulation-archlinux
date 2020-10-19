@@ -31,7 +31,7 @@ def get_intensity(image):
     intensity_sum = 0
     count = len(image.data)
     for pixel in image.data:
-        intensity_sum += ord(pixel)
+        intensity_sum += pixel
 
     return intensity_sum/count
 
