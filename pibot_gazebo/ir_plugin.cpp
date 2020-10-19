@@ -30,6 +30,8 @@ private:
   int realSensors = -1;
   double frontMaxDistance = 0.5;
   double rearRawConstant = 350;
+  int throttle_count = 0;
+  int throttle = 99;
 
 public:
   void Load(sensors::SensorPtr sensor, sdf::ElementPtr sdf)
@@ -197,12 +199,16 @@ public:
 
   void OnUpdate()
   {
-    raySensor->SetActive(false);
+    if (throttle_count++ > throttle)
+    {
+      throttle_count = 0;
+      raySensor->SetActive(false);
 
-    publishRawData();
-    publishMinValue();
+      publishRawData();
+      publishMinValue();
 
-    raySensor->SetActive(true);
+      raySensor->SetActive(true);
+    }
   }
 };
 GZ_REGISTER_SENSOR_PLUGIN(IRPlugin)
