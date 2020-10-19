@@ -161,7 +161,7 @@
         <ray>
           <scan>
             <horizontal>
-              <samples>100</samples>
+              <samples>1</samples>
               <resolution>1</resolution>
             </horizontal>
           </scan>
@@ -210,7 +210,7 @@
           <ray>
             <scan>
               <horizontal>
-                <samples>100</samples>
+                <samples>1</samples>
                 <resolution>1</resolution>
               </horizontal>
             </scan>
@@ -259,7 +259,7 @@
           <ray>
             <scan>
               <horizontal>
-                <samples>100</samples>
+                <samples>1</samples>
                 <resolution>1</resolution>
               </horizontal>
             </scan>
@@ -311,7 +311,7 @@
         <ray>
           <scan>
             <horizontal>
-              <samples>100</samples>
+              <samples>1</samples>
               <resolution>1</resolution>
             </horizontal>
           </scan>
@@ -360,7 +360,7 @@
         <ray>
           <scan>
             <horizontal>
-              <samples>100</samples>
+              <samples>1</samples>
               <resolution>1</resolution>
             </horizontal>
           </scan>
@@ -409,7 +409,7 @@
         <ray>
           <scan>
             <horizontal>
-              <samples>100</samples>
+              <samples>1</samples>
               <resolution>1</resolution>
             </horizontal>
           </scan>
@@ -458,7 +458,7 @@
         <ray>
           <scan>
             <horizontal>
-              <samples>100</samples>
+              <samples>1</samples>
               <resolution>1</resolution>
             </horizontal>
           </scan>
@@ -507,7 +507,7 @@
         <ray>
           <scan>
             <horizontal>
-              <samples>100</samples>
+              <samples>1</samples>
               <resolution>1</resolution>
             </horizontal>
           </scan>
@@ -557,7 +557,7 @@
         <ray>
           <scan>
             <horizontal>
-              <samples>100</samples>
+              <samples>1</samples>
               <resolution>1</resolution>
             </horizontal>
           </scan>
@@ -610,8 +610,8 @@
         <camera name="head">
           <horizontal_fov>0.4</horizontal_fov>
           <image>
-            <width>48</width>
-            <height>48</height>
+            <width>16</width>
+            <height>16</height>
             <format>L8</format>
           </image>
           <clip>
@@ -671,8 +671,8 @@
         <camera name="head">
           <horizontal_fov>0.4</horizontal_fov>
           <image>
-            <width>48</width>
-            <height>48</height>
+            <width>16</width>
+            <height>16</height>
             <format>L8</format>
           </image>
           <clip>
@@ -734,8 +734,8 @@
         <camera name="head">
           <horizontal_fov>0.4</horizontal_fov>
           <image>
-            <width>48</width>
-            <height>48</height>
+            <width>16</width>
+            <height>16</height>
             <format>L8</format>
           </image>
           <clip>
@@ -795,8 +795,8 @@
         <camera name="head">
           <horizontal_fov>0.4</horizontal_fov>
           <image>
-            <width>48</width>
-            <height>48</height>
+            <width>16</width>
+            <height>16</height>
             <format>L8</format>
           </image>
           <clip>
@@ -858,8 +858,8 @@
         <camera name="head">
           <horizontal_fov>0.4</horizontal_fov>
           <image>
-            <width>48</width>
-            <height>48</height>
+            <width>16</width>
+            <height>16</height>
             <format>L8</format>
           </image>
           <clip>
@@ -919,8 +919,8 @@
         <camera name="head">
           <horizontal_fov>0.4</horizontal_fov>
           <image>
-            <width>48</width>
-            <height>48</height>
+            <width>16</width>
+            <height>16</height>
             <format>L8</format>
           </image>
           <clip>
