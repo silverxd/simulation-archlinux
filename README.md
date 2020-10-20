@@ -8,6 +8,11 @@ Virtuaalmasina Hyper-V kujutis asub aadressil: [http://dijkstra.cs.ttu.ee/~Gert.
 
 Kui kasutate arvutiklassi arvutit, siis salvestage see `.vhdx` fail kettale `D:` (datadrive).
 
+#### Kõrgema resolutsiooni toe aktiveerimine
+```
+Set-VM -VMName <your_vm_name> -EnhancedSessionTransportType HvSocket
+```
+
 ### Oma arvuti / mitte Windows 10
 
 Juhul kui te kasutate oma arvutit ja mitte Windows 10 operatsioonisüsteemi, siis saab virtuaalmasinat kasutada nt [VirtualBox tarkvaraga](https://www.virtualbox.org/wiki/Downloads).
