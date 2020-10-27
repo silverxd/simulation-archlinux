@@ -46,6 +46,9 @@ class PiBot:
     def sleep(self, time_in_seconds):
         rospy.sleep(time_in_seconds)
 
+    def get_time(self):
+        return rospy.get_time()
+
     def make_callback_for_sensor(self, attribute_name):
         def callback(value):
             setattr(self, attribute_name, value.data)
@@ -99,6 +102,9 @@ class PiBot:
         rospy.Subscriber("robot/imu/angle", Float32, self.make_callback_for_sensor("rotation_angle"))
 
     def __init__(self, robot_nr=1):
+        # Init node
+        rospy.init_node("pibot", anonymous=True)
+
         # Distance sensors
         self.front_left_laser = 0
         self.front_middle_laser = 0
@@ -121,8 +127,6 @@ class PiBot:
         # Encoders
         self.right_wheel_encoder = 0
         self.left_wheel_encoder = 0
-
-        rospy.init_node("pibot", anonymous=True)
 
         # Publishers
         self.right_wheel_speed_publisher = rospy.Publisher("/robot/wheel/right/vel_cmd", Float32, queue_size=1)
