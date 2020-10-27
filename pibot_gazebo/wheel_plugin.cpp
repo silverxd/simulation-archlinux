@@ -62,6 +62,8 @@ private:
   double leftWheelCoefficient = 1.0;
   double rightWheelCoefficient = 1.0;
   std::chrono::time_point<std::chrono::system_clock> lastTime = std::chrono::system_clock::now();
+  int throttle_count = 0;
+  int throttle = 49;
 
 public:
   void Load(physics::ModelPtr _parent, sdf::ElementPtr /*_sdf*/)
@@ -287,10 +289,14 @@ public:
   // Called by the world update start event
   void OnUpdate()
   {
-    setCoefficients();
-    addNoisePrintVelocities();
-    setVelocities();
-    publishJointStates();
+    if (throttle_count++ >= throttle)
+    {
+      throttle_count = 0;
+      setCoefficients();
+      addNoisePrintVelocities();
+      setVelocities();
+      publishJointStates();
+    }
   }
 
 private:

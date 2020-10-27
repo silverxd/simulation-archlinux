@@ -199,7 +199,7 @@ public:
 
   void OnUpdate()
   {
-    if (throttle_count++ > throttle)
+    if (throttle_count++ >= throttle)
     {
       throttle_count = 0;
       raySensor->SetActive(false);
