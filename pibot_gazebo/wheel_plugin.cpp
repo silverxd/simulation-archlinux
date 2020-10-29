@@ -2,6 +2,7 @@
 #include <gazebo/gazebo.hh>
 #include <gazebo/physics/Joint.hh>
 #include <gazebo/physics/Model.hh>
+#include <ignition/math/Pose3.hh>
 
 #include <thread>
 #include <ros/console.h>
@@ -10,6 +11,7 @@
 #include <ros/subscribe_options.h>
 #include <std_msgs/Float32.h>
 #include <std_msgs/Int32.h>
+#include <geometry_msgs/Pose.h>
 
 // Boost
 #include <boost/thread.hpp>
@@ -47,6 +49,12 @@ private:
   //Joint state publisher
   ros::Publisher rightWheelJointStatePublisher;
   ros::Publisher leftWheelJointStatePublisher;
+
+  // TEMP vel pub
+  ros::Publisher rightWheelVelocityPublisher;
+  ros::Publisher leftWheelVelocityPublisher;
+
+  ros::Publisher modelPosePublisher;
 
   // A ROS callbackqueue that helps process messages
   ros::CallbackQueue rosQueue;
@@ -100,8 +108,13 @@ public:
 
   void createPublishers() {
     //Create joint state publishers
-    this->rightWheelJointStatePublisher = this->rosNode->advertise<std_msgs::Int32>("/robot/wheel/right/position", 1000);
-    this->leftWheelJointStatePublisher = this->rosNode->advertise<std_msgs::Int32>("/robot/wheel/left/position", 1000);
+    this->rightWheelJointStatePublisher = this->rosNode->advertise<std_msgs::Int32>("/robot/wheel/right/position", 100);
+    this->leftWheelJointStatePublisher = this->rosNode->advertise<std_msgs::Int32>("/robot/wheel/left/position", 100);
+
+    this->rightWheelVelocityPublisher = this->rosNode->advertise<std_msgs::Float32>("/robot/wheel/right/velocity", 100);
+    this->leftWheelVelocityPublisher = this->rosNode->advertise<std_msgs::Float32>("/robot/wheel/left/velocity", 100);
+
+    this->modelPosePublisher = this->rosNode->advertise<geometry_msgs::Pose>("/robot/pose", 100);
   }
 
   void initializeUpdate() {
@@ -209,6 +222,23 @@ public:
 
     this->rightWheelJointStatePublisher.publish(rightWheelPosition);
     this->leftWheelJointStatePublisher.publish(leftWheelPosition);
+    
+    std_msgs::Float32 velocity;
+    velocity.data = this->leftWheelJoint->GetVelocity(0);
+    this->leftWheelVelocityPublisher.publish(velocity);
+    velocity.data = this->rightWheelJoint->GetVelocity(0);
+    this->rightWheelVelocityPublisher.publish(velocity);
+
+    geometry_msgs::Pose pose;
+    ignition::math::Pose3d modelPose = this->model->WorldPose();
+    pose.position.x = modelPose.Pos().X();
+    pose.position.y = modelPose.Pos().Y();
+    pose.position.z = modelPose.Pos().Z();
+    pose.orientation.x = modelPose.Rot().X();
+    pose.orientation.y = modelPose.Rot().Y();
+    pose.orientation.z = modelPose.Rot().Z();
+    pose.orientation.w = modelPose.Rot().W();
+    this->modelPosePublisher.publish(pose);
   }
 
   template <typename T>
