@@ -888,7 +888,7 @@
     </visual>
   </link>
   <joint name="pi_camera_to_pole" type="fixed">
-    <origin rpy="0 0 -1.5707" xyz="0 -0.0104 0"/>
+    <origin rpy="0 0 -1.1707" xyz="0 -0.0104 0"/>
     <child link="pi_camera"/>
     <parent link="camera_stand_pole"/>
   </joint>
@@ -898,10 +898,10 @@
       <always_on>1</always_on>
       <visualize>false</visualize>
       <camera name="head">
-        <horizontal_fov>1.3962634</horizontal_fov>
+        <horizontal_fov>1.09</horizontal_fov>
         <image>
-          <width>800</width>
-          <height>800</height>
+          <width>1080</width>
+          <height>1080</height>
           <format>R8G8B8</format>
         </image>
         <clip>
