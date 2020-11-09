@@ -2,7 +2,9 @@ import rospy
 from std_msgs.msg import Int32
 from std_msgs.msg import Float32
 from std_msgs.msg import Float64
+from sensor_msgs.msg import Image
 from math import degrees
+import opencv
 
 
 class Validator:
@@ -104,6 +106,10 @@ class PiBot:
     def __init__(self, robot_nr=1):
         # Init node
         rospy.init_node("pibot", anonymous=True)
+
+        # Camera disabled
+        self.camera_enabled = False
+        self.camera = {'data': None}
 
         # Distance sensors
         self.front_left_laser = 0
@@ -266,3 +272,25 @@ class PiBot:
 
     def get_rotation(self):
         return degrees(self.rotation_angle - self.starting_rotation)
+
+    def camera_callback(self, message):
+        self.camera['data'] = message.data
+        self.camera['width'] = message.width
+        self.camera['height'] = message.height
+        self.image_processor.set_width(self.camera['width'])
+        self.image_processor.set_height(self.camera['height'])
+
+    def subscribe_to_camera(self):
+        rospy.Subscriber("/robot/camera/image_raw", Image, self.camera_callback)
+
+    def enable_camera(self):
+        if not self.camera_enabled:
+            self.image_processor = opencv.ImageProcessor()
+            self.subscribe_to_camera()
+            self.camera_enabled = True
+            self.sleep(0.2)
+
+    def get_objects_opencv(self):
+        if not self.camera_enabled:
+            self.enable_camera()
+        return self.image_processor.get_objects(self.camera['data'])
