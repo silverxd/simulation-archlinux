@@ -1007,7 +1007,7 @@
     </link>
 
     <joint type="fixed" name="pi_camera_to_pole">
-      <origin xyz="0 -0.0104 0" rpy="0 0 -1.1707"/>
+      <origin xyz="0. -0.0104 0" rpy="1.5708 0 -1.1707"/>
       <child link="pi_camera"/>
       <parent link="camera_stand_pole"/>
     </joint>
@@ -1022,7 +1022,7 @@
           <image>
             <width>1080</width>
             <height>1080</height>
-            <format>R8G8B8</format>
+            <format>B8G8R8</format>
           </image>
           <clip>
             <near>0.02</near>
