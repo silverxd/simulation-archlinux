@@ -23,28 +23,27 @@ class ImageProcessor:
             return np.ndarray((self.height, self.width, 3), np.uint8, buffer=sensor_image)
         return None
 
-    def process_image(self, src, outfile=None):
+    def process_mask(self, identifier, mask, image, color, outfile=None):
+        contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        return_value = []
+        for contour in contours:
+           if len(contour) > 5:
+            ((x, y), radius) = cv2.minEnclosingCircle(contour)
+            if outfile is not None:
+                cv2.circle(image,(int(x), int(y)), int(radius), color, 2)
+            return_value.append((identifier, (int(x), int(y)), int(radius)))
+        return return_value
+
+    def process_image(self, src, outfile=None) -> list:
         src = cv2.medianBlur(src, 17)
         hsv = cv2.cvtColor(src, cv2.COLOR_BGR2HSV)
-        mask_red = self.get_mask(hsv, 0, 20)
         kernel = np.ones((47, 47), np.uint8)
-        mask_red = cv2.morphologyEx(mask_red, cv2.MORPH_CLOSE, kernel)
-        cv2.imwrite("/home/iti0201/morph.png", mask_red)
-        mask_blue = self.get_mask(hsv, 240/2, 20)
-        return_value = []
-        contours, _ = cv2.findContours(mask_red, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        for contour in contours:
-           if len(contour) > 5:
-            ((x, y), radius) = cv2.minEnclosingCircle(contour)
-            cv2.circle(mask_red,(int(x), int(y)), int(radius), (255, 255, 255), 2)
-            return_value.append(("red sphere", (int(x), int(y)), int(radius)))
-        contours, _ = cv2.findContours(mask_blue, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        for contour in contours:
-           if len(contour) > 5:
-            ((x, y), radius) = cv2.minEnclosingCircle(contour)
-            return_value.append(("blue sphere", (int(x), int(y)), int(radius)))
+        mask_red = cv2.morphologyEx(self.get_mask(hsv, 0, 170), cv2.MORPH_CLOSE, kernel)
+        mask_blue = cv2.morphologyEx(self.get_mask(hsv, 240/2, 170), cv2.MORPH_CLOSE, kernel)
+        return_value = self.process_mask("red sphere", mask_red, src, (255, 255, 255), outfile) + \
+                       self.process_mask("blue sphere", mask_blue, src, (0, 255, 0), outfile)
         if outfile is not None:
-            cv2.imwrite(outfile, mask_red)
+            cv2.imwrite(outfile, src)
         return return_value
 
     def get_objects(self, image):
