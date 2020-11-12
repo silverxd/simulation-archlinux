@@ -4,7 +4,7 @@ from std_msgs.msg import Float32
 from std_msgs.msg import Float64
 from sensor_msgs.msg import Image
 from math import degrees
-import opencv
+import image_processor
 
 
 class Validator:
@@ -285,12 +285,12 @@ class PiBot:
 
     def enable_camera(self):
         if not self.camera_enabled:
-            self.image_processor = opencv.ImageProcessor()
+            self.image_processor = image_processor.ImageProcessor()
             self.subscribe_to_camera()
             self.camera_enabled = True
             self.sleep(0.2)
 
-    def get_objects_opencv(self):
+    def get_camera_objects(self):
         if not self.camera_enabled:
             self.enable_camera()
         return self.image_processor.get_objects(self.camera['data'])
