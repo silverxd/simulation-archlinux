@@ -70,7 +70,7 @@ private:
   double leftWheelCoefficient = 1.0;
   double rightWheelCoefficient = 1.0;
   std::chrono::time_point<std::chrono::system_clock> lastTime = std::chrono::system_clock::now();
-  int throttle_count = 0;
+  int throttle_count = 49;
   int throttle = 49;
 
 public:
@@ -324,9 +324,9 @@ public:
       throttle_count = 0;
       setCoefficients();
       addNoisePrintVelocities();
-      setVelocities();
       publishJointStates();
     }
+    setVelocities();
   }
 
 private:
