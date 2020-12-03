@@ -3,6 +3,7 @@ from std_msgs.msg import Int32
 from std_msgs.msg import Float32
 from std_msgs.msg import Float64
 from sensor_msgs.msg import Image
+from std_msgs.msg import String
 from math import degrees
 import image_processor
 
@@ -285,7 +286,8 @@ class PiBot:
 
     def enable_camera(self):
         if not self.camera_enabled:
-            self.image_processor = image_processor.ImageProcessor()
+            self.objects_publisher = rospy.Publisher("/robot/camera/objects", String, queue_size=1)
+            self.image_processor = image_processor.ImageProcessor(self.objects_publisher)
             self.subscribe_to_camera()
             self.camera_enabled = True
             self.sleep(0.2)
@@ -293,4 +295,4 @@ class PiBot:
     def get_camera_objects(self):
         if not self.camera_enabled:
             self.enable_camera()
-        return self.image_processor.get_objects(self.camera['data'])
+        return self.image_processor.get_objects(self.camera['data'], String())

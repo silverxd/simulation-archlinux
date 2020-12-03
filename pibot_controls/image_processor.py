@@ -3,9 +3,14 @@ import numpy as np
 import sys
 
 class ImageProcessor:
-    def __init__(self):
+    def __init__(self, publisher=None):
         self.width = None
         self.height = None
+        if publisher is None:
+            self.publisher = None
+        else:
+            self.publisher = publisher
+
 
     def set_width(self, width):
         self.width = width
@@ -46,11 +51,16 @@ class ImageProcessor:
             cv2.imwrite(outfile, src)
         return return_value
 
-    def get_objects(self, image):
+    def get_objects(self, image, message=None):
         src = self.convert_sensor_msgs_image_to_opencv_image(image)
         if src is None:
             return []
-        return self.process_image(src)
+        result = self.process_image(src)
+        if self.publisher is not None:
+            if message is not None:
+                message.data = str(result)
+                self.publisher.publish(message)
+        return result
 
     def read_image_from_file(self, filename):
         src = cv2.imread(cv2.samples.findFile(filename), cv2.IMREAD_COLOR)
