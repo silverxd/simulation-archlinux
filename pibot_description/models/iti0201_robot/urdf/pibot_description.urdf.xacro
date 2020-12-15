@@ -1192,7 +1192,7 @@
       <parent link="base_with_casters"/>
     </joint>
 
-    <link name="grabber_pole">
+    <link name="grabber_pole_link">
       <inertial>
         <mass value="0.001"/>
         <inertia ixx="0.0000337" ixy="0.0" ixz="0.0" 
@@ -1215,7 +1215,7 @@
     <!-- TODO -->
     <joint type="revolute" name="grabber_pole">
       <origin xyz="0 0 0" rpy="0 0 0" />
-      <child link="grabber_pole"/>
+      <child link="grabber_pole_link"/>
       <parent link="pole_rotation_reference"/>
       <limit effort="10.0" velocity="1.0" lower="0.0" upper="1.5"/>
       <axis xyz="0 0 1"/>
@@ -1272,7 +1272,7 @@
     <joint type="fixed" name="grabber_mount_to_pole">
       <origin xyz="0 0 0" rpy="1.5707 0 3.1414"/>
       <child link="grabber_mount"/>
-      <parent link="grabber_pole"/>
+      <parent link="grabber_pole_link"/>
     </joint>
 
     <link name="grabber_left_arm_joint">
