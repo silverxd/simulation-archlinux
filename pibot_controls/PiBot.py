@@ -152,6 +152,7 @@ class PiBot:
         self.UPDATE_TIME = 0.005
         self.WHEEL_DIAMETER = 0.03
         self.AXIS_LENGTH = 0.14
+        self.CAMERA_RESOLUTION = (1080, 1080)  # Width, height
 
         # Wait for initialisation to finish
         rospy.sleep(2)
