@@ -153,6 +153,7 @@ class PiBot:
         self.WHEEL_DIAMETER = 0.03
         self.AXIS_LENGTH = 0.14
         self.CAMERA_RESOLUTION = (1080, 1080)  # Width, height
+        self.CAMERA_FIELD_OF_VIEW = (62.2, 48.8)  # Horizontal,vertical
 
         # Wait for initialisation to finish
         rospy.sleep(2)
