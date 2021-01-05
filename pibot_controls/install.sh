@@ -45,9 +45,10 @@ catkin_make -DCMAKE_CXX_FLAGS="-std=c++17"
 sudo rm -rf /usr/bin/robot_test /usr/bin/script_launch
 DIR=$HOME/catkin_ws/src/pibot_controls
 printf "\nCreating symlinks...\n\n"
-sudo rm -rf /usr/bin/robot_test /usr/bin/script_launch
+sudo rm -rf /usr/bin/robot_test /usr/bin/script_launch /usr/bin/update_files
 sudo ln -s $DIR/robot_test /usr/bin
 sudo ln -s $DIR/script_launch /usr/bin
+sudo ln -s $DIR/update_files /usr/bin
 
 #  Check if python is installed.
 printf "Checking python...\n"
