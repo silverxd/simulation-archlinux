@@ -96,7 +96,9 @@ do
   fi
 
   rm -f ~/.local/lib/$dir/site-packages/PiBot.py
+  rm -f ~/.local/lib/$dir/site-packages/image_processor.py
   ln -s ~/catkin_ws/src/pibot_controls/PiBot.py ~/.local/lib/$dir/site-packages
+  ln -s ~/catkin_ws/src/pibot_controls/image_processor.py ~/.local/lib/$dir/site-packages
 done
 
 #PYTHONDIR=~/.local/lib/$(ls ~/.local/lib/ | grep python3)/site-packages
