@@ -2,34 +2,7 @@
 
 ## Virtuaalmasin
 
-Virtuaalmasina Hyper-V kujutis asub aadressil: [http://dijkstra.cs.ttu.ee/~Gert.Kanter/iti0201/](http://dijkstra.cs.ttu.ee/~Gert.Kanter/iti0201/)
-
-### Arvutiklassi arvuti / Windows 10
-
-Kui kasutate arvutiklassi arvutit, siis salvestage see `.vhdx` fail kettale `D:` (datadrive).
-
-#### Kõrgema resolutsiooni toe aktiveerimine
-```
-Set-VM -VMName <your_vm_name> -EnhancedSessionTransportType HvSocket
-```
-
-### Oma arvuti / mitte Windows 10
-
-Juhul kui te kasutate oma arvutit ja mitte Windows 10 operatsioonisüsteemi, siis saab virtuaalmasinat kasutada nt [VirtualBox tarkvaraga](https://www.virtualbox.org/wiki/Downloads).
-
-Hyper-V kujutise teisendada VirtualBoxile sobivale kujule alljärgneva käsuga käsurealt:
-#### Windowsis
-```
-c:\ > "C:\Program Files\Oracle\VirtualBox\VBoxManage" clonemedium disk /full/path/to/inputdisk/vmdisk.vhdx /full/path/to/outputdisk/vmdisk.vdi --format VDI
-```
-
-#### Linuxis
-
-```
-vboxmanage clonemedium disk /full/path/to/inputdisk/vmdisk.vhdx /full/path/to/outputdisk/vmdisk.vdi --format VDI
-```
-When you have your vdi-file, use it to create a new virtual machine in Virtualbox, as per usual.
-
+Virtuaalmasina kujutis asub aadressil: [http://dijkstra.cs.ttu.ee/~Gert.Kanter/iti0201/](http://dijkstra.cs.ttu.ee/~Gert.Kanter/iti0201/). See on VirtualBox kujutis, mis tuleb importida VirtualBox rakenduses, et seda saaks jooksutada.
 
 ### Installeerimine ja seadistamine
 
@@ -84,15 +57,15 @@ robot_test [uni-id] [task-id] [world-id] [--noise] [--realmotors] [--blind] [--d
 
 `[world-id]` asemele tuleb panna maailma number (osadel ülesannetel on mitu testimismaailma), alates numbrist `1` (ja `2`, `3` jne).
 
-Võti `--noise` paneb kaugusanduritele müra.
+Võti `--noise` paneb kaugusanduritele müra (rohkem päris elule sarnaseks).
 
-Võti `--realmotors` paneb mootori kiirustele müra.
+Võti `--realmotors` paneb mootori kiirustele müra (rohkem päris elule sarnaseks).
 
-Võti `--blind` piirab roboti laserandurite maksimaalset nägemiskaugust.
+Võti `--blind` piirab roboti laserandurite maksimaalset nägemiskaugust (rohkem päris elule sarnaseks).
 
-Võti `--realism` aktiveerib võtmed `--noise`, `--realmotors` ja `--blind`.
+Võti `--realism` aktiveerib võtmed `--noise`, `--realmotors` ja `--blind` (võimalikult "realistlik").
 
-Võti `--debug` paneb simulatsiooni konsooli printima rataste tegelikke kiirusi koos müraga.
+Võti `--debug` paneb simulatsiooni konsooli printima rataste tegelikke kiirusi koos müraga (abiks otse kontrolleri arendamise faasis).
 
 Roboti algasukoha saab määrata käsureal järgmiste võtmetega:
 
@@ -105,9 +78,9 @@ Roboti algasukoha saab määrata käsureal järgmiste võtmetega:
 
 Näiteks:
 ```
-robot_test muudamind M4 1 -x=1.5 -y=1.5 -Y=1.57
+robot_test muudamind SIM 1
 
-robot_test muudamind S 1
+robot_test muudamind M4 1 -x=1.5 -y=1.5 -Y=1.57
 ```
 
 Peale käsu käivitamist, tõmmatakse Gitlab-ist teie salvest lahendus ja pannakse see simulatsioonis käima.
