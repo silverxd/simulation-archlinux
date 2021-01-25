@@ -8,6 +8,8 @@ DIRECTORY="iti0201-2021"
 if [ "$#" -lt 3 ]; then
     echo "USAGE: robot_test [uni-id] [exercise_number] [map_number]"
     echo "You can add git branch name with -b=[branch]"
+    echo "You can add teammate uni-id (if code is in that student's repository) -t=[teammate_uniid]"
+    echo "You can add team repository with -r=[repo_name]"
     echo "You can use your SSH key if you specify --key"
     echo "You can also add optional arguments of -w=[wait_time], -x=[x] and -y=[y], -Y=[yaw], --noise, --realmotors, --debug, --static"
     exit 0
@@ -29,10 +31,20 @@ debug=0
 static=false
 branch=master
 key=0
+team=
+repo=$DIRECTORY
 
 for i in "$@"
 do
 case $i in
+    -t=*|--team=*)
+    team="${i#*=}"
+    shift # past argument=value
+    ;;
+    -r=*|--repo=*)
+    repo="${i#*=}"
+    shift # past argument=value
+    ;;
     -b=*|--branch=*)
     branch="${i#*=}"
     shift # past argument=value
@@ -102,11 +114,19 @@ case $i in
 esac
 done
 
-git_address="https://$git_user_name@gitlab.cs.ttu.ee/$git_user_name/$DIRECTORY.git"
 
-if [[ "$key" -eq 1 ]]; then
-    git_address="git@gitlab.cs.ttu.ee:$git_user_name/$DIRECTORY.git"
+if [[ ! -z "$team" ]]; then
+    git_address="https://$git_user_name@gitlab.cs.ttu.ee/$team/$repo.git"
+    if [[ "$key" -eq 1 ]]; then
+        git_address="git@gitlab.cs.ttu.ee:$team/$repo.git"
+    fi
+else
+    git_address="https://$git_user_name@gitlab.cs.ttu.ee/$git_user_name/$repo.git"
+    if [[ "$key" -eq 1 ]]; then
+        git_address="git@gitlab.cs.ttu.ee:$git_user_name/$repo.git"
+    fi
 fi
+
 
 echo $git_address
 
