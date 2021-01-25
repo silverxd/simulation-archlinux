@@ -137,7 +137,7 @@ if [ -d "$DIRECTORY" ]; then
     git checkout $branch
 else
     echo "Repository doesn't exist yet. Creating one now..."
-    git clone -b $branch $git_address
+    git clone -b $branch $git_address $DIRECTORY
     cd $DIRECTORY
 fi
 git submodule update --init --remote --merge
