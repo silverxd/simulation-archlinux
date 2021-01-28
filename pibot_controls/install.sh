@@ -35,6 +35,16 @@ fi
 #  Setup simulation files.
 printf "${GREEN}Installing ITI0201 simulation...${NC}\n\n"
 cd $HOME
+if [ -d "catkin_ws" ]; then
+  printf "${RED} I will delete $HOME/catkin_ws directory, if you are ready, type 'YES' to continue!${NC}\n"
+  read confirm
+  if [ "$confirm" = "YES" ]; then
+    echo "Deleting catkin_ws..."
+  else
+    echo "Exiting..."
+    exit
+  fi
+fi
 rm -rf catkin_ws
 mkdir catkin_ws
 cd catkin_ws
