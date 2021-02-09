@@ -63,6 +63,10 @@ Näide tiimikaaslase (uni-id näites `temaid`) loodud salves (näites on salve n
 ```
 robot_test minuid L1 1 -t=temaid -r=iti0201-temaid-minuid
 ```
+Kui teie lahendus asub mõnes muus harus kui vaikimisi haru, siis saate kasutada võtit `-b` haru muutmiseks:
+```
+robot_test minuid L1 1 -t=temaid -r=iti0201-temaid-minuid -b=mybranch
+```
 
 Võti `--noise` paneb kaugusanduritele müra (rohkem päris elule sarnaseks).
 
