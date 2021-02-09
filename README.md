@@ -48,7 +48,7 @@ Terminali (käsurea) saab käivitada nupukombinatsiooniga *Ctrl+Alt+T*.
 Kirjuta terminali käsk
 
 ```
-robot_test [uni-id] [task-id] [world-id] [--noise] [--realmotors] [--blind] [--debug] [--realism] -x=[x] -y=[y] -Y=[Y]
+robot_test [uni-id] [task-id] [world-id] [-t=(teammate_uniid_where_repo_is)] [-r=(repository_name)] [-b=(branch_name)] [--noise] [--realmotors] [--blind] [--debug] [--realism] [-x=(x)] [-y=(y)] [-Y=(Y)] [--key]
 ```
 
 `[uni-id]` asemele tuleb panna oma Uni-ID (nt `karamb`).
@@ -56,6 +56,13 @@ robot_test [uni-id] [task-id] [world-id] [--noise] [--realmotors] [--blind] [--d
 `[task-id]` asemele tuleb panna ülesande kood (nt simulaatori ülesanne on `S`).
 
 `[world-id]` asemele tuleb panna maailma number (osadel ülesannetel on mitu testimismaailma), alates numbrist `1` (ja `2`, `3` jne).
+
+Tiimiülesande korral saate arendada tiimikaaslasega ühes salves kasutades võtmeid `-t` ja `-r` ja vajadusel ka `-b` võtit haru muutmiseks.
+
+Näide tiimikaaslase (uni-id näites `temaid`) loodud salves (näites on salve nimi `iti0201-2021-temaid-minuid`) `robot_test` kasutamiseks:
+```
+robot_test minuid L1 1 -t=temaid -r=iti0201-temaid-minuid
+```
 
 Võti `--noise` paneb kaugusanduritele müra (rohkem päris elule sarnaseks).
 
@@ -74,6 +81,8 @@ Roboti algasukoha saab määrata käsureal järgmiste võtmetega:
 `-y` määrab y koordinaadi
 
 `-Y` määrab roboti nurga
+
+Võti `--key` võimaldab kasutada SSH võtit parooli asemel. Selle funktsionaalsuse võimaldamiseks on vaja seadistada Gitlabis SSH võti, selle saavutamiseks on juhend Gitlabi manuaalis (https://docs.gitlab.com/ee/ssh/).
 
 
 Näiteks:
