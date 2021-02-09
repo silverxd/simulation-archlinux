@@ -67,6 +67,7 @@ Kui teie lahendus asub mõnes muus harus kui vaikimisi haru, siis saate kasutada
 ```
 robot_test minuid L1 1 -t=temaid -r=iti0201-temaid-minuid -b=mybranch
 ```
+Kui kood asub teie loodud salves, siis ei pea kasutama `-t` võtit.
 
 Võti `--noise` paneb kaugusanduritele müra (rohkem päris elule sarnaseks).
 
