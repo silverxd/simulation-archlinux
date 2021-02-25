@@ -1,0 +1,18 @@
+<launch>
+    <arg name="paused" default="false"/>
+    <arg name="gui" default="false"/>
+    <include file="$(find pibot_gazebo)/launch/default.launch">
+        <arg name="dir" value="S"/>
+        <arg name="map" value="1"/>
+        <arg name="noise" value="0"/>
+        <arg name="realmotors" value="0"/>
+        <arg name="blind" value="0"/>
+        <arg name="debug" value="0"/>
+    </include>
+    <test test-name="simple"
+          pkg="pibot_gazebo"
+          type="simple_test.py" 
+          time-limit="15.0"
+    />
+    <!--<node pkg="rosbag" type="record" name="rosbag_record_standard_data" respawn="true" output="screen" args="-O $(find bobble_controllers)/test/data/balance /bobble/bobble_balance_controller/bb_controller_status" />-->
+</launch>
