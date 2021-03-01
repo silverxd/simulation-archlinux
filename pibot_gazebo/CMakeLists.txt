@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(pibot_gazebo)
+
+if (POLICY CMP0048)
+  cmake_policy(SET CMP0048 NEW)
+endif (POLICY CMP0048)
+project(pibot_gazebo VERSION 1.0.0)
+add_compile_options(-std=c++17)
 
 find_package(roscpp REQUIRED)
 find_package(std_msgs REQUIRED)
@@ -11,6 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   gazebo_ros
 	std_msgs
+  rostest
 )
 
 # Depend on system install of Gazebo
@@ -32,4 +38,10 @@ catkin_package(
   DEPENDS
     roscpp
     gazebo_ros
+    rostest
 )
+
+if (CATKIN_ENABLE_TESTING)
+  # py tests
+  add_rostest(test/SIM/simple.test)
+endif()
