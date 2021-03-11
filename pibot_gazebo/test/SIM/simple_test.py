@@ -15,9 +15,9 @@ class TestLaunch(unittest.TestCase):
         timeout_t = rospy.get_time() + 5.0
         while not rospy.is_shutdown() and rospy.get_time() < timeout_t:
             rospy.sleep(0.1)
-            topics = rospy.get_published_topics()
+            topics = rospy.get_published_topics(namespace="/robot/ir")
             if len(topics) > 0:
-                print("TOPICS: ", topics)
+                print("TOPICS: ", rospy.get_published_topics())
                 return
         self.fail("No topics found")
         
