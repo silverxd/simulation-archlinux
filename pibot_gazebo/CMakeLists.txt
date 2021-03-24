@@ -42,6 +42,11 @@ catkin_package(
 )
 
 if (CATKIN_ENABLE_TESTING)
+  # cpp tests
+  add_rostest_gtest(cpp_simple
+        test/SIM/cpp_simple.test
+        test/SIM/cpp_simple.cpp)
+  target_link_libraries(cpp_simple ${catkin_LIBRARIES})
   # py tests
-  add_rostest(test/SIM/simple.test)
+  #add_rostest(test/SIM/simple.test)
 endif()
