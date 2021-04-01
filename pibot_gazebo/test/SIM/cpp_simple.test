@@ -1,4 +1,7 @@
 <launch>
+    <node pkg="pibot_gazebo"
+                type="kill_gazebo.sh" name="kill_gazebo"
+                output="log"/>
     <arg name="paused" default="false"/>
     <arg name="gui" default="false"/>
     <include file="$(find pibot_gazebo)/launch/default.launch">
