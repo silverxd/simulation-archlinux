@@ -6,10 +6,13 @@ endif (POLICY CMP0048)
 project(pibot_gazebo VERSION 1.0.0)
 add_compile_options(-std=c++17)
 
+find_package(robotics_gtest_extension CONFIG REQUIRED)
+
 find_package(roscpp REQUIRED)
 find_package(std_msgs REQUIRED)
 include_directories(${roscpp_INCLUDE_DIRS})
 include_directories(${std_msgs_INCLUDE_DIRS})
+include_directories(/usr/lib/robotics_gtest_extension)
 
 # Load catkin and all dependencies required for this package
 find_package(catkin REQUIRED COMPONENTS
@@ -42,11 +45,14 @@ catkin_package(
 )
 
 if (CATKIN_ENABLE_TESTING)
+  include(CheckIncludeFiles)
+  check_include_files(RoboticsGtestExtension.hpp HAVE_ROBOTICS_GTEST_EXTENSION)
+  message("HEADER FOUND $HAVE_ROBOTICS_GTEST_EXTENSION")
   # cpp tests
   add_rostest_gtest(cpp_simple
         test/SIM/cpp_simple.test
         test/SIM/cpp_simple.cpp)
-  target_link_libraries(cpp_simple ${catkin_LIBRARIES})
+  target_link_libraries(cpp_simple ${catkin_LIBRARIES} robotics_gtest_extension)
   # py tests
   #add_rostest(test/SIM/simple.test)
 endif()

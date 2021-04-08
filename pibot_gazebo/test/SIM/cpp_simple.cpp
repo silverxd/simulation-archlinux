@@ -1,8 +1,9 @@
 #include <gtest/gtest.h>
 #include <ros/ros.h>
+#include <include/RoboticsGtestExtenstion.hpp>
 //#include <robot_test/master.h>
 
-TEST(CPP_BasicTest, testEmpty)
+TEST(CPP_TopicTest, SIM)
 {
     ros::master::V_TopicInfo master_topics;
 

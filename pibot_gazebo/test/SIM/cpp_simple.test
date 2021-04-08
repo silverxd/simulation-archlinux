@@ -1,4 +1,5 @@
 <launch>
+    <node name="robot" pkg="SIM" type="robot.py" output="log"/>
     <node pkg="pibot_gazebo"
                 type="kill_gazebo.sh" name="kill_gazebo"
                 output="log"/>
