@@ -151,7 +151,7 @@ class PiBot:
         # Constants
         self.UPDATE_TIME = 0.005
         self.WHEEL_DIAMETER = 0.03
-        self.AXIS_LENGTH = 0.14
+        self.AXIS_LENGTH = 0.132
         self.CAMERA_RESOLUTION = (1080, 1080)  # Width, height
         self.CAMERA_FIELD_OF_VIEW = (62.2, 48.8)  # Horizontal,vertical
 
