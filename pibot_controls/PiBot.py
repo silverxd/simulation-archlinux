@@ -158,6 +158,7 @@ class PiBot:
         # Wait for initialisation to finish
         rospy.sleep(2)
 
+        self.rotation_angle = 0
         # Rotation
         self.starting_rotation = self.rotation_angle
 
