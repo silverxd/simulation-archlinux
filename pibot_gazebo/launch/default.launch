@@ -13,7 +13,7 @@
   <param name="/debug" value="$(arg debug)" />
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(find pibot_gazebo)/worlds/$(arg dir)/$(arg map).world"/>
-    <arg name="gui" value="false"/>
+    <arg name="gui" value="true"/>
     <!-- more default parameters can be changed here -->
   </include>
   <node name="line_sensor_script" pkg="pibot_gazebo" type="line_sensor_script.py" output="screen"/>
