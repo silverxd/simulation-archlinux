@@ -6,7 +6,7 @@ endif (POLICY CMP0048)
 project(pibot_gazebo VERSION 1.0.0)
 add_compile_options(-std=c++17)
 
-find_package(robotics_gtest_extension CONFIG REQUIRED)
+# find_package(robotics_gtest_extension CONFIG REQUIRED)
 
 find_package(roscpp REQUIRED)
 find_package(std_msgs REQUIRED)
