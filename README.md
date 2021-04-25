@@ -61,11 +61,11 @@ Tiimiülesande korral saate arendada tiimikaaslasega ühes salves kasutades võt
 
 Näide tiimikaaslase (uni-id näites `temaid`) loodud salves (näites on salve nimi `iti0201-2021-temaid-minuid`) `robot_test` kasutamiseks:
 ```
-robot_test minuid L1 1 -t=temaid -r=iti0201-temaid-minuid
+robot_test minuid L1 1 -t=temaid -r=iti0201-2021-temaid-minuid
 ```
 Kui teie lahendus asub mõnes muus harus kui vaikimisi haru, siis saate kasutada võtit `-b` haru muutmiseks:
 ```
-robot_test minuid L1 1 -t=temaid -r=iti0201-temaid-minuid -b=mybranch
+robot_test minuid L1 1 -t=temaid -r=iti0201-2021-temaid-minuid -b=mybranch
 ```
 Kui kood asub teie loodud salves, siis ei pea kasutama `-t` võtit.
 
