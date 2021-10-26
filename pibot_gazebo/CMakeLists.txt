@@ -43,16 +43,3 @@ catkin_package(
     gazebo_ros
     rostest
 )
-
-if (CATKIN_ENABLE_TESTING)
-  include(CheckIncludeFiles)
-  check_include_files(RoboticsGtestExtension.hpp HAVE_ROBOTICS_GTEST_EXTENSION)
-  message("HEADER FOUND $HAVE_ROBOTICS_GTEST_EXTENSION")
-  # cpp tests
-  add_rostest_gtest(cpp_simple
-        test/SIM/cpp_simple.test
-        test/SIM/cpp_simple.cpp)
-  target_link_libraries(cpp_simple ${catkin_LIBRARIES} robotics_gtest_extension)
-  # py tests
-  #add_rostest(test/SIM/simple.test)
-endif()
