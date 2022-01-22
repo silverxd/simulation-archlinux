@@ -3,7 +3,7 @@
 killall gzserver gzclient roscore -9 >/dev/null 2>&1
 
 cd ~
-DIRECTORY="iti0201-2021"
+DIRECTORY="iti0201-2022"
 
 if [ "$#" -lt 3 ]; then
     echo "USAGE: robot_test [uni-id] [exercise_number] [map_number]"
