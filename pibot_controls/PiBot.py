@@ -236,7 +236,7 @@ class PiBot:
         :param percentage: -99 .. 99
         """
         value = Float32()
-        value.data = percentage
+        value.data = int(percentage)
         self.left_wheel_speed_publisher.publish(value)
 
     @Validator.validate_speed_percentage
@@ -245,7 +245,7 @@ class PiBot:
         :param percentage: -99 .. 99
         """
         value = Float32()
-        value.data = percentage
+        value.data = int(percentage)
         self.right_wheel_speed_publisher.publish(value)
 
     @Validator.validate_speed_percentage
