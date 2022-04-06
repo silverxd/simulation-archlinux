@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="default">
+    <gui>
+      <camera name="user_camera">
+        <pose>0.078078 0.127889 4.345311 0 1.5708 -3.1415</pose>
+      </camera>
+    </gui>
+    <scene>
+      <ambient>0.5 0.5 0.5 1.0</ambient>
+      <shadows>0</shadows>
+    </scene>
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://iti0201_robot</uri>
+      <name>iti0201_robot</name>
+      <pose>0.063217 -0.208232 0 0 0 3.1416</pose>
+    </include>
+    <include>
+      <uri>model://racetrack20</uri>
+      <name>race_track20</name>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://object</uri>
+      <name>object</name>
+      <pose>-0.305706 -1.123700 0.0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://object</uri>
+      <name>object2</name>
+      <pose>0.688190 -1.121177 0.0 0 0 0</pose>
+    </include>
+  </world>
+</sdf>

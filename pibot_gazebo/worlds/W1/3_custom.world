@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="default">
+    <gui>
+      <camera name="user_camera">
+        <pose>0.285817 -0.003429 3.229345 0 1.5708 -3.1415</pose>
+      </camera>
+    </gui>
+    <scene>
+      <ambient>0.5 0.5 0.5 1.0</ambient>
+      <shadows>0</shadows>
+    </scene>
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://racetrack18</uri>
+      <name>race_track18</name>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://object</uri>
+      <name>object</name>
+      <pose>-0.539450 0.228900 0.0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://object</uri>
+      <name>object2</name>
+      <pose>0.256337 -0.643757 0.0 0 0 0</pose>
+    </include>
+
+
+  </world>
+</sdf>
