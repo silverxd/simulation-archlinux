@@ -119,6 +119,11 @@ done
 #rm -f $PYTHONDIR/PiBot.py
 #ln -s ~/catkin_ws/src/pibot_controls/PiBot.py $PYTHONDIR
 
+# Add catkin workspace to bashrc
+printf "\nAdding sourcing to .bashrc"
+echo "source $HOME/catkin_ws/devel/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+
 printf "\n${YELLOW}The script has finished successfully!${NC}
 Before you start developing, you need to set the bashrc to the correct source.
 To do that write into the terminal ${CYAN}vim ~/.bashrc${NC}
