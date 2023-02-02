@@ -53,7 +53,7 @@ robot_test [uni-id] [task-id] [world-id] [-t=(teammate_uniid_where_repo_is)] [-r
 
 `[uni-id]` asemele tuleb panna oma Uni-ID (nt `karamb`).
 
-`[task-id]` asemele tuleb panna ülesande kood (nt simulaatori ülesanne on `S`).
+`[task-id]` asemele tuleb panna ülesande kood (nt simulaatori ülesanne on `SIM`).
 
 `[world-id]` asemele tuleb panna maailma number (osadel ülesannetel on mitu testimismaailma), alates numbrist `1` (ja `2`, `3` jne).
 
