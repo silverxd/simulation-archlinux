@@ -21,7 +21,7 @@ else
     sudo apt-get install -qq docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
  fi
 
-sudo docker build -t iti0201 .
+sudo docker build --no-cache -t iti0201 .
 
 sudo rm -rf /usr/bin/robot_test /usr/bin/stop_robot
 sudo ln -s $PWD/robot_test /usr/bin
