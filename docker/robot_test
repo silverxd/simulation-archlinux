@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sudo docker run --rm iti0201 robot_test "$@"
+sudo docker run --rm -it --env "DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" iti0201 robot_test "$@"
