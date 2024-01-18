@@ -65,8 +65,15 @@ Linuxi puhul ei ole rangelt määratud millise distroga võib toimida, vaja on, 
 
 Vaja on käivitada docker koos DISPLAY env muutujaga ja kaasa anda X11 socket ja käivitamisele eelnevalt lubada xhostiga GUI näitamine.
 
-Kasutada saab käsku `install.sh` (kui on vaja installeerida Docker ja on tegemist Ubuntu operatsioonisüsteemiga). Ja siis saab kasutada käsku `robot_test`.
+Kui on tegemist Ubuntu operatsioonisüsteemiga (ja on vaja installeerida Docker), siis saab kasutada saab käsku `install.sh`.
 
+Kui `install.sh` skriptis on käsud edukalt läbi jooksutatud, siis on vaja enne simulatsiooni käivitamist jooksutada käsk:
+
+```
+xhost +local:root
+```
+
+Seejärel saab kasutada käsku `robot_test`.
 
 
 ## Roboti testimine
