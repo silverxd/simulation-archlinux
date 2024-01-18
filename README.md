@@ -64,11 +64,16 @@ robot_test myuniid S 1
 
 ## Linux
 
-Linuxi puhul ei ole rangelt määratud millise distroga võib toimida, vaja on, et oleks installeeritud Docker. Kindlasti toimivad Ubuntu ja Debian.
+Linuxi puhul ei ole rangelt määratud millise distroga võib rakendus toimida. Vaja on, et oleks installeeritud Docker (või Ubuntu korral installeerimisskript installeerib ka Dockeri). Kindlasti peaksid toimima Ubuntu ja Debian (mitte-Ubuntu süsteemides on vaja Docker ise käsitsi installeerida).
 
-Vaja on käivitada docker koos DISPLAY env muutujaga ja kaasa anda X11 socket ja käivitamisele eelnevalt lubada xhostiga GUI näitamine.
+Simulatsiooni nägemiseks on vaja Docker käivitada koos DISPLAY env muutujaga ja kaasa anda X11 socket ja käivitamisele eelnevalt lubada xhostiga GUI näitamine.
 
-Kui on tegemist Ubuntu operatsioonisüsteemiga (ja on vaja installeerida Docker), siis saab kasutada saab käsku `install.sh`.
+Installeerimiseks saab kasutada `install.sh` skripti:
+
+```
+git clone https://github.com/iti0201/simulation
+simulation/docker/install.sh
+```
 
 Kui `install.sh` skriptis on käsud edukalt läbi jooksutatud, siis on vaja enne simulatsiooni käivitamist jooksutada käsk:
 
