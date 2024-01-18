@@ -23,6 +23,6 @@ fi
 if [[ "$*" == *"--key"* ]]
 then
     echo "Using key"
-    KEYVOLUME=-v $HOME/iti0201_key:.ssh/id_rsa
+    KEYVOLUME="-v $HOME/iti0201_key:/root/.ssh/id_rsa"
 fi
 sudo docker run --rm -it --env "DISPLAY" $KEYVOLUME --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --name iti0201 iti0201 robot_test "$@"
