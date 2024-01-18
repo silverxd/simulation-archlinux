@@ -134,7 +134,7 @@ Roboti algasukoha saab määrata käsureal järgmiste võtmetega:
 
 `-Y` määrab roboti nurga
 
-Võti `--key` võimaldab kasutada SSH võtit parooli asemel. Selle funktsionaalsuse võimaldamiseks on vaja seadistada Gitlabis SSH võti, selle saavutamiseks on juhend Gitlabi manuaalis (https://docs.gitlab.com/ee/ssh/).
+Võti `--key` võimaldab kasutada SSH võtit parooli asemel. Selle funktsionaalsuse võimaldamiseks on vaja seadistada Gitlabis SSH võti, selle saavutamiseks on juhend Gitlabi manuaalis (https://docs.gitlab.com/ee/ssh/). Võtme genereerimiseks on olemas abiskript `key_install`. NB! `--key` peab olema järjekorras viimane võti (st `robot_test muudamind SIM 1 --realism --key` mitte `robot_test muudamind SIM 1 --key --realism`).
 
 
 Näiteks:
