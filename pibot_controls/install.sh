@@ -95,4 +95,3 @@ The source variables at the bottom of the file have to be
 ${CYAN}source /opt/ros/noetic/setup.bash
 source ~/catkin_ws/devel/setup.bash${NC}
 ${YELLOW}Now you are done!${NC}\n\n"
-exit 1
