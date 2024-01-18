@@ -1,4 +1,14 @@
 #!/bin/bash
 
 stop_robot
+changed=0
+git remote update && git status -uno | grep -q 'Your branch is behind' && changed=1
+if [ $changed = 1 ]; then
+    git pull origin master
+    echo "Updated successfully!"
+    echo "Rebuilding Docker image..."
+    $PWD/install.sh
+else
+    echo "Up-to-date"
+fi
 sudo docker run --rm -it --env "DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --name iti0201 iti0201 robot_test "$@"
