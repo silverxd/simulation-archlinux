@@ -1,51 +1,73 @@
 # Simulaatori kasutamisjuhend
 
-## Virtuaalmasin
+Simulaatori kasutamiseks võib kasutada nii Windows 10+ või Linuxit (Ubuntu või Debian vms).
 
-Virtuaalmasina kujutis asub aadressil: [http://turing.cs.ttu.ee/~gert.kanter/iti0201/](http://turing.cs.ttu.ee/~gert.kanter/iti0201/). See on VirtualBox kujutis, mis tuleb importida VirtualBox rakenduses, et seda saaks jooksutada.
+## Windows ja WSL2
 
-### Installeerimine ja seadistamine
+Simulaatori kasutamiseks Windowsis on vajalik kasutada WSL2 (Windows Subsystem for Linux) tehnoloogiat.
 
-Virtuaalmasin tuleb importida VirtualBox rakendusse.
+### Installeerimine
 
-Selleks pange VirtualBox käima ja valige `File` menüüst `Import Appliance` ja valige eelnevas punktis salvestatud `.ova` fail.
+1. Paigalda "Microsoft Store" rakenduses "Ubuntu 22.04.3 LTS" rakendus
 
-Kui kasutate arvutiklassi arvutit, siis peale importimist tuleb seadistuste all valida `4` protsessorit (CPU) ja mälu `8192` MB.
+![Ubuntu installeerimine](https://raw.githubusercontent.com/iti0201/simulation/master/img/store.png)
 
-Kui seadistused on tehtud, siis võib virtuaalmasina käivitada.
+2. Käivita Windowsi käsurida (Command prompt) vajutades Windows nuppu ja kirjutades "cmd"
 
-### Troubleshooting
+![Käsurida](https://raw.githubusercontent.com/iti0201/simulation/master/img/cmd.png)
 
-#### NO_VMX (arvutiklassis)
+3. Installeeri vajalikud WSL uuendused käsureale kirjutades: 
 
-Kui näete sellist pilti, siis tuleb arvuti restartida ja valida käivitamisel "No Hyper-V" režiim.
+```
+wsl --update --no-distribution
+```
 
-![Virtualiseerimise viga](https://raw.githubusercontent.com/iti0201/simulation/doc/img/verrvmxnovmx.png)
+4. Restardi arvuti
 
-#### Must ekraan
+5. Käivita uuesti käsurida ja muuda Ubuntu WSL versioon käsureale kirjutades:
 
-Kui virtuaalmasin läheb küll näiliselt käima, aga ees on lihtsalt must ekraan, siis vaadake ega ei ole operatsioonisüsteemiks valitud "Ubuntu (32-bit)". Operatsioonisüsteem peab olema "Ubuntu **(64-bit)**".
-Lülitage virtuaalmasin välja ja vahetage operatsioonisüsteem 64-bitiseks.
+```
+wsl --set-version Ubuntu-22.04 2
+```
 
-#### Virtualiseerimine ei tööta (enda arvutil)
+6. Käivita Ubuntu Microsoft Store's (võid pin-ida start menüüsse või taskbarile, et oleks edaspidi mugavam)
 
-Kui virtualiseerimine ei toimi enda arvutil, siis tõenäoliselt on see arvuti BIOS-is välja lülitatud. Virtualiseerimise lubamiseks tuleb minna BIOS-i seadistustesse ja sealt virtualiseerimine sisse lülitada.
-Kahjuks on igal arvutitootjal erinev viis kuidas BIOS-i seadistusmenüüsse ligi pääseda.
-Kui te kasutate Windows 10 või Windows 8, siis võite nt vaadata [seda linki](https://www.drivereasy.com/knowledge/how-to-enter-bios-on-windows-10-windows-7/) kuidas sinna ligi pääseda.
+![Ubuntu](https://raw.githubusercontent.com/iti0201/simulation/master/img/ubuntu.png)
 
-Mõistlikud otsingusõnad on "how to boot into bios" ja lisage oma arvutitootja ja/või mudel või seeria (nt "how to boot into bios ibm thinkpad").
+7. Seadista Ubuntu kasutaja "iti0201" ja parool "iti0201"
 
-Kui teil on UEFI boot, siis vaadake nt [seda linki](https://www.howtogeek.com/213795/how-to-enable-intel-vt-x-in-your-computers-bios-or-uefi-firmware/).
+8. Lae Ubuntus alla installeerimisfailid gitist käsuga:
 
-### Kasutamine
+```
+git clone https://github.com/iti0201/simulation
+```
 
-Virtuaalmasina kasutajanimi ja parool on mõlemad `iti0201`.
+9. Käivita installeerimisskript
 
-Terminali (käsurea) saab käivitada nupukombinatsiooniga *Ctrl+Alt+T*.
+```
+simulation/docker/install.sh
+```
+
+Kui küsitakse parooli, siis sisesta see parool, mida punktis 7 kasutasid.
+
+10. Installeerimine on valmis, nüüd saad käivitada roboti testimise simulatsioonis käsuga, kui oled teinud valmis aine salve ja sinna teinud kataloogi "S" ja sinna faili "robot.py":
+
+```
+robot_test myuniid S 1
+```
+
+
+## Linux
+
+Linuxi puhul ei ole rangelt määratud millise distroga võib toimida, vaja on, et oleks installeeritud Docker. Kindlasti toimivad Ubuntu ja Debian.
+
+Vaja on käivitada docker koos DISPLAY env muutujaga ja kaasa anda X11 socket ja käivitamisele eelnevalt lubada xhostiga GUI näitamine.
+
+
+
+
 
 ## Roboti testimine
-
-Kirjuta terminali käsk
 
 ```
 robot_test [uni-id] [task-id] [world-id] [-t=(teammate_uniid_where_repo_is)] [-r=(repository_name)] [-b=(branch_name)] [--noise] [--realmotors] [--blind] [--debug] [--realism] [-x=(x)] [-y=(y)] [-Y=(Y)] [--key]

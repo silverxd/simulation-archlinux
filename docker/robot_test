@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo docker run --rm iti0201 robot_test "$@"
