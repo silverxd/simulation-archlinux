@@ -30,6 +30,9 @@ wsl --update --no-distribution
 wsl --set-version Ubuntu-22.04 2
 ```
 
+![Set version to WSL2](https://raw.githubusercontent.com/iti0201/simulation/master/img/wsl2.png)
+
+
 6. Käivita Ubuntu Microsoft Store's (võid pin-ida start menüüsse või taskbarile, et oleks edaspidi mugavam)
 
 ![Ubuntu](https://raw.githubusercontent.com/iti0201/simulation/master/img/ubuntu.png)
