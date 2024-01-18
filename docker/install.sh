@@ -22,6 +22,7 @@ else
  fi
 
  sudo docker build --build-arg CACHE_BUST=$(date +%s) -t iti0201 .
+ sudo docker images -q --filter=dangling=true | xargs -I {} sudo docker rmi {}
 
 sudo rm -rf /usr/bin/robot_test /usr/bin/stop_robot
 sudo ln -s $PWD/robot_test /usr/bin
