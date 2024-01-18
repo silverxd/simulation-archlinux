@@ -56,6 +56,8 @@ Kui küsitakse parooli, siis sisesta see parool, mida punktis 7 kasutasid.
 robot_test myuniid S 1
 ```
 
+11. Kui oled lõpetanud, siis saab simulatsiooni kinni panna vajutades `Ctrl-C` (nupud `Ctrl` ja `C` korraga) ja siis vajutades ühe korra `Ctrl-D` (see käsk on lühend käsule `exit`).
+
 
 ## Linux
 
@@ -63,7 +65,7 @@ Linuxi puhul ei ole rangelt määratud millise distroga võib toimida, vaja on, 
 
 Vaja on käivitada docker koos DISPLAY env muutujaga ja kaasa anda X11 socket ja käivitamisele eelnevalt lubada xhostiga GUI näitamine.
 
-
+Kasutada saab käsku `install.sh` (kui on vaja installeerida Docker ja on tegemist Ubuntu operatsioonisüsteemiga). Ja siis saab kasutada käsku `robot_test`.
 
 
 

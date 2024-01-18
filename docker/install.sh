@@ -17,5 +17,6 @@ sudo apt-get install -qq docker-ce docker-ce-cli containerd.io docker-buildx-plu
 
 sudo docker build -t iti0201 .
 
-sudo rm -rf /usr/bin/robot_test
+sudo rm -rf /usr/bin/robot_test /usr/bin/stop_robot
 sudo ln -s $PWD/robot_test /usr/bin
+sudo ln -s $PWD/stop_robot /usr/bin
