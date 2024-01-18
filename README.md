@@ -145,4 +145,3 @@ robot_test muudamind M4 1 -x=1.5 -y=1.5 -Y=1.57
 ```
 
 Peale käsu käivitamist, tõmmatakse Gitlab-ist teie salvest lahendus ja pannakse see simulatsioonis käima.
-
