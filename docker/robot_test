@@ -11,4 +11,9 @@ if [ $changed = 1 ]; then
 else
     echo "Up-to-date"
 fi
-sudo docker run --rm -it --env "DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --name iti0201 iti0201 robot_test "$@"
+if [[ "$*" == *"--key"* ]]
+then
+    echo "Using key"
+    KEYVOLUME=-v $HOME/iti0201_key:.ssh/id_rsa
+fi
+sudo docker run --rm -it --env "DISPLAY" $KEYVOLUME --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --name iti0201 iti0201 robot_test "$@"
