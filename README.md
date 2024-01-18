@@ -19,12 +19,20 @@ Simulaatori kasutamiseks Windowsis on vajalik kasutada WSL2 (Windows Subsystem f
 3. Installeeri vajalikud WSL uuendused käsureale kirjutades: 
 
 ```
-wsl --update --no-distribution
+wsl --update
 ```
 
 4. Restardi arvuti
 
-5. Käivita uuesti käsurida ja muuda Ubuntu WSL versioon käsureale kirjutades:
+5. Installeeri vajalikud WSL uuendused käsureale kirjutades: 
+
+```
+wsl --install --no-distribution
+```
+
+6. Restardi arvuti
+
+7. Käivita uuesti käsurida ja muuda Ubuntu WSL versioon käsureale kirjutades:
 
 ```
 wsl --set-version Ubuntu-22.04 2
@@ -33,19 +41,19 @@ wsl --set-version Ubuntu-22.04 2
 ![Set version to WSL2](https://raw.githubusercontent.com/iti0201/simulation/master/img/wsl2.png)
 
 
-6. Käivita Ubuntu Microsoft Store's (võid pin-ida start menüüsse või taskbarile, et oleks edaspidi mugavam)
+8. Käivita Ubuntu Microsoft Store's (võid pin-ida start menüüsse või taskbarile, et oleks edaspidi mugavam)
 
 ![Ubuntu](https://raw.githubusercontent.com/iti0201/simulation/master/img/ubuntu.png)
 
-7. Seadista Ubuntu kasutaja "iti0201" ja parool "iti0201"
+9. Seadista Ubuntu kasutaja "iti0201" ja parool "iti0201"
 
-8. Lae Ubuntus alla installeerimisfailid gitist käsuga:
+10. Lae Ubuntus alla installeerimisfailid gitist käsuga:
 
 ```
 git clone https://github.com/iti0201/simulation
 ```
 
-9. Käivita installeerimisskript
+11. Käivita installeerimisskript
 
 ```
 simulation/docker/install.sh
@@ -53,13 +61,13 @@ simulation/docker/install.sh
 
 Kui küsitakse parooli, siis sisesta see parool, mida punktis 7 kasutasid.
 
-10. Installeerimine on valmis, nüüd saad käivitada roboti testimise simulatsioonis käsuga, kui oled teinud valmis aine salve ja sinna teinud kataloogi "S" ja sinna faili "robot.py":
+12. Installeerimine on valmis, nüüd saad käivitada roboti testimise simulatsioonis käsuga, kui oled teinud valmis aine salve ja sinna teinud kataloogi "S" ja sinna faili "robot.py":
 
 ```
 robot_test myuniid S 1
 ```
 
-11. Kui oled lõpetanud, siis saab simulatsiooni kinni panna vajutades `Ctrl-C` (nupud `Ctrl` ja `C` korraga) ja siis vajutades ühe korra `Ctrl-D` (see käsk on lühend käsule `exit`).
+13. Kui oled lõpetanud, siis saab simulatsiooni kinni panna vajutades `Ctrl-C` (nupud `Ctrl` ja `C` korraga) ja siis vajutades ühe korra `Ctrl-D` (see käsk on lühend käsule `exit`).
 
 
 ## Linux
