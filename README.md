@@ -97,7 +97,7 @@ Nüüd saad käivitada roboti testimise simulatsioonis käsuga, kui oled teinud 
 robot_test myuniid SIM 1
 ```
 
-13. Kui oled lõpetanud, siis saab simulatsiooni kinni panna vajutades `Ctrl-C` (nupud `Ctrl` ja `C` korraga) ja siis vajutades ühe korra `Ctrl-D` (see käsk on lühend käsule `exit`).
+18. Kui oled lõpetanud, siis saab simulatsiooni kinni panna vajutades `Ctrl-C` (nupud `Ctrl` ja `C` korraga) ja siis vajutades ühe korra `Ctrl-D` (see käsk on lühend käsule `exit`).
 
 
 ## Linux
