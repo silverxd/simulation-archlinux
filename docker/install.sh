@@ -34,6 +34,7 @@ cd $DIR
 sudo docker build --build-arg CACHE_BUST=$(date +%s) -t iti0201 .
 sudo docker images -q --filter=dangling=true | xargs -I {} sudo docker rmi {}
 
-sudo rm -rf /usr/bin/robot_test /usr/bin/stop_robot
+sudo rm -rf /usr/bin/robot_test /usr/bin/stop_robot /usr/bin/key_install
 sudo ln -s $PWD/robot_test /usr/bin
 sudo ln -s $PWD/stop_robot /usr/bin
+sudo ln -s $PWD/key_install /usr/bin

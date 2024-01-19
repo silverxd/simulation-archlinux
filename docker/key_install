@@ -1,4 +1,4 @@
 #!/bin/bash
 ssh-keygen -f $HOME/iti0201_key -t rsa -b 4096
-echo "Copy the following to TalTech GitLab..."
+echo 'Copy the following to TalTech GitLab "Preferences -> SSH Keys -> Add new key"'
 cat $HOME/iti0201_key.pub
