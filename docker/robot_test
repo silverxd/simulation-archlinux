@@ -26,4 +26,4 @@ then
     touch $HOME/known_hosts
     KEYVOLUME="-v $HOME/iti0201_key:/root/.ssh/id_rsa -v $HOME/known_hosts:/root/.ssh/known_hosts"
 fi
-sudo docker run --rm -it --env "DISPLAY" $KEYVOLUME --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --name iti0201 iti0201 robot_test "$@"
+sudo docker run --privileged --rm -it --env "DISPLAY" $KEYVOLUME --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --name iti0201 iti0201 robot_test "$@"
