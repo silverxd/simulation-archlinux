@@ -16,33 +16,32 @@ Simulaatori kasutamiseks Windowsis on vajalik kasutada WSL2 (Windows Subsystem f
 
 ![Ubuntu installeerimine](https://raw.githubusercontent.com/iti0201/simulation/master/img/store.png)
 
-3. Käivita Ubuntu Microsoft Store's (võid pin-ida start menüüsse või taskbarile, et oleks edaspidi mugavam)
+3. Käivita Ubuntu Microsoft Store's (võid pin-ida start menüüsse või taskbarile, et oleks edaspidi mugavam). Seadista Ubuntu kasutaja `iti0201` ja parool `iti0201`
+
 
 ![Ubuntu](https://raw.githubusercontent.com/iti0201/simulation/master/img/ubuntu.png)
 
-4. Seadista Ubuntu kasutaja "iti0201" ja parool "iti0201"
-
-5. Käivita Windowsi käsurida (Command prompt) vajutades Windows nuppu ja kirjutades "cmd"
+4. Käivita Windowsi käsurida (Command prompt) vajutades Windows nuppu ja kirjutades "cmd"
 
 ![Käsurida](https://raw.githubusercontent.com/iti0201/simulation/master/img/cmd.png)
 
-6. Installeeri vajalikud WSL uuendused käsureale kirjutades: 
+5. Installeeri vajalikud WSL uuendused käsureale kirjutades: 
 
 ```
 wsl --update
 ```
 
-7. Taaskäivita arvuti (restart)
+6. (Kui vaja) Taaskäivita arvuti (restart)
 
-8. Installeeri vajalikud WSL uuendused käsureale kirjutades: 
+7. Installeeri vajalikud WSL uuendused käsureale kirjutades: 
 
 ```
 wsl --install --no-distribution
 ```
 
-9. Taaskäivita arvuti (restart)
+8. (Kui vaja) Taaskäivita arvuti (restart)
 
-10. Käivita uuesti käsurida ja muuda Ubuntu WSL versioon käsureale kirjutades:
+9. Käivita uuesti käsurida ja muuda Ubuntu WSL versioon käsureale kirjutades:
 
 ```
 wsl --set-version Ubuntu-22.04 2
@@ -51,7 +50,7 @@ wsl --set-version Ubuntu-22.04 2
 ![Set version to WSL2](https://raw.githubusercontent.com/iti0201/simulation/master/img/wsl2.png)
 
 
-11. Command Prompti võib nüüd kinni panna ja pane uuesti käima Windows Store-st Ubuntu ja seal lae alla installeerimisfailid käsuga:
+10. Command Prompti võib nüüd kinni panna ja pane uuesti käima Windows Store-st Ubuntu ja seal lae alla installeerimisfailid käsuga:
 
 ```
 git clone https://github.com/iti0201/simulation
@@ -59,7 +58,7 @@ git clone https://github.com/iti0201/simulation
 
 ![Clone install](https://raw.githubusercontent.com/iti0201/simulation/master/img/clone_install.png)
 
-12. Käivita installeerimisskript
+11. Käivita installeerimisskript
 
 ```
 simulation/docker/install.sh
@@ -69,29 +68,29 @@ Kui küsitakse parooli, siis sisesta see parool, mida punktis 3 kasutasid.
 
 Installeerimine on valmis! 
 
-13. Järgmiseks on vaja luua aine salv. Selleks mine [https://gitlab.cs.ttu.ee/](https://gitlab.cs.ttu.ee/) ja loo salv "iti0201-2024".
+12. Järgmiseks on vaja luua aine salv. Selleks mine [https://gitlab.cs.ttu.ee/](https://gitlab.cs.ttu.ee/) ja loo salv "iti0201-2024".
 
 ![New project](https://raw.githubusercontent.com/iti0201/simulation/master/img/newproject.png)
 
-14. Kui salv on loodud, siis saab PyCharmis luua selle salvega seotud projekti:
+13. Kui salv on loodud, siis saab PyCharmis luua selle salvega seotud projekti:
 
 ![Get from VCS](https://raw.githubusercontent.com/iti0201/simulation/master/img/get_from_vcs.png)
 
-15. Siis tuleb luua kaust "SIM".
+14. Siis tuleb luua kaust "SIM".
 
 ![Create dir](https://raw.githubusercontent.com/iti0201/simulation/master/img/create_dir.png)
 
 ![Dir named SIM](https://raw.githubusercontent.com/iti0201/simulation/master/img/dir_named_SIM.png)
 
-16. Sinna kausta tuleb luua fail "robot.py".
+15. Sinna kausta tuleb luua fail "robot.py".
 
 ![File named robot](https://raw.githubusercontent.com/iti0201/simulation/master/img/file_named_robot.png)
 
-17. Seejärel tuleb commit-ida see fail Git-i.
+16. Seejärel tuleb commit-ida see fail Git-i.
 
 ![Commit to git](https://raw.githubusercontent.com/iti0201/simulation/master/img/commit_to_git.png)
 
-18. Nüüd saab pushida commit-i Git-i.
+17. Nüüd saab pushida commit-i Git-i.
 
 ![Push to git](https://raw.githubusercontent.com/iti0201/simulation/master/img/push_to_git.png)
 
@@ -103,7 +102,7 @@ Nüüd saad käivitada roboti testimise simulatsioonis käsuga, kui oled teinud 
 robot_test myuniid SIM 1
 ```
 
-19. Kui oled lõpetanud, siis saab simulatsiooni kinni panna vajutades `Ctrl-C` (nupud `Ctrl` ja `C` korraga) ja siis vajutades ühe korra `Ctrl-D` (see käsk on lühend käsule `exit`).
+18. Kui oled lõpetanud, siis saab simulatsiooni kinni panna vajutades `Ctrl-C` (nupud `Ctrl` ja `C` korraga) ja siis vajutades ühe korra `Ctrl-D` (see käsk on lühend käsule `exit`).
 
 
 ## Linux
