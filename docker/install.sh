@@ -1,12 +1,14 @@
 #!/bin/bash
 
-if command -v docker >/dev/null 2>&1; then
+if [[ -f "/usr/bin/docker" ]]
+then
     echo "Skipping Docker install..."
 else
     echo "Installing Docker..."
     sudo apt-get update
     sudo apt-get install -qq ca-certificates curl gnupg
     sudo install -m 0755 -d /etc/apt/keyrings
+    sudo rm -rf /etc/apt/keyrings/docker.gpg
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
     sudo chmod a+r /etc/apt/keyrings/docker.gpg
 
@@ -19,10 +21,18 @@ else
 
 
     sudo apt-get install -qq docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
- fi
+fi
 
- sudo docker build --build-arg CACHE_BUST=$(date +%s) -t iti0201 .
- sudo docker images -q --filter=dangling=true | xargs -I {} sudo docker rmi {}
+SOURCE=${BASH_SOURCE[0]}
+while [ -L "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR=$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )
+  SOURCE=$(readlink "$SOURCE")
+  [[ $SOURCE != /* ]] && SOURCE=$DIR/$SOURCE # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR=$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )
+cd $DIR
+sudo docker build --build-arg CACHE_BUST=$(date +%s) -t iti0201 .
+sudo docker images -q --filter=dangling=true | xargs -I {} sudo docker rmi {}
 
 sudo rm -rf /usr/bin/robot_test /usr/bin/stop_robot
 sudo ln -s $PWD/robot_test /usr/bin

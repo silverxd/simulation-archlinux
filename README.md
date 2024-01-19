@@ -1,6 +1,6 @@
 # Simulaatori kasutamisjuhend
 
-Simulaatori kasutamiseks võib kasutada nii Windows 10+ või Linuxit (Ubuntu või Debian vms).
+Simulaatori kasutamiseks võib kasutada Windows 10/11 või Linuxit (Ubuntu või Debian jms).
 
 ## Windows ja WSL2
 
@@ -12,27 +12,33 @@ Simulaatori kasutamiseks Windowsis on vajalik kasutada WSL2 (Windows Subsystem f
 
 ![Ubuntu installeerimine](https://raw.githubusercontent.com/iti0201/simulation/master/img/store.png)
 
-2. Käivita Windowsi käsurida (Command prompt) vajutades Windows nuppu ja kirjutades "cmd"
+2. Käivita Ubuntu Microsoft Store's (võid pin-ida start menüüsse või taskbarile, et oleks edaspidi mugavam)
+
+![Ubuntu](https://raw.githubusercontent.com/iti0201/simulation/master/img/ubuntu.png)
+
+3. Seadista Ubuntu kasutaja "iti0201" ja parool "iti0201"
+
+4. Käivita Windowsi käsurida (Command prompt) vajutades Windows nuppu ja kirjutades "cmd"
 
 ![Käsurida](https://raw.githubusercontent.com/iti0201/simulation/master/img/cmd.png)
 
-3. Installeeri vajalikud WSL uuendused käsureale kirjutades: 
+5. Installeeri vajalikud WSL uuendused käsureale kirjutades: 
 
 ```
 wsl --update
 ```
 
-4. Restardi arvuti
+6. Restardi arvuti
 
-5. Installeeri vajalikud WSL uuendused käsureale kirjutades: 
+7. Installeeri vajalikud WSL uuendused käsureale kirjutades: 
 
 ```
 wsl --install --no-distribution
 ```
 
-6. Restardi arvuti
+8. Restardi arvuti
 
-7. Käivita uuesti käsurida ja muuda Ubuntu WSL versioon käsureale kirjutades:
+9. Käivita uuesti käsurida ja muuda Ubuntu WSL versioon käsureale kirjutades:
 
 ```
 wsl --set-version Ubuntu-22.04 2
@@ -40,12 +46,6 @@ wsl --set-version Ubuntu-22.04 2
 
 ![Set version to WSL2](https://raw.githubusercontent.com/iti0201/simulation/master/img/wsl2.png)
 
-
-8. Käivita Ubuntu Microsoft Store's (võid pin-ida start menüüsse või taskbarile, et oleks edaspidi mugavam)
-
-![Ubuntu](https://raw.githubusercontent.com/iti0201/simulation/master/img/ubuntu.png)
-
-9. Seadista Ubuntu kasutaja "iti0201" ja parool "iti0201"
 
 10. Lae Ubuntus alla installeerimisfailid gitist käsuga:
 
@@ -59,12 +59,12 @@ git clone https://github.com/iti0201/simulation
 simulation/docker/install.sh
 ```
 
-Kui küsitakse parooli, siis sisesta see parool, mida punktis 7 kasutasid.
+Kui küsitakse parooli, siis sisesta see parool, mida punktis 3 kasutasid.
 
-12. Installeerimine on valmis, nüüd saad käivitada roboti testimise simulatsioonis käsuga, kui oled teinud valmis aine salve ja sinna teinud kataloogi "S" ja sinna faili "robot.py":
+12. Installeerimine on valmis, nüüd saad käivitada roboti testimise simulatsioonis käsuga, kui oled teinud valmis aine salve ja sinna teinud kataloogi "SIM" ja sinna faili "robot.py":
 
 ```
-robot_test myuniid S 1
+robot_test myuniid SIM 1
 ```
 
 13. Kui oled lõpetanud, siis saab simulatsiooni kinni panna vajutades `Ctrl-C` (nupud `Ctrl` ja `C` korraga) ja siis vajutades ühe korra `Ctrl-D` (see käsk on lühend käsule `exit`).
@@ -134,8 +134,7 @@ Roboti algasukoha saab määrata käsureal järgmiste võtmetega:
 
 `-Y` määrab roboti nurga
 
-Võti `--key` võimaldab kasutada SSH võtit parooli asemel. Selle funktsionaalsuse võimaldamiseks on vaja seadistada Gitlabis SSH võti, selle saavutamiseks on juhend Gitlabi manuaalis (https://docs.gitlab.com/ee/ssh/).
-
+Võti `--key` võimaldab kasutada SSH võtit parooli asemel. Selle funktsionaalsuse võimaldamiseks on vaja seadistada Gitlabis SSH võti (https://gitlab.cs.taltech.ee/-/profile/keys).
 
 Näiteks:
 ```
