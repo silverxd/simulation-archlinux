@@ -124,7 +124,7 @@ Kui `install.sh` skriptis on käsud edukalt läbi jooksutatud, siis on vaja enne
 xhost +local:root
 ```
 
-Seejärel saab kasutada käsku `robot_test`. Vaata juhendit WSL2 osast, kui vajad abi.
+Seejärel saab kasutada käsku `robot_test`. Vaata juhendit WSL2 osast alates punktist 12, kui vajad abi.
 
 
 ## Roboti testimine
@@ -169,7 +169,7 @@ Roboti algasukoha saab määrata käsureal järgmiste võtmetega:
 
 `-Y` määrab roboti nurga
 
-Võti `--key` võimaldab kasutada SSH võtit parooli asemel. Selle funktsionaalsuse võimaldamiseks on vaja seadistada Gitlabis SSH võti (https://gitlab.cs.taltech.ee/-/profile/keys).Võtme genereerimiseks on olemas abiskript `key_install`. NB! `--key` peab olema järjekorras viimane võti (st `robot_test muudamind SIM 1 --realism --key` mitte `robot_test muudamind SIM 1 --key --realism`).
+Võti `--key` võimaldab kasutada SSH võtit parooli asemel. Selle funktsionaalsuse võimaldamiseks on vaja seadistada Gitlabis SSH võti [https://gitlab.cs.taltech.ee/-/profile/keys](https://gitlab.cs.taltech.ee/-/profile/keys). Võtme genereerimiseks on olemas abiskript `key_install`. NB! `--key` peab olema järjekorras viimane võti (st `robot_test muudamind SIM 1 --realism --key` mitte `robot_test muudamind SIM 1 --key --realism`).
 
 Näiteks:
 ```
