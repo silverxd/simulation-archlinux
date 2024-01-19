@@ -61,7 +61,37 @@ simulation/docker/install.sh
 
 Kui küsitakse parooli, siis sisesta see parool, mida punktis 3 kasutasid.
 
-12. Installeerimine on valmis, nüüd saad käivitada roboti testimise simulatsioonis käsuga, kui oled teinud valmis aine salve ja sinna teinud kataloogi "SIM" ja sinna faili "robot.py":
+Installeerimine on valmis! 
+
+12. Järgmiseks on vaja luua aine salv. Selleks mine [https://gitlab.cs.ttu.ee/](https://gitlab.cs.ttu.ee/) ja loo salv "iti0201-2024".
+
+![New project](https://raw.githubusercontent.com/iti0201/simulation/master/img/newproject.png)
+
+13. Kui salv on loodud, siis saab PyCharmis luua selle salvega seotud projekti:
+
+![Get from VCS](https://raw.githubusercontent.com/iti0201/simulation/master/img/get_from_vcs.png)
+
+14. Siis tuleb luua kaust "SIM".
+
+![Create dir](https://raw.githubusercontent.com/iti0201/simulation/master/img/create_dir.png)
+
+![Dir named SIM](https://raw.githubusercontent.com/iti0201/simulation/master/img/dir_named_SIM.png)
+
+15. Sinna kausta tuleb luua fail "robot.py".
+
+![File named robot](https://raw.githubusercontent.com/iti0201/simulation/master/img/file_named_robot.png)
+
+16. Seejärel tuleb commit-ida see fail Git-i.
+
+![Commit to git](https://raw.githubusercontent.com/iti0201/simulation/master/img/commit_to_git.png)
+
+17. Nüüd saab pushida commit-i Git-i.
+
+![Push to git](https://raw.githubusercontent.com/iti0201/simulation/master/img/push_to_git.png)
+
+
+
+Nüüd saad käivitada roboti testimise simulatsioonis käsuga, kui oled teinud valmis aine salve ja sinna teinud kataloogi "SIM" ja sinna faili "robot.py":
 
 ```
 robot_test myuniid SIM 1
@@ -89,7 +119,7 @@ Kui `install.sh` skriptis on käsud edukalt läbi jooksutatud, siis on vaja enne
 xhost +local:root
 ```
 
-Seejärel saab kasutada käsku `robot_test`.
+Seejärel saab kasutada käsku `robot_test`. Vaata juhendit WSL2 osast, kui vajad abi.
 
 
 ## Roboti testimine
