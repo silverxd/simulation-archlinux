@@ -51,11 +51,13 @@ wsl --set-version Ubuntu-22.04 2
 ![Set version to WSL2](https://raw.githubusercontent.com/iti0201/simulation/master/img/wsl2.png)
 
 
-11. Lae Ubuntus alla installeerimisfailid gitist käsuga:
+11. Command Prompti võib nüüd kinni panna ja pane uuesti käima Windows Store-st Ubuntu ja seal lae alla installeerimisfailid käsuga:
 
 ```
 git clone https://github.com/iti0201/simulation
 ```
+
+![Clone install](https://raw.githubusercontent.com/iti0201/simulation/master/img/clone_install.png)
 
 12. Käivita installeerimisskript
 
