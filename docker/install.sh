@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: Replace apt-get with pacman, install yay if needed, update dockerfile to use yay, test, write better documentation
+
 if [[ -f "/usr/bin/docker" ]]
 then
     echo "Skipping Docker install..."
