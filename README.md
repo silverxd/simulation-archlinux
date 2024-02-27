@@ -1,96 +1,50 @@
 # Simulaatori kasutamisjuhend
 
-Simulaatori kasutamiseks võib kasutada Windows 10/11 või Linuxit (Ubuntu või Debian jms).
+Simulaatori kasutamiseks on soovituslik kasutada Arch Linuxit.
 
-## Windows ja WSL2
+### Paigaldamine Arch Linuxis
 
-Simulaatori kasutamiseks Windowsis on vajalik kasutada WSL2 (Windows Subsystem for Linux) tehnoloogiat.
-
-### Installeerimine
-
-1. Lülita sisse Windows Subsystem for Linux (WSL) Windows Features menüüs.
-
-![WSL Feature](https://raw.githubusercontent.com/iti0201/simulation/master/img/wsl_feature.png)
-
-2. Paigalda "Microsoft Store" rakenduses "Ubuntu 22.04.3 LTS" rakendus
-
-![Ubuntu installeerimine](https://raw.githubusercontent.com/iti0201/simulation/master/img/store.png)
-
-3. Käivita Ubuntu Microsoft Store's (võid pin-ida start menüüsse või taskbarile, et oleks edaspidi mugavam). Seadista Ubuntu kasutaja `iti0201` ja parool `iti0201`
-
-
-![Ubuntu](https://raw.githubusercontent.com/iti0201/simulation/master/img/ubuntu.png)
-
-4. Käivita Windowsi käsurida (Command prompt) vajutades Windows nuppu ja kirjutades "cmd"
-
-![Käsurida](https://raw.githubusercontent.com/iti0201/simulation/master/img/cmd.png)
-
-5. Installeeri vajalikud WSL uuendused käsureale kirjutades: 
+1. Lae alla paigaldusfailid käsuga:
 
 ```
-wsl --update
-```
-
-6. (Kui vaja) Taaskäivita arvuti (restart)
-
-7. Installeeri vajalikud WSL uuendused käsureale kirjutades: 
-
-```
-wsl --install --no-distribution
-```
-
-8. (Kui vaja) Taaskäivita arvuti (restart)
-
-9. Käivita uuesti käsurida ja muuda Ubuntu WSL versioon käsureale kirjutades:
-
-```
-wsl --set-version Ubuntu-22.04 2
-```
-
-![Set version to WSL2](https://raw.githubusercontent.com/iti0201/simulation/master/img/wsl2.png)
-
-
-10. Command Prompti võib nüüd kinni panna ja pane uuesti käima Windows Store-st Ubuntu ja seal lae alla installeerimisfailid käsuga:
-
-```
-git clone https://github.com/iti0201/simulation
+git clone https://github.com/silverxd/simulation-archlinux
 ```
 
 ![Clone install](https://raw.githubusercontent.com/iti0201/simulation/master/img/clone_install.png)
 
-11. Käivita installeerimisskript
+2. Käivita paigaldusskript
 
 ```
 simulation/docker/install.sh
 ```
 
-Kui küsitakse parooli, siis sisesta see parool, mida punktis 3 kasutasid.
+Kui küsitakse parooli, siis sisesta oma kasutaja parool.
 
-Installeerimine on valmis! 
+Paigaldus on valmis! 
 
-12. Järgmiseks on vaja luua aine salv. Selleks mine [https://gitlab.cs.ttu.ee/](https://gitlab.cs.ttu.ee/) ja loo salv "iti0201-2024".
+3. Järgmiseks on vaja luua aine salv. Selleks mine [https://gitlab.cs.taltech.ee/](https://gitlab.cs.taltech.ee/) ja loo salv "iti0201-2024".
 
 ![New project](https://raw.githubusercontent.com/iti0201/simulation/master/img/newproject.png)
 
-13. Kui salv on loodud, siis saab PyCharmis luua selle salvega seotud projekti:
+4. Kui salv on loodud, siis saab PyCharmis luua selle salvega seotud projekti:
 
 ![Get from VCS](https://raw.githubusercontent.com/iti0201/simulation/master/img/get_from_vcs.png)
 
-14. Siis tuleb luua kaust "SIM".
+5. Siis tuleb luua kaust "SIM".
 
 ![Create dir](https://raw.githubusercontent.com/iti0201/simulation/master/img/create_dir.png)
 
 ![Dir named SIM](https://raw.githubusercontent.com/iti0201/simulation/master/img/dir_named_SIM.png)
 
-15. Sinna kausta tuleb luua fail "robot.py".
+6. Sinna kausta tuleb luua fail "robot.py".
 
 ![File named robot](https://raw.githubusercontent.com/iti0201/simulation/master/img/file_named_robot.png)
 
-16. Seejärel tuleb commit-ida see fail Git-i.
+7. Seejärel tuleb commit-ida see fail Git-i.
 
 ![Commit to git](https://raw.githubusercontent.com/iti0201/simulation/master/img/commit_to_git.png)
 
-17. Nüüd saab pushida commit-i Git-i.
+8. Nüüd saab pushida commit-i Git-i.
 
 ![Push to git](https://raw.githubusercontent.com/iti0201/simulation/master/img/push_to_git.png)
 
@@ -102,16 +56,16 @@ Nüüd saad käivitada roboti testimise simulatsioonis käsuga, kui oled teinud 
 robot_test myuniid SIM 1
 ```
 
-18. Kui oled lõpetanud, siis saab simulatsiooni kinni panna vajutades `Ctrl-C` (nupud `Ctrl` ja `C` korraga) ja siis vajutades ühe korra `Ctrl-D` (see käsk on lühend käsule `exit`).
+9. Kui oled lõpetanud, siis saab simulatsiooni kinni panna vajutades `Ctrl-C` (nupud `Ctrl` ja `C` korraga) ja siis vajutades ühe korra `Ctrl-D` (see käsk on lühend käsule `exit`).
 
 
-## Linux
+## Muud Linuxi distributsioonid
 
-Linuxi puhul ei ole rangelt määratud millise distroga võib rakendus toimida. Vaja on, et oleks installeeritud Docker (või Ubuntu korral installeerimisskript installeerib ka Dockeri). Kindlasti peaksid toimima Ubuntu ja Debian (mitte-Ubuntu süsteemides on vaja Docker ise käsitsi installeerida).
+Linuxi puhul ei ole rangelt määratud millise distroga võib rakendus toimida. Vaja on, et oleks paigaldatud Docker (või Arch Linuxi korral paigaldusskript paigaldab ka Dockeri). Kindlasti peaks toimima Arch Linux (originaalses skriptis ka Ubuntu ja Debian. Teistes süsteemides on vaja Docker ise käsitsi paigaldada).
 
 Simulatsiooni nägemiseks on vaja Docker käivitada koos DISPLAY env muutujaga ja kaasa anda X11 socket ja käivitamisele eelnevalt lubada xhostiga GUI näitamine.
 
-Installeerimiseks saab kasutada `install.sh` skripti:
+Paigaldamiseks saab kasutada `install.sh` skripti:
 
 ```
 git clone https://github.com/iti0201/simulation
@@ -124,7 +78,7 @@ Kui `install.sh` skriptis on käsud edukalt läbi jooksutatud, siis on vaja enne
 xhost +local:root
 ```
 
-Seejärel saab kasutada käsku `robot_test`. Vaata juhendit WSL2 osast alates punktist 12, kui vajad abi.
+Seejärel saab kasutada käsku `robot_test`. Vaata juhendit Arch Linuxi osast alates punktist 3, kui vajad abi.
 
 
 ## Roboti testimine
