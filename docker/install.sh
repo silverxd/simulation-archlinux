@@ -1,6 +1,19 @@
 #!/bin/bash
 
-# TODO: Replace apt-get with pacman, install yay if needed, update dockerfile to use yay, test, write better documentation
+# TODO: Replace apt-get with pacman, install yay if needed, update dockerfile to use yay or other AUR helpers, test, write better documentation
+# Install yay if no AUR helpers are present:
+#
+# sudo pacman -S --needed git base-devel
+# git clone https://aur.archlinux.org/yay.git
+# cd yay
+# makepkg -si
+# cd ..
+# rm -rf yay
+#
+# Great example of how the script should be reformatted:
+# https://koodivaramu.eesti.ee/alvatal/id-kaart/-/blob/main/manjaro-id-kaart.sh
+# (also includes example usage of yay and pacman commands)
+
 
 if [[ -f "/usr/bin/docker" ]]
 then
